@@ -1,0 +1,212 @@
+/* Reina Najjar */
+
+nav a {
+    text-decoration: none;
+}
+
+.logo {
+    width: 15em;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    background-color: #1e4a3b;
+    
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+
+    height: 6rem;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap, 3rem);
+    justify-content: space-between;
+    align-items: center;
+    
+    color: white;
+    font-size: 1.25rem;
+    list-style: none;
+}
+
+
+.mobile-nav-toggle, .cart-word {
+    display: none;
+}
+
+.nav-button {
+    color: white;
+    font-size: 2.5rem;
+}
+
+
+/* Categories dropdown styling */
+.dropbtn {
+    all: unset;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    
+    height: fit-content;
+    width: auto;
+    padding: 20px;
+    
+    background-color: white;
+    backdrop-filter: blur(2rem);
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    border-radius: 20px;
+    z-index: 100;
+}
+
+.dropdown-content a {
+    text-align: left;
+    color: black;
+    padding: 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+    width: 100%;
+}
+  
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* End of categories dropdown styling */
+
+.bi-person-circle {
+    font-size: 1.75rem;
+}
+
+.bi-house, .bi-info-circle, .bi-chat-dots {
+    font-size: 1.5rem;
+}
+
+/* cart icon styling */
+.cart-link {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.cart {
+    position: relative;
+    font-size: 1.75rem;
+    padding: 5px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.items-amount {
+    position: absolute;
+    top: -14px;
+    right: -5px;
+    color:white;
+    font-size: 1rem;
+    padding: 3px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+/* end of cart icon styling */
+
+/* styling for smaller screens */
+@media (max-width: 1002px) {
+    .navbar {
+        position: fixed;
+        inset: 0 0 0 40%;
+        gap: 1.5em;
+        overflow: auto;
+
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2em;
+        justify-content: start;
+        align-items:start;
+
+        background-color: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(2rem);
+        
+        font-size: 1.5rem;
+
+        transform: translateX(100%);
+        transition: transform 350ms ease-in-out;
+    }
+
+    .navbar[data-visible="true"] {
+        transform: translateX(0%);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        z-index: 101;
+        border: 0;
+        background: none;
+        top: 1.5rem;
+        right: 1.5rem;
+    }
+
+    .cart-word {
+        display: block;
+    }
+
+    .cart {
+        margin-right: 0;
+    }
+
+    .dropdown-content a {
+        color: white;
+    }
+
+    .dropdown-content {
+        position: relative;
+
+        background: none;
+        box-shadow: none;
+        backdrop-filter: none;
+    
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        margin-left: 30px;
+    
+        border-radius: 0;
+        border-left: 2px solid rgba(255, 255, 255, 0.5);
+
+        font-size: 1.3rem;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .navbar {
+        inset: 0 0 0 0;
+    }
+}
