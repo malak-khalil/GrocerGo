@@ -1,5 +1,0 @@
-<?
-
-include "../be/dbinc.php"
-
->
