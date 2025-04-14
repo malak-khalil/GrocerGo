@@ -57,7 +57,7 @@
                 <a href="..\frontend\Profile.html"><i class="bi bi-person-circle"></i></a>
             </li>
             <li>
-                <a href="..\frontend\cart.html" class="cart-link">
+                <a href="..\frontend\cart.php" class="cart-link">
                     <div class="cart">
                         <i class="bi bi-cart3"></i>
                         <div id="items-amount" class="items-amount">0</div> 
