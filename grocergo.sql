@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 14 أبريل 2025 الساعة 10:59
+-- Generation Time: 14 أبريل 2025 الساعة 11:31
 -- إصدار الخادم: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -283,6 +283,41 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_p
 (241, 'Allure Superslims White Cigarettes', 'Premium superslim white cigarettes with smooth taste and elegant design.', '$5.00', '20 cigarettes', '../images/tobacco/allre supeslims white.jpg', 'tobacco'),
 (242, 'Allure Black Superslims Cigarettes', 'Sleek black superslim cigarettes with rich, full flavor in an elegant package.', '$5.00', '20 cigarettes', '../images/tobacco/aluure black superslims.webp', 'tobacco'),
 (243, 'Coconut Charcoal Cubes', 'Natural coconut shell charcoal cubes for hookah. Long-lasting, odorless, and provides even heat.', '$10.00', '1kg', '../images/tobacco/ccocnut charcoal cubes.jpg', 'tobacco');
+
+-- --------------------------------------------------------
+
+--
+-- بنية الجدول `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Fname` varchar(50) NOT NULL,
+  `Lname` varchar(50) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `Email` varchar(254) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `users`
+--
+
+INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `address`, `Password`) VALUES
+(1, 'Layla', 'Hassan', '+96170111222', 'laylahassan', 'layla@gmail.com', '123 Cedar St, Beirut', 'password123'),
+(2, 'Omar', 'Salem', '+96170123456', 'omarsalem', 'omar.salem@gmail.com', '45 Elm Ave, Tripoli', 'omarsafe456'),
+(3, 'Maya', 'Khalil', '+96170345678', 'mayakhalil', 'maya.k@gmail.com', 'XX Street, Merdacheh, Botchay', 'maya_pass789'),
+(4, 'Jad', 'Mansour', '+96170987654', 'jadmansour', 'jad.m@gmail.com', '9 Olive Blvd, Jounieh', 'jadstrong!'),
+(5, 'Rana', 'Fadel', '+96170654321', 'ranafadel', 'rana.f@gmail.com', '230 Palm St, Zahle', 'ranarocks'),
+(6, 'Kassem', 'Ali', '+96176456789', 'kassemali', 'kassem.ali@gmail.com', '123 Maple St, Hadath', 'kassem2024'),
+(7, 'Nadine', 'Jabbour', '+96171765432', 'nadinej', 'nadine.jabbour@gmail.com', '56 Oak Ave, Baabda', 'nadinepass99'),
+(8, 'Tariq', 'Kassem', '+96176543210', 'tariqk', 'tariq.kassem@hotmail.com', '98 Cedar Rd, Jounieh', 'tariq1234'),
+(9, 'Sami', 'Khalil', '+96178551122', 'samikhalil', 'sami.khalil@yahoo.com', '101 Palm Blvd, Beirut', 'sammy2000'),
+(10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
