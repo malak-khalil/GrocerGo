@@ -13,6 +13,22 @@ mobileNavToggle.addEventListener('click', () => {
     }
 });
 
+function searchProducts() {
+    var query = document.getElementById("searchInput").value; // Get the search input value
+    var resultsContainer = document.getElementById("searchResults"); // Container to display results
+
+    // Use AJAX to send the search query to search.php
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "GrocerGo\backend\search.php" + query, true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            resultsContainer.innerHTML = xhr.responseText; // Display the results in the container
+        }
+    };
+    xhr.send();
+}
+
+
 function toggleDropdown(button) {
     const dropdown = button.parentElement;
     dropdown.classList.toggle('active');
@@ -82,3 +98,4 @@ document.addEventListener('click', function(event) {
                 }, 300);
             }
         });
+        
