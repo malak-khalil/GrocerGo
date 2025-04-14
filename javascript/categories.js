@@ -26,6 +26,48 @@ document.addEventListener('click', function(event) {
         });
     }
 });
+function searchProducts() {
+    const searchTerm = document.getElementById('searchInput').value.trim();
+
+    if (searchTerm) {
+        // Send the search term to the backend (AJAX or Fetch API)
+        fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
+            .then(response => response.json())
+            .then(data => {
+                // Assuming 'data' is an array of products that match the search
+                displaySearchResults(data);
+            })
+            .catch(error => {
+                console.error('Error fetching search results:', error);
+            });
+    }
+}
+
+function displaySearchResults(products) {
+    const resultsContainer = document.getElementById('resultsContainer');
+    resultsContainer.innerHTML = ''; // Clear previous results
+
+    if (products.length > 0) {
+        products.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.classList.add('search-result');
+
+            productElement.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" />
+                <div class="product-info">
+                    <h4>${product.name}</h4>
+                    <p>${product.description}</p>
+                    <span>$${product.price}</span>
+                </div>
+            `;
+
+            resultsContainer.appendChild(productElement);
+        });
+    } else {
+        resultsContainer.innerHTML = '<p>No products found.</p>';
+    }
+}
+
 
         document.addEventListener("DOMContentLoaded", function() {
             const images = document.querySelectorAll(".fade-in");
