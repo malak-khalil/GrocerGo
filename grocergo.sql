@@ -340,21 +340,22 @@ CREATE TABLE `cart` (
 
 INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`) VALUES
 (1, 1, 146, 1),
-(2, 1, 147, 1),
-(3, 1, 148, 1),
-(4, 1, 149, 1),
-(5, 1, 150, 1),
-(6, 1, 151, 1),
-(7, 1, 152, 1),
-(8, 1, 153, 1),
-(9, 1, 154, 1),
-(10, 1, 155, 1);
+(1, 1, 147, 1),
+(1, 1, 148, 1),
+(1, 1, 149, 1),
+(1, 1, 150, 1),
+(1, 1, 151, 1),
+(1, 1, 152, 1),
+(1, 1, 153, 1),
+(1, 1, 154, 1),
+(1, 1, 155, 1);
 
 --
 -- Indexes for table `cart`
 --
 ALTER TABLE `cart`
-  ADD PRIMARY KEY (`id`,`user_id`);
+  ADD PRIMARY KEY (`id`,`user_id`,`product_id`) USING BTREE;
+
 
 
 --
