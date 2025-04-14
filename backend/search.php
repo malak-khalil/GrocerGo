@@ -1,38 +1,43 @@
 <?php
+// search.php
 
-include 'dbinc.php';
+header('Content-Type: application/json');
+require_once 'dbinc.php'; // Database connection
 
-// Check if the search term is provided
-if (isset($_GET['query'])) {
-    $searchQuery = $_GET['query']; // Get the search term
+// Get search term from the query string
+$searchTerm = isset($_GET['query']) ? $_GET['query'] : '';
 
-    // Prevent SQL Injection by using prepared statements
-    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE ?");
-    $searchTerm = "%" . $searchQuery . "%"; // Wildcards for LIKE query
-    $stmt->bind_param("s", $searchTerm); // Bind the parameter
-
-    // Execute the query
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // Check if there are any results
-    if ($result->num_rows > 0) {
-        // Loop through the results and output them
-        while ($row = $result->fetch_assoc()) {
-            echo "<div class='product-item'>";
-            echo "<h3>" . $row['name'] . "</h3>";
-            echo "<p>" . $row['description'] . "</p>";
-            echo "<p><strong>Price:</strong> $" . $row['price'] . "</p>";
-            echo "</div>";
-        }
-    } else {
-        echo "No products found.";
-    }
-
-    // Close the prepared statement
-    $stmt->close();
+// Validate input (in case the search term is empty)
+if (empty($searchTerm)) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "No search term provided"
+    ]);
+    exit;
 }
 
-// Close the database connection
-$conn->close();
+try {
+    // Prepare SQL query to search products by name, description, or category
+    $stmt = $pdo->prepare("SELECT id, name, price, amount, image_path, description, category
+                           FROM products
+                           WHERE name LIKE :searchTerm OR description LIKE :searchTerm OR category LIKE :searchTerm");
+    
+    // Bind the search term parameter (wildcards for 'LIKE' query)
+    $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
+    
+    // Fetch all matching products
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Return results as JSON
+    echo json_encode([
+        "status" => "success",
+        "data" => $products
+    ]);
+} catch (PDOException $e) {
+    // Handle error if the query fails
+    echo json_encode([
+        "status" => "error",
+        "message" => "Error fetching products: " . $e->getMessage()
+    ]);
+}
 ?>
