@@ -1,3 +1,40 @@
+<?php
+// Include the database connection file
+include('dbinc.php');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE Email = ?");
+    $stmt->bind_param("s", $email); 
+
+    // Execute statement
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        if (password_verify($password, $user['Password'])) {
+            session_start();
+            $_SESSION['user_id'] = $user['ID'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: categories.html");  // Redirect to the categories page
+            exit();
+        } else {
+            $error_message = "Invalid email or password.";
+        }
+    } else {
+        $error_message = "No user found with this email.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
 <!DOCTYPE html> 
 <html lang="en"> <!-- By Antonio Karam -->
   <head>
@@ -142,8 +179,12 @@ input[type="submit"]:hover {
     <img src="..\Images\LogoForLogin.png" alt="Logo" class="logo">
     <div class="login-container">
       <h1>Log in</h1>
+
+      <?php if (isset($error_message)): ?>
+        <p style="color: red;"><?php echo $error_message; ?></p>
+      <?php endif; ?>
       
-      <form action="categories.html" method="GET" onsubmit="return validateForm()"> <!-- for now since theres no backend directly gets u to categories page -->
+      <form id="loginForm" method="POST" onsubmit="return false;">
         <div class=eLabel>
         <label for="email">Email</label><br>
         <input type="email" id="email" name="email" required><br>
