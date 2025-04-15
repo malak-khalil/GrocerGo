@@ -303,7 +303,7 @@
                 <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
             </li>
             <li>
-                <a href="../frontend/cart.html"><i class="bi bi-cart3"></i> Cart</a>
+                <a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a>
             </li>
         </ul>
     </nav>

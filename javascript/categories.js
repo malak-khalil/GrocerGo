@@ -30,11 +30,11 @@ function searchProducts() {
     const searchTerm = document.getElementById('searchInput').value.trim();
 
     if (searchTerm) {
-        // Send the search term to the backend (AJAX or Fetch API)
+        fetch('backend/search.php?query=' + encodeURIComponent(searchTerm))
+
         fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
             .then(response => response.json())
             .then(data => {
-                // Assuming 'data' is an array of products that match the search
                 displaySearchResults(data);
             })
             .catch(error => {

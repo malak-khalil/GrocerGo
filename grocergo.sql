@@ -320,6 +320,52 @@ INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `addr
 (10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456');
 COMMIT;
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `quantity`) VALUES
+(1, 1, 146, 1),
+(1, 1, 147, 1),
+(1, 1, 148, 1),
+(1, 1, 149, 1),
+(1, 1, 150, 1),
+(1, 1, 151, 1),
+(1, 1, 152, 1),
+(1, 1, 153, 1),
+(1, 1, 154, 1),
+(1, 1, 155, 1);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`id`,`user_id`,`product_id`) USING BTREE;
+
+
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+COMMIT;
+
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
