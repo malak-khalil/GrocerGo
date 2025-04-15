@@ -129,7 +129,7 @@ input[type="submit"]:hover {
     <div class="signup-container">
       <h1>Sign up</h1>
       
-      <form action="Log-in.html" method="GET" onsubmit="return validateForm()"><!--only for now, while theres no backend, must bring u back to login page to login to new acc-->
+      <form action="Log-in.php" method="GET" onsubmit="return validateForm()"><!--only for now, while theres no backend, must bring u back to login page to login to new acc-->
         <div class=eLabel>
         <label for="Fname">First name</label><br>
         <input type="text" id="Fname" name="Fname" required><br>

@@ -157,7 +157,7 @@ input[type="submit"]:hover {
       </form>
     
       <p>Don't have an account?</p>
-      <a href="Sign-up.html">Sign Up</a>
+      <a href="Sign-up.php">Sign Up</a>
     </div>
     </div>
     </div>

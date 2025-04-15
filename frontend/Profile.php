@@ -388,7 +388,7 @@
 
         document.querySelector('.btn-danger').addEventListener('click', function() {
             if (confirm("Are you sure you want to sign out?")) {
-                window.location.href = "../frontend/Log-in.html";
+                window.location.href = "../frontend/Log-in.php";
             }
         });
     </script>
