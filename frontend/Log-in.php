@@ -173,8 +173,8 @@ input[type="submit"]:hover {
       console.log("Login script loaded");
 
     document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();  // Prevent form submission from refreshing the page
-      submitLoginForm();       // Call the login form submission function
+      event.preventDefault();  
+      submitLoginForm();       
     });
 
      function submitLoginForm() {
@@ -194,7 +194,7 @@ input[type="submit"]:hover {
         }
 
 
-        const xhr = new XMLHttpRequest();
+      const xhr = new XMLHttpRequest();
       xhr.open("POST", "../backend/Login-handler.php", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 

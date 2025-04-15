@@ -129,7 +129,7 @@ input[type="submit"]:hover {
     <div class="signup-container">
       <h1>Sign up</h1>
       
-      <form action="Log-in.php" method="GET" onsubmit="return validateForm()"><!--only for now, while theres no backend, must bring u back to login page to login to new acc-->
+      <form id="SignupForm" method="POST" onsubmit="return false;"><!--only for now, while theres no backend, must bring u back to login page to login to new acc-->
         <div class=eLabel>
         <label for="Fname">First name</label><br>
         <input type="text" id="Fname" name="Fname" required><br>
@@ -161,14 +161,21 @@ input[type="submit"]:hover {
     </div>
     </div>
     <script>
-    function validateForm() {
-    const fname = document.getElementById("Fname").value;
-    const lname = document.getElementById("Lname").value;
-    const email = document.getElementById("email").value;
-    const phone = document.getElementById("Pnumber").value;
-    const password = document.getElementById("password").value;
 
-    if (!fname || !lname || !email || !phone || !password) {
+    document.getElementById("SignupForm").addEventListener("submit", function(event) {
+      event.preventDefault();  
+      submitSignupForm();       
+    });
+
+    function submitSignupForm() {
+      const Fname = document.getElementById("Fname").value;
+      const Lname = document.getElementById("Lname").value;
+      const Pnumber = document.getElementById("Pnumber").value;
+      const username = document.getElementById("username").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+    if (!Fname || !Lname || !email || !phone || !password || !username || !Pnumber) {
       alert("All fields are required.");
       return false; 
     }
@@ -178,6 +185,34 @@ input[type="submit"]:hover {
       alert("Please enter a valid email address.");
       return false;
     }
+
+    const xhr = new XMLHttpRequest();
+      xhr.open("POST", "../backend/Signup_handler.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      const data = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&username=${encodeURIComponent(username)}&Pnumber=${encodeURIComponent(Pnumber)}&Fname=${encodeURIComponent(Fname)}&Lname=${encodeURIComponent(Lname)}`;
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              window.location.href = "Log-in.php";
+            } else {
+              document.getElementById("errorMessage").innerText = response.message;
+              document.getElementById("errorMessage").style.display = "block";
+            }
+          } catch (e) {
+            console.error("JSON parse error", e);
+            document.getElementById("errorMessage").innerText = "Server error. Please try again.";
+            document.getElementById("errorMessage").style.display = "block";
+          }
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      xhr.send(data);
   };
       </script>
     
