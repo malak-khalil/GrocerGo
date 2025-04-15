@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
   if ($user) {
-    if ($password === $user['Password']) {
+    if (password_verify($password, $user['Password'])) {
       session_start();
       $_SESSION['user_id'] = $user['ID'];
       echo json_encode(['success' => true]);
