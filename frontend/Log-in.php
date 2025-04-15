@@ -1,38 +1,3 @@
-<?php
-include('../backend/dbinc.php');
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $stmt = $conn->prepare("SELECT * FROM users WHERE Email = ?");
-    $stmt->bind_param("s", $email); 
-
-    // Execute statement
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        if (password_verify($password, $user['Password'])) {
-            session_start();
-            $_SESSION['user_id'] = $user['ID'];
-            $_SESSION['username'] = $user['username'];
-            header("Location: categories.html");  // Redirect to the categories page
-            exit();
-        } else {
-            $error_message = "Invalid email or password.";
-        }
-    } else {
-        $error_message = "No user found with this email.";
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-?>
-
 
 <!DOCTYPE html> 
 <html lang="en"> <!-- By Antonio Karam -->
@@ -182,6 +147,8 @@ input[type="submit"]:hover {
       <?php if (isset($error_message)): ?>
         <p style="color: red;"><?php echo $error_message; ?></p>
       <?php endif; ?>
+
+      <p id="errorMessage" style="color: red; display: none;"></p>
       
       <form id="loginForm" method="POST" onsubmit="return false;">
         <div class=eLabel>
@@ -203,25 +170,60 @@ input[type="submit"]:hover {
     </div>
 
     <script>
-    function validateForm()  {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+      console.log("Login script loaded");
 
-    if (!email ||!password) {
-      alert("Both fields are required.");
-      return false; 
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();  // Prevent form submission from refreshing the page
+      submitLoginForm();       // Call the login form submission function
+    });
+
+     function submitLoginForm() {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+
+        if (!email || !password) {
+          alert("Both fields are required.");
+          return false;
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+
+        const xhr = new XMLHttpRequest();
+      xhr.open("POST", "../backend/Login-handler.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+      const data = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              window.location.href = "categories.html";
+            } else {
+              document.getElementById("errorMessage").innerText = response.message;
+              document.getElementById("errorMessage").style.display = "block";
+            }
+          } catch (e) {
+            console.error("JSON parse error", e);
+            document.getElementById("errorMessage").innerText = "Server error. Please try again.";
+            document.getElementById("errorMessage").style.display = "block";
+          }
+        } else {
+          console.error("Request failed with status:", xhr.status);
+        }
+      };
+
+      xhr.send(data);
     }
 
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-    }
     </script>
-
-    
-    
     
   </body>
 </html>
