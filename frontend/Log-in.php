@@ -158,7 +158,7 @@ input[type="submit"]:hover {
         <div class=eLabel>
         <label for="password">Password</label><br>
         <input type="password" id="password" name="password" required><br><br>
-	<a href="ForgotPassword.html" style="font-size: 0.9em; color: #1E4A3B; display: block; margin-bottom: 10px;">Forgot Password?</a>
+	<a href="ForgotPassword.php" style="font-size: 0.9em; color: #1E4A3B; display: block; margin-bottom: 10px;">Forgot Password?</a>
         </div>
         <input type="submit" value="Log in"><br>
       </form>

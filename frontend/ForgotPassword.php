@@ -303,13 +303,36 @@
         });
 
         function validateForgotPasswordForm() {
-            const email = document.getElementById("email").value;
-            if (email === "") {
-                alert("Please enter your email address.");
-                return false;
-            }
-            return true;
+        const email = document.getElementById("email").value;
+        if (email === "") {
+            alert("Please enter your email address.");
+            return false;
         }
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "ForgotPassword.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+        const data = "email=" + encodeURIComponent(email);
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    alert(response.message);  
+                    window.location.href = "Change_pass.html?token=" + response.token; 
+                } else {
+                    alert(response.message); 
+                }
+            } else {
+                alert('There was a problem with the request.');
+            }
+        };
+
+        xhr.send(data);
+        return false; 
+    }
     </script>
 </body>
 </html>
