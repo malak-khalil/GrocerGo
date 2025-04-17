@@ -129,7 +129,8 @@ input[type="submit"]:hover {
     <div class="signup-container">
       <h1>Sign up</h1>
       
-      <form id="SignupForm" method="POST" onsubmit="return false;"><!--only for now, while theres no backend, must bring u back to login page to login to new acc-->
+      <form id="SignupForm" method="POST" onsubmit="return false;">
+      <div id="errorMessage" style="display:none; color:red; margin-top:10px;"></div>
         <div class=eLabel>
         <label for="Fname">First name</label><br>
         <input type="text" id="Fname" name="Fname" required><br>
@@ -140,7 +141,7 @@ input[type="submit"]:hover {
         </div>
         <div class=eLabel>
         <label for="Pnumber">Phone number</label><br>
-        <input type="tel" id="Pnumber" name="Pnumber" required><br>
+        <input type="text" id="Pnumber" name="Pnumber" required><br>
         </div>
         <div class=eLabel>
         <label for="username">Username</label><br>
@@ -153,6 +154,10 @@ input[type="submit"]:hover {
         <div class=eLabel>
         <label for="password">Password</label><br>
         <input type="password" id="password" name="password" required><br><br>
+        </div>
+        <div class=eLabel>
+        <label for="address">Address</label><br>
+        <input type="text" id="address" name="address" required><br><br>
         </div>
         <input type="submit" value="Sign up"><br>
       </form>
@@ -174,8 +179,9 @@ input[type="submit"]:hover {
       const username = document.getElementById("username").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+      const address = document.getElementById("address").value;
 
-    if (!Fname || !Lname || !email || !phone || !password || !username || !Pnumber) {
+    if (!Fname || !Lname || !email || !password || !username || !Pnumber || !address) {
       alert("All fields are required.");
       return false; 
     }
@@ -190,7 +196,7 @@ input[type="submit"]:hover {
       xhr.open("POST", "../backend/Signup_handler.php", true);
       xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      const data = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&username=${encodeURIComponent(username)}&Pnumber=${encodeURIComponent(Pnumber)}&Fname=${encodeURIComponent(Fname)}&Lname=${encodeURIComponent(Lname)}`;
+      const data = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&username=${encodeURIComponent(username)}&Pnumber=${encodeURIComponent(Pnumber)}&Fname=${encodeURIComponent(Fname)}&Lname=${encodeURIComponent(Lname)}&address=${encodeURIComponent(address)}`;
 
     xhr.onload = function() {
         if (xhr.status === 200) {
