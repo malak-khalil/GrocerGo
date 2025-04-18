@@ -65,7 +65,7 @@
     
     <!-- Main Content -->
     <main class="main-content">
-        <h1 class="page-title">FCleaning &amp; Household</h1>
+        <h1 class="page-title">Cleaning &amp; Household</h1>
         
         <div class="products-grid" id="productsGrid">
         </div>
