@@ -8,30 +8,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
     <link href="..\styling\categories.css" rel="stylesheet">
-    <style>
-        /* Center the modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 600px;
-            width: 80%;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -92,7 +68,6 @@
         <h1 class="page-title">Fresh Fruits & Vegetables</h1>
         
         <div class="products-grid" id="productsGrid">
-            <!-- Product cards will be generated here -->
         </div>
     </main>
     
@@ -101,7 +76,6 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModal">&times;</span>
             <div class="modal-body" id="modalBody">
-                <!-- Modal content will be inserted here -->
             </div>
         </div>
     </div>
@@ -109,120 +83,144 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            // Make an AJAX call to fetch the products
-            $.ajax({
-                url: '../backend/get-fruitsandvegetables.php', // Path to the backend PHP script
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    if (data.length > 0) {
-                        // Loop through the products and append them to the container
-                        data.forEach(function(product) {
-                            // Parse the price to ensure it's a number
-                            var price = parseFloat(product.price.replace('$', ''));
-                            price = isNaN(price) ? 0 : price.toFixed(2);  // Default to 0 if invalid
+    // Fetch products from backend
+    $.ajax({
+        url: '../backend/get-fruitsandvegetables.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            if (data.error) {
+                console.error("Error:", data.message);
+                $('#productsGrid').html('<div class="error-message">Error loading products. Please try again later.</div>');
+                return;
+            }
 
-                            var productHTML = `
-                                <div class="product-card" data-id="${product.id}">
-                                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
-                                    <div class="product-details">
-                                        <h3 class="product-name">${product.name}</h3>
-                                        <div class="product-info">
-                                            <span class="product-price">$${price}</span>
-                                            <span class="product-weight">${product.amount}</span>
-                                        </div>
-                                        <div class="quantity-controls">
-                                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                                            <span class="quantity">0</span>
-                                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
-                                        </div>
-                                        <button class="add-to-cart">Add to Cart</button>
-                                    </div>
-                                </div>
-                            `;
-                            $('#productsGrid').append(productHTML);
-                        });
-                    } else {
-                        $('#productsGrid').html('<p>No products found.</p>');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching products:", error);
-                    console.error("Response from server:", xhr.responseText);
-                    $('#productsGrid').html('<p>There was an error fetching the products.</p>');
-                }
-            });
+            if (data.length > 0) {
+                renderProducts(data);
+            } else {
+                $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", error);
+            $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+        }
+    });
 
-            // Handle the quantity controls
-            $(document).on('click', '.quantity-btn', function() {
-                var quantityDisplay = $(this).siblings('.quantity');
-                var currentQuantity = parseInt(quantityDisplay.text());
-                if ($(this).hasClass('plus-btn')) {
-                    quantityDisplay.text(currentQuantity + 1);
-                } else if ($(this).hasClass('minus-btn') && currentQuantity > 0) {
-                    quantityDisplay.text(currentQuantity - 1);
-                }
-            });
+    // Render products function
+    function renderProducts(products) {
+        const grid = $('#productsGrid');
+        grid.empty();
 
-            // Add to Cart functionality (not connected to the backend for now)
-            $(document).on('click', '.add-to-cart', function() {
-                var productCard = $(this).closest('.product-card');
-                var productId = productCard.data('id');
-                var quantity = productCard.find('.quantity').text();
-                alert(`Added ${quantity} of product ID ${productId} to cart.`);
-            });
-
-            // Handle the product image click to open the modal
-            $(document).on('click', '.product-image', function() {
-                var productCard = $(this).closest('.product-card');
-                var productId = productCard.data('id');
-                var productName = productCard.find('.product-name').text();
-                var productImage = productCard.find('.product-image').attr('src');
-                var productPrice = productCard.find('.product-price').text();
-                var productDescription = productCard.find('.product-description').text();
-
-                // Populate modal with product details
-                $('#modalBody').html(`
-                    <img src="${productImage}" alt="${productName}" class="modal-image">
-                    <h2 class="modal-title">${productName}</h2>
-                    <p class="modal-description">${productDescription}</p>
-                    <p class="modal-price">${productPrice}</p>
-                `);
-
-                $('#productModal').fadeIn();
-            });
-
-            // Close modal functionality
-            $('#closeModal').click(function() {
-                $('#productModal').fadeOut();
-            });
-        });
-        function toggleDropdown(button) {
-    const dropdown = button.parentElement;
-    dropdown.classList.toggle('active');
-}
-document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            dropdown.classList.remove('active');
+        products.forEach(product => {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${product.price}</span>
+                            <span class="product-weight">${product.amount}</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            grid.append(productHTML);
         });
     }
-});
-const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-const navbar = document.getElementById('navbar');
 
-mobileNavToggle.addEventListener('click', () => {
-    const visibility = navbar.getAttribute('data-visible');
+    // Quantity controls
+    $(document).on('click', '.quantity-btn', function() {
+        const quantityDisplay = $(this).siblings('.quantity');
+        let currentQuantity = parseInt(quantityDisplay.text());
+        
+        if ($(this).hasClass('plus-btn')) {
+            quantityDisplay.text(currentQuantity + 1);
+        } else if ($(this).hasClass('minus-btn') && currentQuantity > 0) {
+            quantityDisplay.text(currentQuantity - 1);
+        }
+    });
+
+    // Modal functionality
+    $(document).on('click', '.product-image', function() {
+        const productCard = $(this).closest('.product-card');
+        const productName = productCard.find('.product-name').text();
+        const productImage = $(this).attr('src');
+        const productPrice = productCard.find('.product-price').text();
+        const productWeight = productCard.find('.product-weight').text();
+        const productDescription = productCard.data('description');
+
+        const modalHTML = `
+            <img src="${productImage}" alt="${productName}" class="modal-image">
+            <h2 class="modal-title">${productName}</h2>
+            <div class="modal-description">
+                <p>${productDescription}</p><br>
+                <p><strong> ${productPrice} / ${productWeight}</strong></p>
+            </div>
+            <div class="modal-quantity">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
+        `;
+
+        $('#modalBody').html(modalHTML);
+        $('#productModal').fadeIn();
+        
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close modal
+    $('#closeModal').click(closeModal);
     
-    if (visibility === "false") {
-        navbar.setAttribute('data-visible', "true");
-        mobileNavToggle.setAttribute('aria-expanded', "true");
-    } else {
-        navbar.setAttribute('data-visible', "false");
-        mobileNavToggle.setAttribute('aria-expanded', "false");
+    // Close when clicking outside modal
+    $(document).mouseup(function(e) {
+        if ($('#productModal').is(':visible') && 
+            !$(e.target).closest('.modal-content').length && 
+            !$(e.target).is('.product-image')) {
+            closeModal();
+        }
+    });
+    
+    // Close with ESC key
+    $(document).keyup(function(e) {
+        if (e.key === "Escape" && $('#productModal').is(':visible')) {
+            closeModal();
+        }
+    });
+    
+    function closeModal() {
+        $('#productModal').fadeOut();
+        $('body').css('overflow', 'auto');
     }
-});
-    </script>
+
+    // Add to cart from modal
+    $(document).on('click', '#modalBody .add-to-cart', function() {
+        const quantity = $('#modalBody .quantity').text();
+        const productName = $('#modalBody .modal-title').text();
+        alert(`Added ${quantity} ${productName} to cart!`);
+        closeModal();
+    });
+
+    // Mobile navigation toggle
+    const mobileNavToggle = $('.mobile-nav-toggle');
+    const navbar = $('#navbar');
+
+    mobileNavToggle.on('click', function() {
+        const visibility = navbar.attr('data-visible');
+        navbar.attr('data-visible', visibility === "false" ? "true" : "false");
+        mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
+    });
+});</script>
 </body>
 </html>

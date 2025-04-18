@@ -1,12 +1,8 @@
 <?php
-// Include the database connection file
-include('dbinc.php');  // Ensure the correct path if needed
-
-// Query to fetch fruits and vegetables
+include('dbinc.php');  
 $sql = "SELECT id, name, description, price, amount, image_path, category FROM products WHERE category = 'tobacco'";
 
 try {
-    // Prepare and execute the query
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
 
