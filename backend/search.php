@@ -17,14 +17,14 @@ if (empty($searchTerm)) {
 }
 
 try {
-    // Prepare SQL query to search products by name, description, or category
+    // Prepare SQL query to search products only by name
     $stmt = $pdo->prepare("SELECT id, name, price, amount, image_path, description, category
                            FROM products
-                           WHERE name LIKE :searchTerm OR description LIKE :searchTerm OR category LIKE :searchTerm");
-    
+                           WHERE name LIKE :searchTerm");
+
     // Bind the search term parameter (wildcards for 'LIKE' query)
     $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
-    
+
     // Fetch all matching products
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

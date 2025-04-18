@@ -3,31 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruits & Vegetables - GrocerGo</title>
+    <title>Butchery & Seafood - GrocerGo</title>
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
     <link href="..\styling\categories.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
-            <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-        
-        <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
-            <i class="bi bi-list"></i>
-        </button>
+        <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
     
-        <ul id="navbar" class="navbar" data-visible="false">
+    <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
+        <i class="bi bi-list"></i>
+    </button>
+
+    <ul id="navbar" class="navbar" data-visible="false">
+    <li>
+            <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+        </li>
         <li>
-                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
-            </li>
-            <li>
-                <div class="dropdown"> 
-                    <button class="dropbtn" onclick="toggleDropdown(this)">
-                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <div class="dropdown-content">
+            <div class="dropdown"> 
+                <button class="dropbtn" onclick="toggleDropdown(this)">
+                    <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                </button>
+                <div class="dropdown-content">
                     <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
                     <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
                     <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
@@ -42,64 +41,64 @@
                     <a href="../frontend/snacksandcandy.php"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
                     <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
                 </div>
-                </div>
-            </li>
-            
-            <li>
-                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
-            </li>
-            <li>
-                <a href="../frontend/cart.php" class="cart-link">
-                    <div class="cart">
-                        <i class="bi bi-cart3"></i>
-                    </div> 
-                    <span>Cart</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search for products...">
-        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
-    </div>
-    
-    <!-- Main Content -->
-    <main class="main-content">
-        <h1 class="page-title">Fresh Fruits & Vegetables</h1>
+            </div>
+        </li>
         
-        <div class="products-grid" id="productsGrid">
-        </div>
-    </main>
+        <li>
+            <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+        </li>
+        <li>
+            <a href="../frontend/cart.php" class="cart-link">
+                <div class="cart">
+                    <i class="bi bi-cart3"></i>
+                </div> 
+                <span>Cart</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search for products...">
+    <button class="search-btn"><i class="bi bi-search"></i> Search</button>
+</div>
+
+<!-- Main Content -->
+<main class="main-content">
+    <h1 class="page-title">Fresh Fruits & Vegetables</h1>
     
+    <div class="products-grid" id="productsGrid">
     </div>
-    <div class="modal" id="productModal">
-    <div class="modal-content">
-        <span class="close-modal" id="closeModal">&times;</span>
-        <div class="modal-body" id="modalBody">
-            <img src="" alt="" class="modal-image">
-            <h2 class="modal-title"></h2>
-            <div class="modal-description">
-                <p class="product-description"></p><br>
-                <p><strong class="product-price"></strong></p>
-                <p><strong class="product-weight"></strong></p>
-            </div>
-            <div class="modal-quantity">
-                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                <span class="quantity">0</span>
-                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
-            </div>
-            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
-                Add to Cart
-            </button>
+</main>
+
+</div>
+<div class="modal" id="productModal">
+<div class="modal-content">
+    <span class="close-modal" id="closeModal">&times;</span>
+    <div class="modal-body" id="modalBody">
+        <img src="" alt="" class="modal-image">
+        <h2 class="modal-title"></h2>
+        <div class="modal-description">
+            <p class="product-description"></p><br>
+            <p><strong class="product-price"></strong></p>
+            <p><strong class="product-weight"></strong></p>
         </div>
+        <div class="modal-quantity">
+            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+            <span class="quantity">0</span>
+            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+        </div>
+        <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+            Add to Cart
+        </button>
     </div>
+</div>
 </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
     // Fetch products from backend
     $.ajax({
-        url: '../backend/get-fruitsandvegetables.php',
+        url: '../backend/get-butcheryandseafood.php',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -308,14 +307,13 @@ $(document).ready(function() {
         });
     }
 
-    // Load original products when search is empty or reset
     function loadOriginalProducts() {
         // Show loading state
         $('#productsGrid').html('<div class="loading">Loading products...</div>');
-        $('.page-title').text('Fresh Fruits & Vegetables');
+        $('.page-title').text('Butchery and Sea Food');
 
         $.ajax({
-            url: '../backend/get-fruitsandvegetables.php',
+            url: '../backend/get-butcheryandseafood.php',
             method: 'GET',
             dataType: 'json',
             success: function(data) {
