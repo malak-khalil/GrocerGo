@@ -7,6 +7,7 @@
     <meta name="description" content="GrocerGo - Your fastest way to get groceries delivered. Fresh produce, pantry staples, and household essentials delivered to your door in Beirut.">
     <link rel="icon" href='../Images/home/cart3.svg' type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="..\styling\items.css" rel="stylesheet">
     <link href="..\styling\categories.css" rel="stylesheet">
 </head>
 <body>
@@ -62,12 +63,7 @@
                 <i class="bi bi-stopwatch"></i>
                 <span style="font-weight: bold;">8 AM - 12 AM</span>
             </div>
-           
         </div>
-         <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search for products...">
-        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
-</div>
     </div>
     
     <section class="hero-section">
@@ -278,8 +274,5 @@
     </footer>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../javascript/categories.js"></script>
-    <script src="../GrocerGo/javascript/search.js"></script>
-
-
 </body>
 </html>

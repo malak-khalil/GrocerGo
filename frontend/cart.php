@@ -27,9 +27,6 @@
                 <a href="..\frontend\categories.html"><i class="bi bi-house"></i> Home</a>
             </li>
             <li>
-                <a href="..\frontend\About.html"><i class="bi bi-info-circle"></i> About</a>
-            </li>
-            <li>
                 <div class="dropdown"> 
                     <button class="dropbtn" onclick="getCategories()"><i class="bi bi-caret-down-fill"></i> Categories</button>
                     
@@ -51,10 +48,7 @@
                 </div>
             </li>
             <li>
-                <a href="..\frontend\Reviews.html"><i class="bi bi-chat-dots"></i> Feedback</a>
-            </li>
-            <li>
-                <a href="..\frontend\Profile.html"><i class="bi bi-person-circle"></i></a>
+                <a href="..\frontend\Profile.html"><i class="bi bi-person-circle"></i>My Account</a>
             </li>
             <li>
                 <a href="..\frontend\cart.php" class="cart-link">
