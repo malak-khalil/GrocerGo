@@ -64,14 +64,10 @@
             </div>
            
         </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search for products...">
-            <button class="search-btn" onclick="searchProducts()">
-                <i class="bi bi-search"></i> Search
-            </button>
-        </div>
-        
-        <div id="resultsContainer"></div>
+         <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
+</div>
     </div>
     
     <section class="hero-section">
@@ -280,9 +276,10 @@
         
         <p>&copy; 2025 GrocerGo. All rights reserved.</p>
     </footer>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../javascript/categories.js"></script>
     <script src="../GrocerGo/javascript/search.js"></script>
+
 
 </body>
 </html>

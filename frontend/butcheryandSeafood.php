@@ -64,7 +64,7 @@
 
 <!-- Main Content -->
 <main class="main-content">
-    <h1 class="page-title">Butchery and Sea Food</h1>
+    <h1 class="page-title">Butchery & Sea Food</h1>
     
     <div class="products-grid" id="productsGrid">
     </div>

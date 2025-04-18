@@ -26,50 +26,7 @@ document.addEventListener('click', function(event) {
         });
     }
 });
-function searchProducts() {
-    const searchTerm = document.getElementById('searchInput').value.trim();
-
-    if (searchTerm) {
-        fetch('backend/search.php?query=' + encodeURIComponent(searchTerm))
-
-        fetch(`/search?query=${encodeURIComponent(searchTerm)}`)
-            .then(response => response.json())
-            .then(data => {
-                displaySearchResults(data);
-            })
-            .catch(error => {
-                console.error('Error fetching search results:', error);
-            });
-    }
-}
-
-function displaySearchResults(products) {
-    const resultsContainer = document.getElementById('resultsContainer');
-    resultsContainer.innerHTML = ''; // Clear previous results
-
-    if (products.length > 0) {
-        products.forEach(product => {
-            const productElement = document.createElement('div');
-            productElement.classList.add('search-result');
-
-            productElement.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" />
-                <div class="product-info">
-                    <h4>${product.name}</h4>
-                    <p>${product.description}</p>
-                    <span>$${product.price}</span>
-                </div>
-            `;
-
-            resultsContainer.appendChild(productElement);
-        });
-    } else {
-        resultsContainer.innerHTML = '<p>No products found.</p>';
-    }
-}
-
-
-        document.addEventListener("DOMContentLoaded", function() {
+     document.addEventListener("DOMContentLoaded", function() {
             const images = document.querySelectorAll(".fade-in");
             images.forEach(img => {
                 if (img.complete) {
@@ -124,4 +81,101 @@ function displaySearchResults(products) {
                 }, 300);
             }
         });
+        
+        $(document).ready(function() {
+            // Real-time search: Trigger search as the user types
+            $('#searchInput').on('keyup', function() {
+                performSearch();
+            });
+        
+            // Perform search
+            function performSearch() {
+                const searchTerm = $('#searchInput').val().trim();
+        
+                if (searchTerm === '') {
+                    // If the search input is empty, load all products
+                    loadOriginalProducts();
+                    return;
+                }
+        
+                // Show loading state
+                $('#productsGrid').html('<div class="loading">Searching products...</div>');
+        
+                $.ajax({
+                    url: '../backend/search.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: { query: searchTerm },
+                    success: function(data) {
+                        if (data.status === 'error') {
+                            $('#productsGrid').html(`<div class="error-message">${data.message}</div>`);
+                            return;
+                        }
+        
+                        if (data.data && data.data.length > 0) {
+                            renderProducts(data.data);
+                            $('.page-title').text(`Search Results for "${searchTerm}"`);
+                        } else {
+                            $('#productsGrid').html('<div class="no-products">No products found matching your search.</div>');
+                            $('.page-title').text(`No results for "${searchTerm}"`);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#productsGrid').html('<div class="error-message">Search failed. Please try again.</div>');
+                    }
+                });
+            }
+        
+            // Render products in the grid
+            function renderProducts(products) {
+                const grid = $('#productsGrid');
+                grid.empty();
+        
+                products.forEach(product => {
+                    const productHTML = `
+                        <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                            <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                            <div class="product-details">
+                                <h3 class="product-name">${product.name}</h3>
+                                <div class="product-info">
+                                    <span class="product-price">${product.price}</span>
+                                    <span class="product-weight">${product.amount}</span>
+                                </div>
+                                <div class="quantity-controls">
+                                    <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                                    <span class="quantity">0</span>
+                                    <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                                </div>
+                                <button class="add-to-cart">Add to Cart</button>
+                            </div>
+                        </div>
+                    `;
+                    grid.append(productHTML);
+                });
+            }
+        
+            // Load original products when search is empty or reset
+            function loadOriginalProducts() {
+                // Show loading state
+                $('#productsGrid').html('<div class="loading">Loading products...</div>');
+                
+        
+                $.ajax({
+                    url: '../backend/get-products.php',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (Array.isArray(data) && data.length > 0) {
+                            renderProducts(data);
+                        } else {
+                            $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+                    }
+                });
+            }
+        });
+        
         
