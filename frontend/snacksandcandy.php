@@ -7,629 +7,331 @@
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
+    <link href="..\styling\categories.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="../frontend/categories.html">
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-        </a>
         
         <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
             <i class="bi bi-list"></i>
         </button>
     
         <ul id="navbar" class="navbar" data-visible="false">
-            <li>
-                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+        <li>
+                <a href="../frontend/categories.php"><i class="bi bi-house"></i> Home</a>
             </li>
             <li>
-                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+                <div class="dropdown"> 
+                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                    <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
+                    <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
+                    <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
+                    <a href="../frontend/beverages.php"><i class="bi bi-cup-straw"></i></i> Beverages</a>
+                    <a href="../frontend/butcheryandSeafood.php"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
+                    <a href="../frontend/cleaningandhousehold.php"><i class="bi bi-bucket"></i> Cleaning & Household</a>
+                    <a href="../frontend/dairyandeggs.php"><i class="bi bi-egg"></i> Dairy & Eggs</a>
+                    <a href="../frontend/frozenfood.php"><i class="bi bi-snow"></i> Frozen Food</a>
+                    <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
+                    <a href="../frontend/healthyandorganic.php"><i class="bi bi-heart"></i> Healthy & Organic</a>
+                    <a href="../frontend/pantryessentials.php"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
+                    <a href="../frontend/snacksandcandy.php"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
+                    <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
+                </div>
+                </div>
+            </li>
+            
+            <li>
+                <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
             </li>
             <li>
-                <a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a>
+                <a href="../frontend/cart.php" class="cart-link">
+                    <div class="cart">
+                        <i class="bi bi-cart3"></i>
+                    </div> 
+                    <span>Cart</span>
+                </a>
             </li>
         </ul>
     </nav>
-    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search for products...">
-        <button class="search-btn">
-            <i class="bi bi-search"></i> Search
-        </button>
+        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
     </div>
     
     <!-- Main Content -->
     <main class="main-content">
-        <h1 class="page-title">Snacks & Candy</h1>
+        <h1 class="page-title">Snacks &amp; Candy</h1>
         
         <div class="products-grid" id="productsGrid">
-            <!-- Product cards will be generated here -->
         </div>
     </main>
     
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <div class="modal-body" id="modalBody">
-                <!-- Modal content will be inserted here -->
-            </div>
-        </div>
     </div>
-    
-    <script>
-    const products = [
-        {
-            id: 1,
-            name: "Bebeto Cola Jelly Gum",
-            price: 2.99,
-            weight: "80g",
-            image: "../images/snacks and candy/bebeto cola jelly gum 80g.webp",
-            description: "Chewy cola-flavored jelly gum candies. Perfect for a sweet treat anytime."
-        },
-        {
-            id: 2,
-            name: "Biscoff Lotus Spread",
-            price: 5.49,
-            weight: "400g",
-            image: "../images/snacks and candy/biscof lotus spread.jpeg",
-            description: "Delicious cookie butter spread made from crushed Biscoff cookies. Perfect for toast, pancakes, or eating by the spoonful!"
-        },
-        {
-            id: 3,
-            name: "Biscolata Mood Chocolate",
-            price: 3.99,
-            weight: "120g",
-            image: "../images/snacks and candy/biscolata.webp",
-            description: "Creamy milk chocolate with a smooth texture that melts in your mouth."
-        },
-        {
-            id: 4,
-            name: "Bruschettini Garlic Chips",
-            price: 4.29,
-            weight: "150g",
-            image: "../images/snacks and candy/bruschettini garlic chips.jpg",
-            description: "Crispy garlic-flavored chips inspired by Italian bruschetta. Perfect for snacking or with dips."
-        },
-        {
-            id: 5,
-            name: "Chupa Chups Lollipops",
-            price: 1.49,
-            weight: "1pc",
-            image: "../images/snacks and candy/chupa chups lollopops.webp",
-            description: "Classic fruit-flavored lollipops with a long-lasting taste. Various flavors available."
-        },
-        {
-            id: 6,
-            name: "Cocoa Wafer with Cocoa Cream",
-            price: 2.79,
-            weight: "100g",
-            image: "../images/snacks and candy/cocoa wafer with cocoa cream.jpeg",
-            description: "Crispy cocoa wafers layered with rich cocoa cream filling. A chocolate lover's delight."
-        },
-        {
-            id: 7,
-            name: "Croco Crackers Cheese",
-            price: 3.49,
-            weight: "100g",
-            image: "../images/snacks and candy/croco crackers cheese 100g.jpg",
-            description: "Crunchy cheese-flavored crackers shaped like crocodiles. Fun and tasty snack."
-        },
-        {
-            id: 8,
-            name: "Croco Salted Sticks",
-            price: 2.49,
-            weight: "100g",
-            image: "../images/snacks and candy/croco salted sticks.jpg",
-            description: "Thin, crispy salted bread sticks. Perfect for dipping or snacking on their own."
-        },
-        {
-            id: 9,
-            name: "Digestive Milk Chocolate Biscuits",
-            price: 4.99,
-            weight: "250g",
-            image: "../images/snacks and candy/digestive milk chocolate biscuits.jpg",
-            description: "Classic digestive biscuits covered in smooth milk chocolate. A perfect tea-time treat."
-        },
-        {
-            id: 10,
-            name: "Dolsi Peanut Puffs",
-            price: 2.49,
-            weight: "80g",
-            image: "../images/snacks and candy/dolsi chips peanut puffs 80g.png",
-            description: "Light and crunchy peanut-flavored puffs. A satisfying savory snack."
-        },
-        {
-            id: 11,
-            name: "Dolsi Vinegar Waves",
-            price: 2.79,
-            weight: "80g",
-            image: "../images/snacks and candy/dolsi chips waves vinegar 80g.png",
-            description: "Wavy potato chips with tangy vinegar flavor. A classic crisp taste."
-        },
-        {
-            id: 12,
-            name: "Dolsi Crunchy Ketchup Puffs",
-            price: 2.99,
-            weight: "80g",
-            image: "../images/snacks and candy/dolsi crunchy ketchup puffs 80g.avif",
-            description: "Crunchy corn puffs with delicious ketchup flavor. A kid-friendly snack."
-        },
-        {
-            id: 13,
-            name: "Dolsi Pizza Puffs",
-            price: 2.99,
-            weight: "80g",
-            image: "../images/snacks and candy/dolsi pizza puffs.avif",
-            description: "Pizza-flavored corn puffs with herbs and cheese taste. A fun snack alternative."
-        },
-        {
-            id: 14,
-            name: "Dolsi Twister BBQ",
-            price: 2.99,
-            weight: "80g",
-            image: "../images/snacks and candy/dolsi crunchy twister BBQ 80g.jpg",
-            description: "Twisted corn snacks with smoky barbecue flavor. Addictively tasty."
-        },
-        {
-            id: 15,
-            name: "English Marble Cake",
-            price: 3.99,
-            weight: "150g",
-            image: "../images/snacks and candy/engish marble cke.jpg",
-            description: "Soft and moist marble cake with swirls of vanilla and chocolate. Perfect with coffee."
-        },
-        {
-            id: 16,
-            name: "Equia Oat Crackers with Thyme",
-            price: 2.49,
-            weight: "50g",
-            image: "../images/snacks and candy/equia oat crackers thymes 50g.jpeg",
-            description: "Healthy oat crackers flavored with thyme. Great with cheese or dips."
-        },
-        {
-            id: 17,
-            name: "Erko Mallow Plus Marshmallow",
-            price: 1.99,
-            weight: "70g",
-            image: "../images/snacks and candy/erko marshmallow mallow fun round 70g.jpg",
-            description: "Soft and fluffy marshmallows in fun shapes. Perfect for hot chocolate or snacking."
-        },
-        {
-            id: 18,
-            name: "Galaxy Smooth Milk Chocolate",
-            price: 1.49,
-            weight: "42g",
-            image: "../images/snacks and candy/galaxy milk chocolate bar.jpg",
-            description: "Creamy milk chocolate that melts smoothly in your mouth. A classic British favorite."
-        },
-        {
-            id: 19,
-            name: "Halawa Plain",
-            price: 4.99,
-            weight: "500g",
-            image: "../images/snacks and candy/halawa plain.webp",
-            description: "Traditional Middle Eastern sesame halva. Sweet, crumbly, and delicious."
-        },
-        {
-            id: 20,
-            name: "Ketchup Baked Potato Snips",
-            price: 2.99,
-            weight: "80g",
-            image: "../images/snacks and candy/ketchup baked potato snips.jpg",
-            description: "Baked potato chips with tangy ketchup flavor. A lighter crisp option."
-        },
-        {
-            id: 21,
-            name: "Kinder Bars",
-            price: 3.49,
-            weight: "4 bars",
-            image: "../images/snacks and candy/kinder bars.jpg",
-            description: "Creamy milk chocolate with a milky filling. A favorite among kids and adults."
-        },
-        {
-            id: 22,
-            name: "Kinder Joy",
-            price: 2.49,
-            weight: "1pc",
-            image: "../images/snacks and candy/kinder joy.jpg",
-            description: "Fun chocolate egg with a toy surprise inside. Two layers of joy!"
-        },
-        {
-            id: 23,
-            name: "KitKat 4 Fingers",
-            price: 1.99,
-            weight: "42g",
-            image: "../images/snacks and candy/kitkat 4 fingers.avif",
-            description: "Crispy wafer fingers covered in milk chocolate. Perfect for breaking and sharing."
-        },
-        {
-            id: 24,
-            name: "Kopiko Coffee Candy",
-            price: 3.29,
-            weight: "150g",
-            image: "../images/snacks and candy/kopiko coffe candy.jpg",
-            description: "Coffee-flavored hard candies that give you an energy boost. Made with real coffee extract."
-        },
-        {
-            id: 25,
-            name: "Krikita Classic Nut Mix",
-            price: 5.99,
-            weight: "300g",
-            image: "../images/snacks and candy/krikita classic nut mix 300g.jpeg",
-            description: "Premium mix of roasted nuts including peanuts, almonds, and cashews. A healthy protein snack."
-        },
-        {
-            id: 26,
-            name: "Krikita Salted Pumpkin Seeds",
-            price: 3.99,
-            weight: "170g",
-            image: "../images/snacks and candy/krikita salted pimpkin seeds 170g.jpg",
-            description: "Roasted and salted pumpkin seeds. Rich in nutrients and full of flavor."
-        },
-        {
-            id: 27,
-            name: "Lindt Excellence Extra Creamy",
-            price: 4.49,
-            weight: "100g",
-            image: "../images/snacks and candy/lindt excellence extra creamy.webp",
-            description: "Ultra-smooth milk chocolate with an exceptionally creamy texture. Swiss chocolate perfection."
-        },
-        {
-            id: 28,
-            name: "Mars Bar",
-            price: 1.79,
-            weight: "52g",
-            image: "../images/snacks and candy/mars bar 52g.jpg",
-            description: "Classic combination of nougat and caramel covered in milk chocolate. The original energy bar."
-        },
-        {
-            id: 29,
-            name: "Mentos Gum Pure Fresh Mint",
-            price: 3.49,
-            weight: "50g",
-            image: "../images/snacks and candy/mentos gum pure fresh mint.webp",
-            description: "Sugar-free chewing gum with refreshing mint flavor. Helps freshen breath."
-        },
-        {
-            id: 30,
-            name: "Mentos Gum Pure Fresh Strawberry",
-            price: 3.49,
-            weight: "50g",
-            image: "../images/snacks and candy/mentos gum pure fresh strawberry.webp",
-            description: "Sugar-free chewing gum with sweet strawberry flavor. Long-lasting taste."
-        },
-        {
-            id: 31,
-            name: "Nutella",
-            price: 6.99,
-            weight: "350g",
-            image: "../images/snacks and candy/nutella.avif",
-            description: "The world's favorite hazelnut spread. Perfect on toast, fruits, or straight from the jar!"
-        },
-        {
-            id: 32,
-            name: "Pringles Original Potato Chips",
-            price: 3.99,
-            weight: "165g",
-            image: "../images/snacks and candy/pringles original potato chips 165g.avif",
-            description: "Classic stackable potato crisps with the perfect crunch and just the right amount of salt."
-        },
-        {
-            id: 33,
-            name: "Skittles Fruits Lollies",
-            price: 2.99,
-            weight: "125g",
-            image: "../images/snacks and candy/skittles fruits lollies bag.png",
-            description: "Chewy fruit-flavored candies that let you taste the rainbow. Various fruity flavors."
-        },
-        {
-            id: 34,
-            name: "Snickers Bar",
-            price: 1.79,
-            weight: "50g",
-            image: "../images/snacks and candy/snickers bar.jpg",
-            description: "The perfect combination of nougat, caramel, peanuts, and milk chocolate. Satisfies your hunger."
-        },
-        {
-            id: 35,
-            name: "Snips Baked Salted Potato",
-            price: 2.49,
-            weight: "80g",
-            image: "../images/snacks and candy/snips baked salted potato.avif",
-            description: "Baked potato chips with just the right amount of salt. A lighter crisp option."
-        },
-        {
-            id: 36,
-            name: "Strawberry Jam",
-            price: 4.29,
-            weight: "370g",
-            image: "../images/snacks and candy/strawberry jam.jpg",
-            description: "Sweet strawberry jam made with real fruit. Perfect for toast, pastries, or desserts."
-        },
-        {
-            id: 37,
-            name: "Twix Bar",
-            price: 1.79,
-            weight: "50g",
-            image: "../images/snacks and candy/twix bar.jpg",
-            description: "Crispy cookie topped with caramel and coated in milk chocolate. Left or right?"
-        },
-        {
-            id: 38,
-            name: "White BBG Marshmallow",
-            price: 3.49,
-            weight: "220g",
-            image: "../images/snacks and candy/white bbg marshmallow fat free 220g.jpg",
-            description: "Soft and fluffy white marshmallows. Great for hot chocolate, baking, or snacking."
-        },
-        {
-            id: 39,
-            name: "Wooden Bakery Chocolate Croissant",
-            price: 2.49,
-            weight: "60g",
-            image: "../images/snacks and candy/wooden bakery choclate criossant 60g.avif",
-            description: "Flaky croissant filled with rich chocolate. A delicious breakfast or snack option."
-        }
-    ];
-
-    // DOM elements
-    const productsGrid = document.getElementById('productsGrid');
-    const searchInput = document.getElementById('searchInput');
-    const productModal = document.getElementById('productModal');
-    const closeModal = document.getElementById('closeModal');
-    const modalBody = document.getElementById('modalBody');
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const navbar = document.getElementById('navbar');
-
-    // Cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Generate product cards
-    function renderProducts(productsToRender) {
-        productsGrid.innerHTML = '';
-        productsToRender.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.dataset.id = product.id;
-            
-            // Check if product is already in cart
-            const cartItem = cart.find(item => item.id === product.id);
-            const quantity = cartItem ? cartItem.quantity : 0;
-            
-            productCard.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-details">
-                    <h3 class="product-name">${product.name}</h3>
-                    <div class="product-info">
-                        <span class="product-price">$${product.price.toFixed(2)}</span>
-                        <span class="product-weight">${product.weight}</span>
-                    </div>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                        <span class="quantity">${quantity}</span>
-                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
-                    </div>
-                    <button class="add-to-cart">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
-                </div>
-            `;
-            productsGrid.appendChild(productCard);
-            
-            // Add click event to product image
-            const productImage = productCard.querySelector('.product-image');
-            productImage.addEventListener('click', () => openProductModal(product));
-            
-            // Add event listeners for quantity controls
-            const plusBtn = productCard.querySelector('.plus-btn');
-            const minusBtn = productCard.querySelector('.minus-btn');
-            const quantityDisplay = productCard.querySelector('.quantity');
-            const addToCartBtn = productCard.querySelector('.add-to-cart');
-            
-            plusBtn.addEventListener('click', () => {
-                const newQuantity = parseInt(quantityDisplay.textContent) + 1;
-                quantityDisplay.textContent = newQuantity;
-                addToCartBtn.textContent = 'Update Cart';
-                updateCart(product.id, newQuantity);
-            });
-            
-            minusBtn.addEventListener('click', () => {
-                const currentQuantity = parseInt(quantityDisplay.textContent);
-                if (currentQuantity > 0) {
-                    const newQuantity = currentQuantity - 1;
-                    quantityDisplay.textContent = newQuantity;
-                    addToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
-                    updateCart(product.id, newQuantity);
-                }
-            });
-            
-            addToCartBtn.addEventListener('click', () => {
-                const quantity = parseInt(quantityDisplay.textContent);
-                if (quantity > 0) {
-                    updateCart(product.id, quantity);
-                    addToCartBtn.textContent = 'Update Cart';
-                    showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
-                } else {
-                    showToast('Please select at least 1 item');
-                }
-            });
-        });
-    }
-
-    // Update cart function
-    function updateCart(productId, quantity) {
-        // Remove if quantity is 0
-        if (quantity === 0) {
-            cart = cart.filter(item => item.id !== productId);
-        } else {
-            // Check if already in cart
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity = quantity;
-            } else {
-                const product = products.find(p => p.id === productId);
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: quantity
-                });
-            }
-        }
-        
-        // Save to localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    // Open product modal
-    function openProductModal(product) {
-        // Check if product is in cart
-        const cartItem = cart.find(item => item.id === product.id);
-        const quantity = cartItem ? cartItem.quantity : 0;
-        
-        modalBody.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="modal-image">
-            <h2 class="modal-title">${product.name}</h2>
-            <p class="modal-description">${product.description}</p>
-            <p class="modal-price">$${product.price.toFixed(2)} / ${product.weight}</p>
-            <div class="quantity-controls" style="justify-content: center; margin: 20px 0;">
+    <div class="modal" id="productModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-body" id="modalBody">
+            <img src="" alt="" class="modal-image">
+            <h2 class="modal-title"></h2>
+            <div class="modal-description">
+                <p class="product-description"></p><br>
+                <p><strong class="product-price"></strong></p>
+                <p><strong class="product-weight"></strong></p>
+            </div>
+            <div class="modal-quantity">
                 <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                <span class="quantity">${quantity}</span>
+                <span class="quantity">0</span>
                 <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
             </div>
-            <button class="add-to-cart" style="margin-top: 10px;">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
-        `;
-        
-        // Get modal elements
-        const modalQuantity = modalBody.querySelector('.quantity');
-        const modalPlusBtn = modalBody.querySelector('.plus-btn');
-        const modalMinusBtn = modalBody.querySelector('.minus-btn');
-        const modalAddToCartBtn = modalBody.querySelector('.add-to-cart');
-        
-        // Add event listeners for modal controls
-        modalPlusBtn.addEventListener('click', () => {
-            const newQuantity = parseInt(modalQuantity.textContent) + 1;
-            modalQuantity.textContent = newQuantity;
-            modalAddToCartBtn.textContent = 'Update Cart';
-        });
-        
-        modalMinusBtn.addEventListener('click', () => {
-            const currentQuantity = parseInt(modalQuantity.textContent);
-            if (currentQuantity > 0) {
-                const newQuantity = currentQuantity - 1;
-                modalQuantity.textContent = newQuantity;
-                modalAddToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    // Fetch products from backend
+    $.ajax({
+        url: '../backend/get-snacksandcandy.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            if (data.error) {
+                console.error("Error:", data.message);
+                $('#productsGrid').html('<div class="error-message">Error loading products. Please try again later.</div>');
+                return;
             }
-        });
-        
-        modalAddToCartBtn.addEventListener('click', () => {
-            const quantity = parseInt(modalQuantity.textContent);
-            if (quantity > 0) {
-                updateCart(product.id, quantity);
-                modalAddToCartBtn.textContent = 'Update Cart';
-                showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
-                
-                // Update the main product card if it's visible
-                const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
-                if (productCard) {
-                    const cardQuantity = productCard.querySelector('.quantity');
-                    const cardAddToCartBtn = productCard.querySelector('.add-to-cart');
-                    cardQuantity.textContent = quantity;
-                    cardAddToCartBtn.textContent = 'Update Cart';
-                }
+
+            if (data.length > 0) {
+                renderProducts(data);
             } else {
-                showToast('Please select at least 1 item');
+                $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
             }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", error);
+            $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+        }
+    });
+
+    // Render products function
+    function renderProducts(products) {
+        const grid = $('#productsGrid');
+        grid.empty();
+
+        products.forEach(product => {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${product.price}</span>
+                            <span class="product-weight">${product.amount}</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            grid.append(productHTML);
         });
-        
-        productModal.style.display = 'flex';
     }
 
-    // Show toast notification
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.className = 'toast-notification';
-        toast.textContent = message;
-        document.body.appendChild(toast);
+    // Quantity controls
+    $(document).on('click', '.quantity-btn', function() {
+        const quantityDisplay = $(this).siblings('.quantity');
+        let currentQuantity = parseInt(quantityDisplay.text());
         
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(toast);
-            }, 300);
-        }, 3000);
-    }
-
-    // Add toast styles dynamically
-    const toastStyles = document.createElement('style');
-    toastStyles.textContent = `
-        .toast-notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .toast-notification.show {
-            opacity: 1;
-        }
-    `;
-    document.head.appendChild(toastStyles);
-
-    // Close product modal
-    closeModal.addEventListener('click', () => {
-        productModal.style.display = 'none';
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === productModal) {
-            productModal.style.display = 'none';
+        if ($(this).hasClass('plus-btn')) {
+            quantityDisplay.text(currentQuantity + 1);
+        } else if ($(this).hasClass('minus-btn') && currentQuantity > 0) {
+            quantityDisplay.text(currentQuantity - 1);
         }
     });
 
-    // Search functionality
-    function searchProducts() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredProducts = products.filter(product => 
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm)
-        );
-        renderProducts(filteredProducts);
+    // Modal functionality
+    $(document).on('click', '.product-image', function() {
+        const productCard = $(this).closest('.product-card');
+        const productName = productCard.find('.product-name').text();
+        const productImage = $(this).attr('src');
+        const productPrice = productCard.find('.product-price').text();
+        const productWeight = productCard.find('.product-weight').text();
+        const productDescription = productCard.data('description');
+
+        const modalHTML = `
+            <img src="${productImage}" alt="${productName}" class="modal-image">
+            <h2 class="modal-title">${productName}</h2>
+            <div class="modal-description">
+                <p>${productDescription}</p><br>
+                <p><strong> ${productPrice} / ${productWeight}</strong></p>
+            </div>
+            <div class="modal-quantity">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
+        `;
+
+        $('#modalBody').html(modalHTML);
+        $('#productModal').fadeIn();
+        
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close modal
+    $('#closeModal').click(closeModal);
+    
+    // Close when clicking outside modal
+    $(document).mouseup(function(e) {
+        if ($('#productModal').is(':visible') && 
+            !$(e.target).closest('.modal-content').length && 
+            !$(e.target).is('.product-image')) {
+            closeModal();
+        }
+    });
+    
+    // Close with ESC key
+    $(document).keyup(function(e) {
+        if (e.key === "Escape" && $('#productModal').is(':visible')) {
+            closeModal();
+        }
+    });
+    
+    function closeModal() {
+        $('#productModal').fadeOut();
+        $('body').css('overflow', 'auto');
     }
+
+    // Add to cart from modal
+    $(document).on('click', '#modalBody .add-to-cart', function() {
+        const quantity = $('#modalBody .quantity').text();
+        const productName = $('#modalBody .modal-title').text();
+        alert(`Added ${quantity} ${productName} to cart!`);
+        closeModal();
+    });
 
     // Mobile navigation toggle
-    mobileNavToggle.addEventListener('click', () => {
-        const visibility = navbar.getAttribute('data-visible');
-        
-        if (visibility === "false") {
-            navbar.setAttribute('data-visible', "true");
-            mobileNavToggle.setAttribute('aria-expanded', "true");
-        } else {
-            navbar.setAttribute('data-visible', "false");
-            mobileNavToggle.setAttribute('aria-expanded', "false");
-        }
+    const mobileNavToggle = $('.mobile-nav-toggle');
+    const navbar = $('#navbar');
+
+    mobileNavToggle.on('click', function() {
+        const visibility = navbar.attr('data-visible');
+        navbar.attr('data-visible', visibility === "false" ? "true" : "false");
+        mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
+    });
+});
+$(document).ready(function() {
+    // Real-time search: Trigger search as the user types
+    $('#searchInput').on('keyup', function() {
+        performSearch();
     });
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', () => {
-        renderProducts(products);
-        
-        // Add event listeners
-        searchInput.addEventListener('input', searchProducts);
-    });
-    </script>
+    // Perform search
+    function performSearch() {
+        const searchTerm = $('#searchInput').val().trim();
+
+        if (searchTerm === '') {
+            // If the search input is empty, load all products
+            loadOriginalProducts();
+            return;
+        }
+
+        // Show loading state
+        $('#productsGrid').html('<div class="loading">Searching products...</div>');
+
+        $.ajax({
+            url: '../backend/search.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { query: searchTerm },
+            success: function(data) {
+                if (data.status === 'error') {
+                    $('#productsGrid').html(`<div class="error-message">${data.message}</div>`);
+                    return;
+                }
+
+                if (data.data && data.data.length > 0) {
+                    renderProducts(data.data);
+                    $('.page-title').text(`Search Results for "${searchTerm}"`);
+                } else {
+                    $('#productsGrid').html('<div class="no-products">No products found matching your search.</div>');
+                    $('.page-title').text(`No results for "${searchTerm}"`);
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#productsGrid').html('<div class="error-message">Search failed. Please try again.</div>');
+            }
+        });
+    }
+
+    // Render products in the grid
+    function renderProducts(products) {
+        const grid = $('#productsGrid');
+        grid.empty();
+
+        products.forEach(product => {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${product.price}</span>
+                            <span class="product-weight">${product.amount}</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            grid.append(productHTML);
+        });
+    }
+
+    // Load original products when search is empty or reset
+    function loadOriginalProducts() {
+        // Show loading state
+        $('#productsGrid').html('<div class="loading">Loading products...</div>');
+        $('.page-title').text('Snacks and Candy');
+
+        $.ajax({
+            url: '../backend/get-snacksandcandy.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (Array.isArray(data) && data.length > 0) {
+                    renderProducts(data);
+                } else {
+                    $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+            }
+        });
+    }
+});
+
+</script>
 </body>
 </html>

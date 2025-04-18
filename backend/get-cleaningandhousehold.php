@@ -3,7 +3,7 @@
 include('dbinc.php');  // Ensure the correct path if needed
 
 // Query to fetch fruits and vegetables
-$sql = "SELECT id, name, description, price, amount, image_path, category FROM products WHERE category = 'cleaningandhousehold";
+$sql = "SELECT id, name, description, price, amount, image_path, category FROM products WHERE category = 'cleaningandhousehold'";
 
 try {
     // Prepare and execute the query
