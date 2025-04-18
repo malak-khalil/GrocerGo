@@ -98,7 +98,7 @@
         $(document).ready(function() {
     // Fetch products from backend
     $.ajax({
-        url: '../backend/get-tobacco.php',
+        url: '../backend/tobacco.php',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -246,7 +246,7 @@ $(document).ready(function() {
         const searchTerm = $('#searchInput').val().trim();
 
         if (searchTerm === '') {
-            // If the search input is empty, load all products
+            // If the search input is empty, load all products and reset the cart items
             loadOriginalProducts();
             return;
         }
@@ -314,7 +314,7 @@ $(document).ready(function() {
         $('.page-title').text('Tobacco');
 
         $.ajax({
-            url: '../backend/get-tobacco.php',
+            url: '../backend/tobacco.php',
             method: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -328,8 +328,26 @@ $(document).ready(function() {
                 $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
             }
         });
+
+        // Reset Cart items display (if any cart-related data needs to be reset)
+        displayCartItems();
+    }
+
+    // Function to display cart items (This should be customized based on your cart system)
+    function displayCartItems() {
+        // For example, you might want to load cart items from local storage or session storage
+        // If using session storage, you can fetch the items like this:
+        let cartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
+        const cartDisplay = $('#cartItems'); // Make sure this is the correct element for displaying cart items
+
+        if (cartItems.length > 0) {
+            cartDisplay.html('<ul>' + cartItems.map(item => `<li>${item.name} - ${item.quantity}</li>`).join('') + '</ul>');
+        } else {
+            cartDisplay.html('<p>No items in the cart.</p>');
+        }
     }
 });
+
 
 </script>
 </body>

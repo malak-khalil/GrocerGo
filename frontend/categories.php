@@ -133,77 +133,77 @@
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="butcheryandSeafood.html" class="category-box">
+                <a href="butcheryandSeafood.php" class="category-box">
                     <img src="../images/category/butcheryandseafood.jpg" alt="Butchery & Seafood" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Butchery & Seafood</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="dairyandeggs.html" class="category-box">
+                <a href="dairyandeggs.php" class="category-box">
                     <img src="../images/category/dairyandeggs.jpg" alt="Dairy & Eggs" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Dairy & Eggs</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="bakery.html" class="category-box">
+                <a href="bakery.php" class="category-box">
                     <img src="../images/category/bakery.jpg" alt="Bakery" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Bakery</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="pantryessentials.html" class="category-box">
+                <a href="pantryessentials.php" class="category-box">
                     <img src="../images/category/pantryessentials.jpg" alt="Pantry Essentials" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Pantry Essentials</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="beverages.html" class="category-box">
+                <a href="beverages.php" class="category-box">
                     <img src="../images/category/beverages.jpg" alt="Beverages" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Beverages</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="frozenfood.html" class="category-box">
+                <a href="frozenfood.php" class="category-box">
                     <img src="../images/category/frozenfood.jpg" alt="Frozen Food" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Frozen Food</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="snacksandcandy.html" class="category-box">
+                <a href="snacksandcandy.php" class="category-box">
                     <img src="../images/category/snacksandcandy.jpg" alt="Snacks & Candy" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Snacks & Candy</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="healthyandorganic.html" class="category-box">
+                <a href="healthyandorganic.php" class="category-box">
                     <img src="../images/category/healthyandorganic.jpg" alt="Healthy & Organic" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Healthy & Organic</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="beautyandpersonalcare.html" class="category-box">
+                <a href="beautyandpersonalcare.php" class="category-box">
                     <img src="../images/category/beautyandpersonalcare.jpg" alt="Beauty & Personal Care" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Beauty & Personal Care</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="cleaningandhousehold.html" class="category-box">
+                <a href="cleaningandhousehold.php" class="category-box">
                     <img src="../images/category/cleaningandhousehold.jpg" alt="Cleaning & Household" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Cleaning & Household</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>
                 </a>
-                <a href="tobacco.html" class="category-box">
+                <a href="tobacco.php" class="category-box">
                     <img src="../images/category/tobacco.jpg" alt="Tobacco" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Tobacco</h3>
