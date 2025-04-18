@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cleaning & Household - GrocerGo</title>
+    <title>Beverages - GrocerGo</title>
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
@@ -65,7 +65,7 @@
     
     <!-- Main Content -->
     <main class="main-content">
-        <h1 class="page-title">FCleaning &amp; Household</h1>
+        <h1 class="page-title">Beverages</h1>
         
         <div class="products-grid" id="productsGrid">
         </div>
@@ -99,7 +99,7 @@
         $(document).ready(function() {
     // Fetch products from backend
     $.ajax({
-        url: '../backend/get-cleaningandhousehold.php',
+        url: '../backend/get-beverages.php',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -312,10 +312,10 @@ $(document).ready(function() {
     function loadOriginalProducts() {
         // Show loading state
         $('#productsGrid').html('<div class="loading">Loading products...</div>');
-        $('.page-title').text('Cleaning and Household');
+        $('.page-title').text('Beverages');
 
         $.ajax({
-            url: '../backend/get-cleaningandhousehold.php',
+            url: '../backend/get-beverages.php',
             method: 'GET',
             dataType: 'json',
             success: function(data) {
