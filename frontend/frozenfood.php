@@ -7,37 +7,60 @@
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
-
+    <link href="..\styling\categories.css" rel="stylesheet">
 </head>
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="../frontend/categories.html">
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-        </a>
         
         <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
             <i class="bi bi-list"></i>
         </button>
     
         <ul id="navbar" class="navbar" data-visible="false">
-            <li>
-                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+        <li>
+                <a href="../frontend/categories.php"><i class="bi bi-house"></i> Home</a>
             </li>
             <li>
-                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+                <div class="dropdown"> 
+                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                    <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
+                    <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
+                    <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
+                    <a href="../frontend/beverages.php"><i class="bi bi-cup-straw"></i></i> Beverages</a>
+                    <a href="../frontend/butcheryandSeafood.php"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
+                    <a href="../frontend/cleaningandhousehold.php"><i class="bi bi-bucket"></i> Cleaning & Household</a>
+                    <a href="../frontend/dairyandeggs.php"><i class="bi bi-egg"></i> Dairy & Eggs</a>
+                    <a href="../frontend/frozenfood.php"><i class="bi bi-snow"></i> Frozen Food</a>
+                    <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
+                    <a href="../frontend/healthyandorganic.php"><i class="bi bi-heart"></i> Healthy & Organic</a>
+                    <a href="../frontend/pantryessentials.php"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
+                    <a href="../frontend/snacksandcandy.php"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
+                    <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
+                </div>
+                </div>
+            </li>
+            
+            <li>
+                <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
             </li>
             <li>
-                <a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a>
+                <a href="../frontend/cart.php" class="cart-link">
+                    <div class="cart">
+                        <i class="bi bi-cart3"></i>
+                    </div> 
+                    <span>Cart</span>
+                </a>
             </li>
         </ul>
     </nav>
-    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search for products...">
-        <button class="search-btn">
-            <i class="bi bi-search"></i> Search
-        </button>
+        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
     </div>
     
     <!-- Main Content -->
@@ -45,416 +68,270 @@
         <h1 class="page-title">Frozen Food</h1>
         
         <div class="products-grid" id="productsGrid">
-            <!-- Product cards will be generated here -->
         </div>
     </main>
     
-    <!-- Product Modal -->
-    <div class="modal" id="productModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <div class="modal-body" id="modalBody">
-                <!-- Modal content will be inserted here -->
-            </div>
-        </div>
     </div>
-    
-    <script>
-    const products = [
-        {
-            id: 1,
-            name: "Byte Frozen Cheese Sambousek",
-            price: 5.99,
-            weight: "400g",
-            image: "../images/frozen food/byte frzoen cheese sambousek.jpg",
-            description: "Delicious cheese-filled sambousek, perfect for quick snacks or appetizers. Ready to cook from frozen."
-        },
-        {
-            id: 2,
-            name: "Frozen Beef Kibbeh",
-            price: 6.99,
-            weight: "400g",
-            image: "../images/frozen food/frozen beef kibbeh 400g.webp",
-            description: "Traditional beef kibbeh with authentic spices. Just fry or bake for a delicious meal."
-        },
-        {
-            id: 3,
-            name: "Frozen Chopped Spinach",
-            price: 3.49,
-            weight: "400g",
-            image: "../images/frozen food/frozen chopped spinach.png",
-            description: "Convenient chopped spinach, perfect for pies, stews, or side dishes. No need to wash or chop."
-        },
-        {
-            id: 4,
-            name: "Frozen Cooked Chicken Nuggets",
-            price: 7.99,
-            weight: "500g",
-            image: "../images/frozen food/frozen cooked chicken nuggets.jpg",
-            description: "Pre-cooked chicken nuggets, ready to heat and serve. Great for quick meals or snacks."
-        },
-        {
-            id: 5,
-            name: "Frozen Minced Beef",
-            price: 8.99,
-            weight: "500g",
-            image: "../images/frozen food/frozen minced beef.jpg",
-            description: "High-quality minced beef, perfect for burgers, meatballs, or bolognese. Individually frozen for convenience."
-        },
-        {
-            id: 6,
-            name: "Plein Soleil Frozen Blueberries",
-            price: 4.99,
-            weight: "400g",
-            image: "../images/frozen food/plein soleil frozen blueberries 400g.avif",
-            description: "Sweet frozen blueberries, great for smoothies, baking, or as a healthy snack. Packed with antioxidants."
-        },
-        {
-            id: 7,
-            name: "Maxim's Frozen Pizza Margherita",
-            price: 6.49,
-            weight: "400g",
-            image: "../images/frozen food/Maxim'S frozen pizza margherita.jpg",
-            description: "Classic margherita pizza with tomato sauce and mozzarella. Ready to bake in minutes."
-        },
-        {
-            id: 8,
-            name: "MyProtein Chocolate Ice Cream",
-            price: 5.99,
-            weight: "500ml",
-            image: "../images/frozen food/Myprotein chocolate ice crea,.jpg",
-            description: "High-protein chocolate ice cream, a delicious and healthier frozen treat."
-        },
-        {
-            id: 9,
-            name: "Vanilla Family Pack Ice Cream",
-            price: 7.99,
-            weight: "1L",
-            image: "../images/frozen food/vanilla family pack ice cream.jpg",
-            description: "Creamy vanilla ice cream in a family-sized pack. Perfect for desserts and treats."
-        },
-        {
-            id: 10,
-            name: "Plein Soleil Frozen Broccoli",
-            price: 3.99,
-            weight: "400g",
-            image: "../images/frozen food/frozen plein soleil brocoli 400g.avif",
-            description: "Nutritious frozen broccoli florets, ready to steam or stir-fry. Preserves all the vitamins and minerals."
-        },
-        {
-            id: 11,
-            name: "McCain Frozen Potato Wedges",
-            price: 4.99,
-            weight: "750g",
-            image: "../images/frozen food/McCain frozen potato wedges.jpeg",
-            description: "Crispy potato wedges, perfect for baking or air frying. Great side dish or snack."
-        },
-        {
-            id: 12,
-            name: "Plein Soleil Frozen Edamame",
-            price: 5.49,
-            weight: "400g",
-            image: "../images/frozen food/plein soleil frozen edamame whole green soybeans.png",
-            description: "Whole green soybeans, rich in protein and fiber. Steam or boil for a healthy snack."
-        },
-        {
-            id: 13,
-            name: "Plein Soleil Frozen Mixed Berries",
-            price: 6.49,
-            weight: "400g",
-            image: "../images/frozen food/plein soleil frozen mixed berries 400g.avif",
-            description: "Delicious mix of frozen berries including strawberries, raspberries, and blackberries. Perfect for smoothies or desserts."
-        },
-        {
-            id: 14,
-            name: "Plein Soleil Frozen Strawberries",
-            price: 5.99,
-            weight: "400g",
-            image: "../images/frozen food/plein soleil frozen strawberry 400g.avif",
-            description: "Sweet frozen strawberries, great for desserts, smoothies, or as a topping. Rich in vitamin C."
-        },
-        {
-            id: 15,
-            name: "Plein Soleil Frozen Classic Vegetables",
-            price: 4.99,
-            weight: "400g",
-            image: "../images/frozen food/plein soleil frozne classic vegetables 400g.avif",
-            description: "Classic mix of frozen vegetables including carrots, peas, and green beans. Ready to cook."
-        },
-        {
-            id: 16,
-            name: "Tabmia Frozen Chicken Escalopes",
-            price: 8.99,
-            weight: "500g",
-            image: "../images/frozen food/tabmia frozen chicken escalopes.jpg",
-            description: "Breaded chicken escalopes, ready to cook. Perfect for quick and tasty meals."
-        },
-        {
-            id: 17,
-            name: "Tanmia Frozen Spicy Crispy Chicken Filet",
-            price: 9.49,
-            weight: "500g",
-            image: "../images/frozen food/tanmia frozen spicy crispy chicken filet.avif",
-            description: "Spicy breaded chicken filets with a crispy coating. Just bake or fry for a delicious meal."
-        }
-    ];
-
-    // DOM elements
-    const productsGrid = document.getElementById('productsGrid');
-    const searchInput = document.getElementById('searchInput');
-    const productModal = document.getElementById('productModal');
-    const closeModal = document.getElementById('closeModal');
-    const modalBody = document.getElementById('modalBody');
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const navbar = document.getElementById('navbar');
-
-    // Cart functionality
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Generate product cards
-    function renderProducts(productsToRender) {
-        productsGrid.innerHTML = '';
-        productsToRender.forEach(product => {
-            const productCard = document.createElement('div');
-            productCard.className = 'product-card';
-            productCard.dataset.id = product.id;
-            
-            // Check if product is already in cart
-            const cartItem = cart.find(item => item.id === product.id);
-            const quantity = cartItem ? cartItem.quantity : 0;
-            
-            productCard.innerHTML = `
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-details">
-                    <h3 class="product-name">${product.name}</h3>
-                    <div class="product-info">
-                        <span class="product-price">$${product.price.toFixed(2)}</span>
-                        <span class="product-weight">${product.weight}</span>
-                    </div>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                        <span class="quantity">${quantity}</span>
-                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
-                    </div>
-                    <button class="add-to-cart">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
-                </div>
-            `;
-            productsGrid.appendChild(productCard);
-            
-            // Add click event to product image
-            const productImage = productCard.querySelector('.product-image');
-            productImage.addEventListener('click', () => openProductModal(product));
-            
-            // Add event listeners for quantity controls
-            const plusBtn = productCard.querySelector('.plus-btn');
-            const minusBtn = productCard.querySelector('.minus-btn');
-            const quantityDisplay = productCard.querySelector('.quantity');
-            const addToCartBtn = productCard.querySelector('.add-to-cart');
-            
-            plusBtn.addEventListener('click', () => {
-                const newQuantity = parseInt(quantityDisplay.textContent) + 1;
-                quantityDisplay.textContent = newQuantity;
-                addToCartBtn.textContent = 'Update Cart';
-                updateCart(product.id, newQuantity);
-            });
-            
-            minusBtn.addEventListener('click', () => {
-                const currentQuantity = parseInt(quantityDisplay.textContent);
-                if (currentQuantity > 0) {
-                    const newQuantity = currentQuantity - 1;
-                    quantityDisplay.textContent = newQuantity;
-                    addToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
-                    updateCart(product.id, newQuantity);
-                }
-            });
-            
-            addToCartBtn.addEventListener('click', () => {
-                const quantity = parseInt(quantityDisplay.textContent);
-                if (quantity > 0) {
-                    updateCart(product.id, quantity);
-                    addToCartBtn.textContent = 'Update Cart';
-                    showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
-                } else {
-                    showToast('Please select at least 1 item');
-                }
-            });
-        });
-    }
-
-    // Update cart function
-    function updateCart(productId, quantity) {
-        // Remove if quantity is 0
-        if (quantity === 0) {
-            cart = cart.filter(item => item.id !== productId);
-        } else {
-            // Check if already in cart
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity = quantity;
-            } else {
-                const product = products.find(p => p.id === productId);
-                cart.push({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    image: product.image,
-                    quantity: quantity
-                });
-            }
-        }
-        
-        // Save to localStorage
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }
-
-    // Open product modal
-    function openProductModal(product) {
-        // Check if product is in cart
-        const cartItem = cart.find(item => item.id === product.id);
-        const quantity = cartItem ? cartItem.quantity : 0;
-        
-        modalBody.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" class="modal-image">
-            <h2 class="modal-title">${product.name}</h2>
-            <p class="modal-description">${product.description}</p>
-            <p class="modal-price">$${product.price.toFixed(2)} / ${product.weight}</p>
-            <div class="quantity-controls" style="justify-content: center; margin: 20px 0;">
+    <div class="modal" id="productModal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-body" id="modalBody">
+            <img src="" alt="" class="modal-image">
+            <h2 class="modal-title"></h2>
+            <div class="modal-description">
+                <p class="product-description"></p><br>
+                <p><strong class="product-price"></strong></p>
+                <p><strong class="product-weight"></strong></p>
+            </div>
+            <div class="modal-quantity">
                 <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                <span class="quantity">${quantity}</span>
+                <span class="quantity">0</span>
                 <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
             </div>
-            <button class="add-to-cart" style="margin-top: 10px;">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
-        `;
-        
-        // Get modal elements
-        const modalQuantity = modalBody.querySelector('.quantity');
-        const modalPlusBtn = modalBody.querySelector('.plus-btn');
-        const modalMinusBtn = modalBody.querySelector('.minus-btn');
-        const modalAddToCartBtn = modalBody.querySelector('.add-to-cart');
-        
-        // Add event listeners for modal controls
-        modalPlusBtn.addEventListener('click', () => {
-            const newQuantity = parseInt(modalQuantity.textContent) + 1;
-            modalQuantity.textContent = newQuantity;
-            modalAddToCartBtn.textContent = 'Update Cart';
-        });
-        
-        modalMinusBtn.addEventListener('click', () => {
-            const currentQuantity = parseInt(modalQuantity.textContent);
-            if (currentQuantity > 0) {
-                const newQuantity = currentQuantity - 1;
-                modalQuantity.textContent = newQuantity;
-                modalAddToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+    // Fetch products from backend
+    $.ajax({
+        url: '../backend/get-frozenfood.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            if (data.error) {
+                console.error("Error:", data.message);
+                $('#productsGrid').html('<div class="error-message">Error loading products. Please try again later.</div>');
+                return;
             }
-        });
-        
-        modalAddToCartBtn.addEventListener('click', () => {
-            const quantity = parseInt(modalQuantity.textContent);
-            if (quantity > 0) {
-                updateCart(product.id, quantity);
-                modalAddToCartBtn.textContent = 'Update Cart';
-                showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
-                
-                // Update the main product card if it's visible
-                const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
-                if (productCard) {
-                    const cardQuantity = productCard.querySelector('.quantity');
-                    const cardAddToCartBtn = productCard.querySelector('.add-to-cart');
-                    cardQuantity.textContent = quantity;
-                    cardAddToCartBtn.textContent = 'Update Cart';
-                }
+
+            if (data.length > 0) {
+                renderProducts(data);
             } else {
-                showToast('Please select at least 1 item');
+                $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
             }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", error);
+            $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+        }
+    });
+
+    // Render products function
+    function renderProducts(products) {
+        const grid = $('#productsGrid');
+        grid.empty();
+
+        products.forEach(product => {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${product.price}</span>
+                            <span class="product-weight">${product.amount}</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            grid.append(productHTML);
         });
-        
-        productModal.style.display = 'flex';
     }
 
-    // Show toast notification
-    function showToast(message) {
-        const toast = document.createElement('div');
-        toast.className = 'toast-notification';
-        toast.textContent = message;
-        document.body.appendChild(toast);
+    // Quantity controls
+    $(document).on('click', '.quantity-btn', function() {
+        const quantityDisplay = $(this).siblings('.quantity');
+        let currentQuantity = parseInt(quantityDisplay.text());
         
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 10);
-        
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                document.body.removeChild(toast);
-            }, 300);
-        }, 3000);
-    }
-
-    // Add toast styles dynamically
-    const toastStyles = document.createElement('style');
-    toastStyles.textContent = `
-        .toast-notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-dark);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 4px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10000;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .toast-notification.show {
-            opacity: 1;
-        }
-    `;
-    document.head.appendChild(toastStyles);
-
-    // Close product modal
-    closeModal.addEventListener('click', () => {
-        productModal.style.display = 'none';
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === productModal) {
-            productModal.style.display = 'none';
+        if ($(this).hasClass('plus-btn')) {
+            quantityDisplay.text(currentQuantity + 1);
+        } else if ($(this).hasClass('minus-btn') && currentQuantity > 0) {
+            quantityDisplay.text(currentQuantity - 1);
         }
     });
 
-    // Search functionality
-    function searchProducts() {
-        const searchTerm = searchInput.value.toLowerCase();
-        const filteredProducts = products.filter(product => 
-            product.name.toLowerCase().includes(searchTerm) ||
-            product.description.toLowerCase().includes(searchTerm)
-        );
-        renderProducts(filteredProducts);
+    // Modal functionality
+    $(document).on('click', '.product-image', function() {
+        const productCard = $(this).closest('.product-card');
+        const productName = productCard.find('.product-name').text();
+        const productImage = $(this).attr('src');
+        const productPrice = productCard.find('.product-price').text();
+        const productWeight = productCard.find('.product-weight').text();
+        const productDescription = productCard.data('description');
+
+        const modalHTML = `
+            <img src="${productImage}" alt="${productName}" class="modal-image">
+            <h2 class="modal-title">${productName}</h2>
+            <div class="modal-description">
+                <p>${productDescription}</p><br>
+                <p><strong> ${productPrice} / ${productWeight}</strong></p>
+            </div>
+            <div class="modal-quantity">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
+        `;
+
+        $('#modalBody').html(modalHTML);
+        $('#productModal').fadeIn();
+        
+        // Prevent body scroll when modal is open
+        $('body').css('overflow', 'hidden');
+    });
+
+    // Close modal
+    $('#closeModal').click(closeModal);
+    
+    // Close when clicking outside modal
+    $(document).mouseup(function(e) {
+        if ($('#productModal').is(':visible') && 
+            !$(e.target).closest('.modal-content').length && 
+            !$(e.target).is('.product-image')) {
+            closeModal();
+        }
+    });
+    
+    // Close with ESC key
+    $(document).keyup(function(e) {
+        if (e.key === "Escape" && $('#productModal').is(':visible')) {
+            closeModal();
+        }
+    });
+    
+    function closeModal() {
+        $('#productModal').fadeOut();
+        $('body').css('overflow', 'auto');
     }
+
+    // Add to cart from modal
+    $(document).on('click', '#modalBody .add-to-cart', function() {
+        const quantity = $('#modalBody .quantity').text();
+        const productName = $('#modalBody .modal-title').text();
+        alert(`Added ${quantity} ${productName} to cart!`);
+        closeModal();
+    });
 
     // Mobile navigation toggle
-    mobileNavToggle.addEventListener('click', () => {
-        const visibility = navbar.getAttribute('data-visible');
-        
-        if (visibility === "false") {
-            navbar.setAttribute('data-visible', "true");
-            mobileNavToggle.setAttribute('aria-expanded', "true");
-        } else {
-            navbar.setAttribute('data-visible', "false");
-            mobileNavToggle.setAttribute('aria-expanded', "false");
-        }
+    const mobileNavToggle = $('.mobile-nav-toggle');
+    const navbar = $('#navbar');
+
+    mobileNavToggle.on('click', function() {
+        const visibility = navbar.attr('data-visible');
+        navbar.attr('data-visible', visibility === "false" ? "true" : "false");
+        mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
+    });
+});
+$(document).ready(function() {
+    // Real-time search: Trigger search as the user types
+    $('#searchInput').on('keyup', function() {
+        performSearch();
     });
 
-    // Initialize the page
-    document.addEventListener('DOMContentLoaded', () => {
-        renderProducts(products);
-        
-        // Add event listeners
-        searchInput.addEventListener('input', searchProducts);
-    });
-    </script>
+    // Perform search
+    function performSearch() {
+        const searchTerm = $('#searchInput').val().trim();
+
+        if (searchTerm === '') {
+            // If the search input is empty, load all products
+            loadOriginalProducts();
+            return;
+        }
+
+        // Show loading state
+        $('#productsGrid').html('<div class="loading">Searching products...</div>');
+
+        $.ajax({
+            url: '../backend/search.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { query: searchTerm },
+            success: function(data) {
+                if (data.status === 'error') {
+                    $('#productsGrid').html(`<div class="error-message">${data.message}</div>`);
+                    return;
+                }
+
+                if (data.data && data.data.length > 0) {
+                    renderProducts(data.data);
+                    $('.page-title').text(`Search Results for "${searchTerm}"`);
+                } else {
+                    $('#productsGrid').html('<div class="no-products">No products found matching your search.</div>');
+                    $('.page-title').text(`No results for "${searchTerm}"`);
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#productsGrid').html('<div class="error-message">Search failed. Please try again.</div>');
+            }
+        });
+    }
+
+    // Render products in the grid
+    function renderProducts(products) {
+        const grid = $('#productsGrid');
+        grid.empty();
+
+        products.forEach(product => {
+            const productHTML = `
+                <div class="product-card" data-id="${product.id}" data-description="${product.description}">
+                    <img src="${product.image_path}" alt="${product.name}" class="product-image">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${product.price}</span>
+                            <span class="product-weight">${product.amount}</span>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                        </div>
+                        <button class="add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+            grid.append(productHTML);
+        });
+    }
+
+    // Load original products when search is empty or reset
+    function loadOriginalProducts() {
+        // Show loading state
+        $('#productsGrid').html('<div class="loading">Loading products...</div>');
+        $('.page-title').text('Frozen Food');
+
+        $.ajax({
+            url: '../backend/get-frozenfood.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                if (Array.isArray(data) && data.length > 0) {
+                    renderProducts(data);
+                } else {
+                    $('#productsGrid').html('<div class="no-products">No products found in this category.</div>');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#productsGrid').html('<div class="error-message">Failed to load products. Please check your connection.</div>');
+            }
+        });
+    }
+});
+
+</script>
 </body>
 </html>
