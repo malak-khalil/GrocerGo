@@ -7,6 +7,7 @@
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\styling\items.css" rel="stylesheet">
+    <link href="..\styling\categories.css" rel="stylesheet">
     <style>
         /* Center the modal */
         .modal {
@@ -35,21 +36,52 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="../frontend/categories.html">
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-        </a>
         
         <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
             <i class="bi bi-list"></i>
         </button>
     
         <ul id="navbar" class="navbar" data-visible="false">
-            <li><a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a></li>
-            <li><a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a></li>
-            <li><a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a></li>
+        <li>
+                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li>
+                <div class="dropdown"> 
+                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
+                        <a href="../frontend/bakery.html"><i class="bi bi-basket"></i> Bakery</a>
+                        <a href="../frontend/beautyandpersonalcare.html"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
+                        <a href="../frontend/beverages.html"><i class="bi bi-cup-straw"></i></i> Beverages</a>
+                        <a href="../frontend/butcheryandSeafood.html"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
+                        <a href="../frontend/cleaningandhousehold.html"><i class="bi bi-bucket"></i> Cleaning & Household</a>
+                        <a href="../frontend/dairyandeggs.html"><i class="bi bi-egg"></i> Dairy & Eggs</a>
+                        <a href="../frontend/frozenfood.html"><i class="bi bi-snow"></i> Frozen Food</a>
+                        <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
+                        <a href="../frontend/healthyandorganic.html"><i class="bi bi-heart"></i> Healthy & Organic</a>
+                        <a href="../frontend/pantryessentials.html"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
+                        <a href="../frontend/snacksandcandy.html"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
+                        <a href="../frontend/tobacco.html"><i class="bi bi-fire"></i> Tobacco</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li>
+                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+            </li>
+            <li>
+                <a href="../frontend/cart.php" class="cart-link">
+                    <div class="cart">
+                        <i class="bi bi-cart3"></i>
+                    </div> 
+                    <span>Cart</span>
+                </a>
+            </li>
         </ul>
     </nav>
-    
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="Search for products...">
         <button class="search-btn"><i class="bi bi-search"></i> Search</button>
@@ -99,7 +131,6 @@
                                             <span class="product-price">$${price}</span>
                                             <span class="product-weight">${product.amount}</span>
                                         </div>
-                                        <p class="product-description">${product.description}</p>
                                         <div class="quantity-controls">
                                             <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
                                             <span class="quantity">0</span>
@@ -166,6 +197,32 @@
                 $('#productModal').fadeOut();
             });
         });
+        function toggleDropdown(button) {
+    const dropdown = button.parentElement;
+    dropdown.classList.toggle('active');
+}
+document.addEventListener('click', function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+});
+const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+const navbar = document.getElementById('navbar');
+
+mobileNavToggle.addEventListener('click', () => {
+    const visibility = navbar.getAttribute('data-visible');
+    
+    if (visibility === "false") {
+        navbar.setAttribute('data-visible', "true");
+        mobileNavToggle.setAttribute('aria-expanded', "true");
+    } else {
+        navbar.setAttribute('data-visible', "false");
+        mobileNavToggle.setAttribute('aria-expanded', "false");
+    }
+});
     </script>
 </body>
 </html>
