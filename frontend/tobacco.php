@@ -64,7 +64,7 @@
     
     <!-- Main Content -->
     <main class="main-content">
-        <h1 class="page-title">Fresh Fruits & Vegetables</h1>
+        <h1 class="page-title">Tobacco</h1>
         
         <div class="products-grid" id="productsGrid">
         </div>
