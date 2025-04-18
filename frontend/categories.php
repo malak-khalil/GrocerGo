@@ -44,7 +44,7 @@
             </li>
             
             <li>
-                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+                <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
             </li>
             <li>
                 <a href="../frontend/cart.php" class="cart-link">
@@ -257,11 +257,11 @@
     
     <footer>
         <div class="footer-links">
-            <a href="../frontend/About.html">About Us</a>
-            <a href="../frontend/Reviews.html">Feedback</a>
-            <a href="..\frontend\privacy-policy.html">Privacy Policy</a>
-            <a href="..\frontend\terms-of-service.html">Terms of Service</a>
-            <a href="../frontend/About.html#contact-us">Contact Us</a>
+            <a href="../frontend/About.php">About Us</a>
+            <a href="../frontend/Reviews.php">Feedback</a>
+            <a href="..\frontend\privacy-policy.php">Privacy Policy</a>
+            <a href="..\frontend\terms-of-service.php">Terms of Service</a>
+            <a href="../frontend/About.php#contact-us">Contact Us</a>
         </div>
         
         <div class="social-icons">

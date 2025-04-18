@@ -8,10 +8,11 @@
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="..\styling\categories.css" rel="stylesheet">
     <style>
         :root {
             --primary-color: #1E4A3B;
-            --primary-dark: #16382c;
+            --primary-dark: #1E4A3B;
             --primary-light: #81C784;
             --text-light: #fff;
             --text-dark: #333;
@@ -30,78 +31,6 @@
             color: var(--text-dark);
             min-height: 100vh;
         }
-        
-        nav {
-            width: 100%;
-            background-color: var(--primary-dark);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo {
-            height: 50px;
-            width: auto;
-            transition: var(--transition);
-        }
-        
-        .logo:hover {
-            transform: scale(1.05);
-        }
-        
-        .mobile-nav-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.8rem;
-            cursor: pointer;
-            z-index: 9999;
-        }
-        
-        .navbar {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-            align-items: center;
-        }
-        
-        .navbar a {
-            color: var(--text-light);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: var(--transition);
-            font-size: 1rem;
-            position: relative;
-	    text-decoration: none;
-        }
-        
-        .navbar a:hover {
-            color: var(--primary-light);
-        }
-        
-        .navbar a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-light);
-            transition: var(--transition);
-        }
-        
-        .navbar a:hover::after {
-            width: 100%;
-        }
-        
         .main-content {
             display: flex;
             flex-direction: column;
@@ -289,25 +218,52 @@
     </style>
 </head>
 <body>
-    <nav>
-        <a href="../frontend/categories.html">
+<nav>
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-        </a>
         
         <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
             <i class="bi bi-list"></i>
         </button>
     
         <ul id="navbar" class="navbar" data-visible="false">
-            <li>
-                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+            
+        <li>
+                <a href="../frontend/categories.php"><i class="bi bi-person-circle"></i> Home</a>
             </li>
             <li>
-                <a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a>
+                <div class="dropdown"> 
+                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
+                        <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
+                        <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
+                        <a href="../frontend/beverages.php"><i class="bi bi-cup-straw"></i></i> Beverages</a>
+                        <a href="../frontend/butcheryandSeafood.php"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
+                        <a href="../frontend/cleaningandhousehold.php"><i class="bi bi-bucket"></i> Cleaning & Household</a>
+                        <a href="../frontend/dairyandeggs.php"><i class="bi bi-egg"></i> Dairy & Eggs</a>
+                        <a href="../frontend/frozenfood.php"><i class="bi bi-snow"></i> Frozen Food</a>
+                        <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
+                        <a href="../frontend/healthyandorganic.php"><i class="bi bi-heart"></i> Healthy & Organic</a>
+                        <a href="../frontend/pantryessentials.php"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
+                        <a href="../frontend/snacksandcandy.php"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
+                        <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li>
+                <a href="../frontend/cart.php" class="cart-link">
+                    <div class="cart">
+                        <i class="bi bi-cart3"></i>
+                    </div> 
+                    <span>Cart</span>
+                </a>
             </li>
         </ul>
     </nav>
-    
+
     <main class="main-content">
         <div class="profile-container">
             <h1>My Account</h1>

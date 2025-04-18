@@ -1,9 +1,10 @@
+<!--Malak khalil-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - GrocerGo</title>
+    <title>Privacy Policy - GrocerGo</title>
     <link rel="icon" href='../Images/home/cart3.svg' type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -182,53 +183,59 @@
     <header>
         <div class="container">
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
-            <h1>Terms of Service</h1>
+            <h1>Privacy Policy</h1>
             <p class="last-updated">Last Updated: April 10, 2025</p>
         </div>
     </header>
     
     <div class="container">
         <div class="content">
-            <p>Welcome to GrocerGo! These Terms of Service ("Terms") govern your use of our website and services. By accessing or using our services, you agree to be bound by these Terms.</p>
+            <p>At GrocerGo, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
             
-            <h2>Account Registration</h2>
-            <p>To place orders, you may need to create an account. You agree to provide accurate and complete information and to keep your account credentials secure.</p>
-            
-            <h2>Ordering and Payment</h2>
-            <p>All orders are subject to product availability. We reserve the right to limit quantities and refuse service. Prices are subject to change without notice.</p>
-            <p>You agree to pay all charges incurred by your account, including applicable taxes and delivery fees.</p>
-            
-            <h2>Delivery</h2>
-            <p>We aim to deliver within the estimated timeframe, but delivery times are not guaranteed. Risk of loss passes to you upon delivery.</p>
-            
-            <h2>Returns and Refunds</h2>
-            <p>Perishable goods cannot be returned. For non-perishable items, returns must be made within 7 days of delivery with proof of purchase.</p>
-            
-            <h2>User Conduct</h2>
-            <p>You agree not to:</p>
+            <h2>Information We Collect</h2>
+            <p>We may collect personal information that you voluntarily provide to us when you:</p>
             <ul>
-                <li>Use our services for any illegal purpose</li>
-                <li>Attempt to gain unauthorized access to our systems</li>
-                <li>Interfere with the proper working of our services</li>
-                <li>Submit false or misleading information</li>
+                <li>Register an account</li>
+                <li>Place an order</li>
+                <li>Subscribe to our newsletter</li>
+                <li>Contact customer support</li>
+                <li>Participate in surveys or promotions</li>
+            </ul>
+            <p>The types of personal information we collect may include your name, email address, phone number, delivery address, payment information, and order history.</p>
+            
+            <h2>How We Use Your Information</h2>
+            <p>We use the information we collect to:</p>
+            <ul>
+                <li>Process and fulfill your orders</li>
+                <li>Communicate with you about your account or orders</li>
+                <li>Improve our products and services</li>
+                <li>Personalize your shopping experience</li>
+                <li>Send promotional offers (with your consent)</li>
+                <li>Prevent fraud and enhance security</li>
             </ul>
             
-            <h2>Intellectual Property</h2>
-            <p>All content on our website, including text, graphics, logos, and images, is our property and protected by copyright laws.</p>
+            <h2>Data Security</h2>
+            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
             
-            <h2>Limitation of Liability</h2>
-            <p>GrocerGo shall not be liable for any indirect, incidental, special, or consequential damages resulting from your use of our services.</p>
+            <h2>Third-Party Services</h2>
+            <p>We may employ third-party companies to facilitate our services (payment processing, delivery, analytics). These third parties have access to your information only to perform specific tasks on our behalf.</p>
             
-            <h2>Changes to Terms</h2>
-            <p>We may modify these Terms at any time. Continued use of our services constitutes acceptance of the modified Terms.</p>
+            <h2>Your Rights</h2>
+            <p>You have the right to:</p>
+            <ul>
+                <li>Access, update, or delete your personal information</li>
+                <li>Opt-out of marketing communications</li>
+                <li>Withdraw consent where applicable</li>
+                <li>Lodge a complaint with a data protection authority</li>
+            </ul>
             
-            <h2>Governing Law</h2>
-            <p>These Terms shall be governed by the laws of Lebanon without regard to its conflict of law provisions.</p>
+            <h2>Changes to This Policy</h2>
+            <p>We may update our Privacy Policy periodically. We will notify you of any changes by posting the new policy on this page and updating the "Last Updated" date.</p>
             
             <h2>Contact Us</h2>
-            <p>For questions about these Terms, please contact us at <a href="mailto:legal@grocergo.com">legal@grocergo.com</a>.</p>
+            <p>If you have questions about this Privacy Policy, please contact us at <a href="mailto:privacy@grocergo.com">privacy@grocergo.com</a>.</p>
             
-            <a href="../frontend/categories.html" class="back-btn">
+            <a href="../frontend/categories.php" class="back-btn">
                 <i class="bi bi-arrow-left"></i> Back to Home
             </a>
         </div>

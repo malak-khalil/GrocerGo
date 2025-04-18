@@ -300,7 +300,7 @@
             <p id="thankYouMessage">Thank you for your review!</p>
         </div>
         
-        <a href="../frontend/categories.html" class="btn btn-back">
+        <a href="../frontend/categories.php" class="btn btn-back">
             <i class="bi bi-arrow-left"></i> Back to Home
         </a>
     </div>
