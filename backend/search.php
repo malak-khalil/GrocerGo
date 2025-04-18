@@ -2,7 +2,7 @@
 // search.php
 
 header('Content-Type: application/json');
-require_once 'dbinc.php'; // Database connection
+include('dbinc.php'); // Database connection
 
 // Get search term from the query string
 $searchTerm = isset($_GET['query']) ? $_GET['query'] : '';

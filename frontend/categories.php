@@ -33,7 +33,7 @@
                         <a href="../frontend/cleaningandhousehold.html"><i class="bi bi-bucket"></i> Cleaning & Household</a>
                         <a href="../frontend/dairyandeggs.html"><i class="bi bi-egg"></i> Dairy & Eggs</a>
                         <a href="../frontend/frozenfood.html"><i class="bi bi-snow"></i> Frozen Food</a>
-                        <a href="../frontend/fruitsandvegetables.html"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
+                        <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
                         <a href="../frontend/healthyandorganic.html"><i class="bi bi-heart"></i> Healthy & Organic</a>
                         <a href="../frontend/pantryessentials.html"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
                         <a href="../frontend/snacksandcandy.html"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
@@ -126,7 +126,7 @@
             </div>
             
             <div class="category-container">
-                <a href="fruitsandvegetables.html" class="category-box">
+                <a href="fruitsandvegetables.php" class="category-box">
                     <img src="../images/category/fruitsandvegetables.jpg" alt="Fruits and Vegetables" class="category-image">
                     <div class="category-overlay">
                         <h3 class="category-name">Fruits & Vegetables</h3>
