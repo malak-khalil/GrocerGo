@@ -190,20 +190,30 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px 0;
+    margin: 12px 0;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #f8f8f8;
+    border-radius: 50px;
+    padding: 4px;
 }
 
 .quantity-btn {
     background-color: #f1f1f1;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    font-size: 1rem;
 }
 
 .quantity-btn:hover {
@@ -212,9 +222,12 @@ body {
 }
 
 .quantity {
+    min-width: 24px;
+    text-align: center;
     font-weight: 500;
-    margin: 0 10px;
+    font-size: 0.95rem;
 }
+
 
 .add-to-cart {
     width: 100%;
@@ -345,6 +358,23 @@ body {
     margin: 10px 0;
     font-size: 1.1rem;
 }
+.modal-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+.modal-quantity .quantity-btn {
+    width: 32px;
+    height: 32px;
+}
+
+.modal-quantity .quantity {
+    font-size: 1.1rem;
+    min-width: 30px;
+}
 
 .modal-info .modal-price {
     font-weight: 600;
@@ -359,34 +389,6 @@ body {
     margin: 10px 0;
 }
 
-.quantity-btn {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: #f1f1f1;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.quantity-btn:hover {
-    background-color: var(--primary-light);
-    color: white;
-}
-.quantity-selector {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.quantity {
-    font-size: 1.1rem;
-    min-width: 20px;
-    text-align: center;
-    font-weight: 500;
-}
 
 /* Toast and Messages */
 .toast {

@@ -71,14 +71,30 @@
         </div>
     </main>
     
-    <!-- Product Modal -->
+    </div>
     <div class="modal" id="productModal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModal">&times;</span>
-            <div class="modal-body" id="modalBody">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModal">&times;</span>
+        <div class="modal-body" id="modalBody">
+            <img src="" alt="" class="modal-image">
+            <h2 class="modal-title"></h2>
+            <div class="modal-description">
+                <p class="product-description"></p><br>
+                <p><strong class="product-price"></strong></p>
+                <p><strong class="product-weight"></strong></p>
             </div>
+            <div class="modal-quantity">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">0</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+                Add to Cart
+            </button>
         </div>
     </div>
+</div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
