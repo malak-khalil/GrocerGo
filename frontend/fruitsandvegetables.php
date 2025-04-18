@@ -20,7 +20,7 @@
     
         <ul id="navbar" class="navbar" data-visible="false">
         <li>
-                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+                <a href="../frontend/categories.php"><i class="bi bi-house"></i> Home</a>
             </li>
             <li>
                 <div class="dropdown"> 
@@ -46,7 +46,7 @@
             </li>
             
             <li>
-                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+                <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
             </li>
             <li>
                 <a href="../frontend/cart.php" class="cart-link">
