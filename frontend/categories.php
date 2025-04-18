@@ -26,18 +26,18 @@
                     </button>
                     <div class="dropdown-content">
                         <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
-                        <a href="../frontend/bakery.html"><i class="bi bi-basket"></i> Bakery</a>
-                        <a href="../frontend/beautyandpersonalcare.html"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
-                        <a href="../frontend/beverages.html"><i class="bi bi-cup-straw"></i></i> Beverages</a>
-                        <a href="../frontend/butcheryandSeafood.html"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
-                        <a href="../frontend/cleaningandhousehold.html"><i class="bi bi-bucket"></i> Cleaning & Household</a>
-                        <a href="../frontend/dairyandeggs.html"><i class="bi bi-egg"></i> Dairy & Eggs</a>
-                        <a href="../frontend/frozenfood.html"><i class="bi bi-snow"></i> Frozen Food</a>
+                        <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
+                        <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
+                        <a href="../frontend/beverages.php"><i class="bi bi-cup-straw"></i></i> Beverages</a>
+                        <a href="../frontend/butcheryandSeafood.php"><i class="bi bi-droplet"></i> Butchery & Seafood</a>
+                        <a href="../frontend/cleaningandhousehold.php"><i class="bi bi-bucket"></i> Cleaning & Household</a>
+                        <a href="../frontend/dairyandeggs.php"><i class="bi bi-egg"></i> Dairy & Eggs</a>
+                        <a href="../frontend/frozenfood.php"><i class="bi bi-snow"></i> Frozen Food</a>
                         <a href="../frontend/fruitsandvegetables.php"><i class="bi bi-apple"></i> Fruits & Vegetables</a>
-                        <a href="../frontend/healthyandorganic.html"><i class="bi bi-heart"></i> Healthy & Organic</a>
-                        <a href="../frontend/pantryessentials.html"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
-                        <a href="../frontend/snacksandcandy.html"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
-                        <a href="../frontend/tobacco.html"><i class="bi bi-fire"></i> Tobacco</a>
+                        <a href="../frontend/healthyandorganic.php"><i class="bi bi-heart"></i> Healthy & Organic</a>
+                        <a href="../frontend/pantryessentials.php"><i class="bi bi-box-seam"></i> Pantry Essentials</a>
+                        <a href="../frontend/snacksandcandy.php"><i class="bi bi-cookie"></i></i> Snacks & Candy</a>
+                        <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
                     </div>
                 </div>
             </li>
