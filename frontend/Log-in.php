@@ -205,7 +205,7 @@ input[type="submit"]:hover {
           try {
             const response = JSON.parse(xhr.responseText);
             if (response.success) {
-              window.location.href = "categories.html";
+              window.location.href = "categories.php";
             } else {
               document.getElementById("errorMessage").innerText = response.message;
               document.getElementById("errorMessage").style.display = "block";

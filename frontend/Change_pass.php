@@ -8,6 +8,7 @@
     <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         :root {
             --primary-color: #1E4A3B;
@@ -291,7 +292,7 @@
 </head>
 <body>
     <nav>
-        <a href="../frontend/categories.html">
+        <a href="../frontend/categories.php">
             <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
         </a>
         
@@ -300,8 +301,7 @@
         </button>
 
         <ul id="navbar" class="navbar" data-visible="false">
-            <li><a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a></li>
-            <li><a href="../frontend/Address.html"><i class="bi bi-geo-alt"></i> Address</a></li>
+            <li><a href="../frontend/categories.php"><i class="bi bi-house"></i> Home</a></li>
             <li><a href="../frontend/cart.php"><i class="bi bi-cart3"></i> Cart</a></li>
         </ul>
     </nav>
@@ -309,7 +309,8 @@
     <main class="main-content">
         <div class="profile-container">
             <h1>Change Password</h1>
-            <form class="profile-form" onsubmit="return validatePasswordForm()">
+            <div id="message"></div>
+            <form id="changePassForm" class="profile-form" method="POST" action="Change_pass.php">
                 <div class="form-group">
                     <label for="newPass">New Password</label>
                     <input type="password" id="newPass" name="newPass" placeholder="Enter new password" required>
@@ -326,25 +327,46 @@
     </main>
 
     <script>
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navbar = document.getElementById('navbar');
+        $(document).ready(function() {
+            $('#changePassForm').on('submit', function(e) {
+                e.preventDefault(); 
 
-        mobileNavToggle.addEventListener('click', () => {
-            const visibility = navbar.getAttribute('data-visible');
-            navbar.setAttribute('data-visible', visibility === "false" ? "true" : "false");
-            mobileNavToggle.setAttribute('aria-expanded', visibility === "false");
+                var newPass = $('#newPass').val();
+                var confirmPass = $('#confirmPass').val();
+
+
+                if (newPass !== confirmPass) {
+                    $('#message').html('<p style="color:red;">Passwords do not match!</p>');
+                    return;
+                }
+
+
+                 $('#message').html('<p>Processing...</p>');
+
+
+                $.ajax({
+                url: '../backend/ChangePass-handler.php',
+                type: 'POST',
+                data: {
+                    newPass: newPass,
+                    confirmPass: confirmPass
+                },
+                success: function(response) {
+                    if (response === 'success') {
+                        $('#message').html('<p style="color:green;">Password changed successfully!</p>');
+                        setTimeout(function() {
+                            window.location.href = '../frontend/Log-in.php'; 
+                        }, 2000); 
+                    } else {
+                        $('#message').html('<p style="color:red;">' + response + '</p>');
+                    }
+                },
+                error: function() {
+                    $('#message').html('<p style="color:red;">An error occurred. Please try again.</p>');
+                }
+            });
         });
-
-        function validatePasswordForm() {
-            const newPass = document.getElementById("newPass").value;
-            const confirmPass = document.getElementById("confirmPass").value;
-
-            if (newPass !== confirmPass) {
-                alert("New passwords do not match.");
-                return false;
-            }
-            return true;
-        }
+    });
     </script>
 </body>
 </html>

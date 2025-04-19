@@ -298,7 +298,7 @@
                     <input type="address" id="address" name="address" value="Beirut, Hamra, Bliss Street">
                 </div>
                 
-                <button type="button" class="btn btn-secondary" onclick="location.href='ForgotPassword.php'">Forgot Password</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='Change_pass.php'">Change Password</button>
                 <button type="submit" class="btn btn-primary">Save Changes</button>
                 <button type="button" class="btn btn-danger">Sign Out</button>
             </form>
