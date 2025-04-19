@@ -61,7 +61,7 @@
         <div class="time-location">
             <div class="info-item">
                 <i class="bi bi-stopwatch"></i>
-                <span style="font-weight: bold;">8 AM - 12 AM</span>
+                <span style="font-weight: bold;">Open hours: 8 AM - 12 AM</span>
             </div>
         </div>
     </div>

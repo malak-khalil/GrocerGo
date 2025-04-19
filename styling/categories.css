@@ -8,6 +8,8 @@
     --text-light: #fff;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Open Sans', sans-serif;
 }
 
 * {
@@ -20,7 +22,7 @@ body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
-    background-color: #fff;
+    background: linear-gradient(to right, #1E4A3B, #2D6A4F);
     overflow-x: hidden;
 }
 
@@ -397,7 +399,7 @@ nav {
     background-color: var(--background-light);
     padding: 12px 20px;
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: auto 1fr auto;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #e0e0e0;
@@ -509,8 +511,8 @@ nav {
     color: #666;
     font-size: 1rem;
 }
+  
 
-/* Categories Section */
 .categories-section {
     width: 100%;
     padding: 5rem 0;
