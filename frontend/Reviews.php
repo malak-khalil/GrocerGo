@@ -32,10 +32,12 @@
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 0; 
+}
+
         
         .logo-container {
             display: flex;
@@ -58,13 +60,15 @@
         }
         
         .review-section {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            padding: 30px;
-            margin-bottom: 30px;
-            animation: slideInUp 0.8s ease 0.5s both;
-        }
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    margin-bottom: 30px;
+    margin-top: 0; 
+    animation: slideInUp 0.8s ease 0.5s both;
+}
+
         
         @keyframes slideInUp {
             from { transform: translateY(30px); opacity: 0; }
@@ -234,163 +238,117 @@
         <div class="logo-container">
             <img width="300px" src="../Images/LogoForLogin.png" alt="GrocerGo Logo">
         </div>
-        
+
         <h1>Customer Reviews</h1>
-        
+
         <div class="review-section">
-            <div id="reviews">
+    <div id="reviews">
+        <?php if (empty($reviews)): ?>
+            <p>No reviews yet. Be the first to review!</p>
+        <?php else: ?>
+            <?php foreach ($reviews as $review): ?>
                 <div class="review">
-                    <strong>Sarah H.</strong>
-                    <p>Amazing fresh products! My go-to grocery store.</p>
+                    <strong><?php echo htmlspecialchars($review['name']); ?></strong>
+                    <p><?php echo htmlspecialchars($review['review_text']); ?></p>
                     <div class="stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
+                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                            <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill' : ''; ?>"></i>
+                        <?php endfor; ?>
                     </div>
                 </div>
-                <div class="review">
-                    <strong>Daniel M.</strong>
-                    <p>Good selection.</p>
-                    <div class="stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
+
+
+        <!-- Add Your Review Form -->
         <div class="add-review">
             <h2>Add Your Review</h2>
-            <input type="text" id="name" placeholder="Your Name">
-            <textarea id="reviewText" rows="4" placeholder="Your review..."></textarea>
-            
-            <div class="rating-container">
-                <span class="star" data-value="1">
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star-fill"></i>
-                </span>
-                <span class="star" data-value="2">
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star-fill"></i>
-                </span>
-                <span class="star" data-value="3">
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star-fill"></i>
-                </span>
-                <span class="star" data-value="4">
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star-fill"></i>
-                </span>
-                <span class="star" data-value="5">
-                    <i class="bi bi-star"></i>
-                    <i class="bi bi-star-fill"></i>
-                </span>
-            </div>
-            
-            <p style="text-align: center; color: var(--primary-dark); margin-top: -10px; margin-bottom: 10px;">
-                Click to rate your experience
-            </p>
-            
-            <button class="btn" onclick="addReview()">Submit Review</button>
-            <p id="thankYouMessage">Thank you for your review!</p>
+            <form method="POST" action="">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <textarea id="reviewText" name="reviewText" rows="4" placeholder="Your review..." required></textarea>
+                
+                <div class="rating-container">
+                    <span class="star" data-value="1">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                    <span class="star" data-value="2">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                    <span class="star" data-value="3">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                    <span class="star" data-value="4">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                    <span class="star" data-value="5">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </span>
+                </div>
+                
+                <input type="hidden" name="rating" id="rating" value="0">
+                
+                <button class="btn" type="submit">Submit Review</button>
+            </form>
         </div>
-        
+
         <a href="../frontend/categories.php" class="btn btn-back">
             <i class="bi bi-arrow-left"></i> Back to Home
         </a>
     </div>
 
+
     <script>
         let selectedRating = 0;
-        const stars = document.querySelectorAll(".rating-container .star");
+const stars = document.querySelectorAll(".rating-container .star");
 
-        stars.forEach(star => {
-            // Show empty stars by default
-            star.querySelector('.bi-star').style.opacity = '1';
-            
-            star.addEventListener("click", function() {
-                selectedRating = parseInt(this.getAttribute("data-value"));
-                highlightStars(selectedRating);
-            });
-            
-            star.addEventListener("mouseover", function() {
-                const hoverRating = parseInt(this.getAttribute("data-value"));
-                highlightStars(hoverRating, true);
-            });
-            
-            star.addEventListener("mouseout", function() {
-                highlightStars(selectedRating);
-            });
-        });
+stars.forEach(star => {
+    star.addEventListener("click", function() {
+        selectedRating = parseInt(this.getAttribute("data-value"));
+        document.getElementById("rating").value = selectedRating; // Set hidden input value
+        highlightStars(selectedRating); // Highlight the stars
+    });
 
-        function highlightStars(rating, isHover = false) {
-            stars.forEach(star => {
-                const starValue = parseInt(star.getAttribute("data-value"));
-                const emptyStar = star.querySelector('.bi-star');
-                const filledStar = star.querySelector('.bi-star-fill');
-                
-                if (starValue <= rating) {
-                    if (isHover) {
-                        emptyStar.style.opacity = '0';
-                        filledStar.style.opacity = '1';
-                    } else {
-                        star.classList.add("active");
-                        emptyStar.style.opacity = '0';
-                        filledStar.style.opacity = '1';
-                    }
-                } else {
-                    star.classList.remove("active");
-                    emptyStar.style.opacity = '1';
-                    filledStar.style.opacity = '0';
-                }
-            });
-        }
+    star.addEventListener("mouseover", function() {
+        const hoverRating = parseInt(this.getAttribute("data-value"));
+        highlightStars(hoverRating, true); // Highlight the stars on hover
+    });
 
-        function addReview() {
-            const name = document.getElementById("name").value.trim();
-            const reviewText = document.getElementById("reviewText").value.trim();
+    star.addEventListener("mouseout", function() {
+        highlightStars(selectedRating); // Return the stars to their original state
+    });
+});
 
-            if (!name || !reviewText || selectedRating === 0) {
-                alert("Please fill in all fields and select a rating.");
-                return;
+function highlightStars(rating, isHover = false) {
+    stars.forEach(star => {
+        const starValue = parseInt(star.getAttribute("data-value"));
+        const emptyStar = star.querySelector('.bi-star');
+        const filledStar = star.querySelector('.bi-star-fill');
+
+        if (starValue <= rating) {
+            if (isHover) {
+                emptyStar.style.opacity = '0';
+                filledStar.style.opacity = '1';
+            } else {
+                star.classList.add("active"); // Add active class for all stars up to the clicked one
+                emptyStar.style.opacity = '0';
+                filledStar.style.opacity = '1';
             }
-
-            const reviewsContainer = document.getElementById("reviews");
-            const newReview = document.createElement("div");
-            newReview.className = "review";
-            
-            // Create star rating display
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                starsHtml += `<i class="bi bi-star${i <= selectedRating ? '-fill' : ''}"></i>`;
-            }
-            
-            newReview.innerHTML = `
-                <strong>${name}</strong>
-                <p>${reviewText}</p>
-                <div class="stars">${starsHtml}</div>
-            `;
-            
-            reviewsContainer.prepend(newReview);
-            
-            // Reset form
-            document.getElementById("name").value = "";
-            document.getElementById("reviewText").value = "";
-            selectedRating = 0;
-            highlightStars(selectedRating);
-            
-            // Show thank you message
-            const thankYouMessage = document.getElementById("thankYouMessage");
-            thankYouMessage.style.display = "block";
-            setTimeout(() => {
-                thankYouMessage.style.display = "none";
-            }, 3000);
+        } else {
+            star.classList.remove("active"); // Remove active class for stars after the clicked one
+            emptyStar.style.opacity = '1';
+            filledStar.style.opacity = '0';
         }
+    });
+}
+
+
     </script>
 </body>
 </html>

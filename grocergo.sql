@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 18, 2025 at 09:24 PM
+-- Generation Time: Apr 19, 2025 at 11:12 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -287,6 +287,33 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_p
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reviews`
+--
+
+DROP TABLE IF EXISTS `reviews`;
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `review_text` text NOT NULL,
+  `rating` int NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALUES
+(1, 'Sarah H.', 'Amazing fresh products! My go-to grocery store.', 5, '2025-04-19 22:53:17'),
+(2, 'Daniel M.', 'Good selection of products, but the prices could be better.', 4, '2025-04-19 22:53:17'),
+(3, 'Jessica T.', 'Quick delivery and great customer service, highly recommended!', 5, '2025-04-19 22:53:17'),
+(4, 'John B.', 'The quality is great, but sometimes I have trouble finding certain items.', 3, '2025-04-19 22:53:17'),
+(5, 'Anna W.', 'The website is easy to use, but the selection of organic food is lacking.', 3, '2025-04-19 22:53:17');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -301,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `address` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `users`
@@ -317,7 +344,8 @@ INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `addr
 (7, 'Nadine', 'Jabbour', '+96171765432', 'nadinej', 'nadine.jabbour@gmail.com', '56 Oak Ave, Baabda', 'nadinepass99'),
 (8, 'Tariq', 'Kassem', '+96176543210', 'tariqk', 'tariq.kassem@hotmail.com', '98 Cedar Rd, Jounieh', 'tariq1234'),
 (9, 'Sami', 'Khalil', '+96178551122', 'samikhalil', 'sami.khalil@yahoo.com', '101 Palm Blvd, Beirut', 'sammy2000'),
-(10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456');
+(10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456'),
+(11, 'malak', 'khalil', '71233806', 'malakxkhalil', 'malak.khalil@lau.edu', 'madam curie', '$2y$10$t4l4yISLeAIQSzm5R.p/GetLiA/XA2Sh7huOtA6/P3jkSj3Vbhx8G');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
