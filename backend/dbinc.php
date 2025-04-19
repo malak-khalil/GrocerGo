@@ -20,31 +20,4 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['name'], $_POST['reviewText'], $_POST['rating'])) {
-    // Get form data
-    $name = htmlspecialchars($_POST['name']);
-    $reviewText = htmlspecialchars($_POST['reviewText']);
-    $rating = (int)$_POST['rating'];
-
-    // Check if all fields are provided and rating is valid
-    if ($name && $reviewText && $rating >= 1 && $rating <= 5) {
-        // Prepare the SQL statement
-        $stmt = $pdo->prepare("INSERT INTO reviews (name, review_text, rating) VALUES (?, ?, ?)");
-        // Execute the statement
-        if ($stmt->execute([$name, $reviewText, $rating])) {
-            // Redirect to the same page to show the updated reviews
-            header("Location: " . $_SERVER['REQUEST_URI']);
-            exit; // Exit after redirecting to avoid further execution
-        } else {
-            echo "There was an error saving your review.";
-        }
-    } else {
-        echo "Please fill in all fields and provide a valid rating.";
-    }
-}
-
-// Fetch reviews from the database
-$stmt = $pdo->prepare("SELECT * FROM reviews ORDER BY created_at DESC");
-$stmt->execute();
-$reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 19, 2025 at 11:12 PM
+-- Generation Time: Apr 19, 2025 at 11:22 PM
 -- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
@@ -298,7 +298,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
   `rating` int NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `reviews`
@@ -309,7 +309,9 @@ INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALU
 (2, 'Daniel M.', 'Good selection of products, but the prices could be better.', 4, '2025-04-19 22:53:17'),
 (3, 'Jessica T.', 'Quick delivery and great customer service, highly recommended!', 5, '2025-04-19 22:53:17'),
 (4, 'John B.', 'The quality is great, but sometimes I have trouble finding certain items.', 3, '2025-04-19 22:53:17'),
-(5, 'Anna W.', 'The website is easy to use, but the selection of organic food is lacking.', 3, '2025-04-19 22:53:17');
+(5, 'Anna W.', 'The website is easy to use, but the selection of organic food is lacking.', 3, '2025-04-19 22:53:17'),
+(6, 'malak khalil', 'perfect', 5, '2025-04-19 23:20:36'),
+(7, 'dima', 'fast delivery!!!!!!!!!!1', 5, '2025-04-19 23:21:35');
 
 -- --------------------------------------------------------
 

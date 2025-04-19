@@ -1,4 +1,45 @@
-<!--Aya al saleh-->
+<?php
+// reviews.php - Standalone reviews functionality
+
+// Database connection
+$host = 'localhost';       
+$dbname = 'grocergo'; 
+$user = 'root';
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    // Handle form submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $name = $_POST['name'] ?? '';
+        $reviewText = $_POST['reviewText'] ?? '';
+        $rating = $_POST['rating'] ?? 0;
+        
+        if (!empty($name) && !empty($reviewText) && $rating > 0) {
+            $stmt = $pdo->prepare("INSERT INTO reviews (name, review_text, rating) VALUES (:name, :review, :rating)");
+            $stmt->execute([
+                ':name' => $name,
+                ':review' => $reviewText,
+                ':rating' => $rating
+            ]);
+            
+            // Redirect to prevent form resubmission
+            header("Location: ".$_SERVER['PHP_SELF']);
+            exit();
+        }
+    }
+    
+    // Fetch all reviews
+    $stmt = $pdo->query("SELECT * FROM reviews ORDER BY created_at DESC");
+    $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,12 +73,11 @@
         }
         
         .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    margin-top: 0; 
-}
-
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 0; 
+        }
         
         .logo-container {
             display: flex;
@@ -60,15 +100,14 @@
         }
         
         .review-section {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    padding: 30px;
-    margin-bottom: 30px;
-    margin-top: 0; 
-    animation: slideInUp 0.8s ease 0.5s both;
-}
-
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            margin-bottom: 30px;
+            margin-top: 0; 
+            animation: slideInUp 0.8s ease 0.5s both;
+        }
         
         @keyframes slideInUp {
             from { transform: translateY(30px); opacity: 0; }
@@ -242,27 +281,25 @@
         <h1>Customer Reviews</h1>
 
         <div class="review-section">
-    <div id="reviews">
-        <?php if (empty($reviews)): ?>
-            <p>No reviews yet. Be the first to review!</p>
-        <?php else: ?>
-            <?php foreach ($reviews as $review): ?>
-                <div class="review">
-                    <strong><?php echo htmlspecialchars($review['name']); ?></strong>
-                    <p><?php echo htmlspecialchars($review['review_text']); ?></p>
-                    <div class="stars">
-                        <?php for ($i = 1; $i <= 5; $i++): ?>
-                            <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill' : ''; ?>"></i>
-                        <?php endfor; ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
-</div>
+            <div id="reviews">
+                <?php if (empty($reviews)): ?>
+                    <p>No reviews yet. Be the first to review!</p>
+                <?php else: ?>
+                    <?php foreach ($reviews as $review): ?>
+                        <div class="review">
+                            <strong><?php echo htmlspecialchars($review['name']); ?></strong>
+                            <p><?php echo htmlspecialchars($review['review_text']); ?></p>
+                            <div class="stars">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="bi bi-star<?php echo $i <= $review['rating'] ? '-fill' : ''; ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
 
-
-        <!-- Add Your Review Form -->
         <div class="add-review">
             <h2>Add Your Review</h2>
             <form method="POST" action="">
@@ -292,7 +329,7 @@
                     </span>
                 </div>
                 
-                <input type="hidden" name="rating" id="rating" value="0">
+                <input type="hidden" name="rating" id="rating" value="0" required>
                 
                 <button class="btn" type="submit">Submit Review</button>
             </form>
@@ -303,52 +340,49 @@
         </a>
     </div>
 
-
     <script>
         let selectedRating = 0;
-const stars = document.querySelectorAll(".rating-container .star");
+        const stars = document.querySelectorAll(".rating-container .star");
 
-stars.forEach(star => {
-    star.addEventListener("click", function() {
-        selectedRating = parseInt(this.getAttribute("data-value"));
-        document.getElementById("rating").value = selectedRating; // Set hidden input value
-        highlightStars(selectedRating); // Highlight the stars
-    });
+        stars.forEach(star => {
+            star.addEventListener("click", function() {
+                selectedRating = parseInt(this.getAttribute("data-value"));
+                document.getElementById("rating").value = selectedRating;
+                highlightStars(selectedRating);
+            });
 
-    star.addEventListener("mouseover", function() {
-        const hoverRating = parseInt(this.getAttribute("data-value"));
-        highlightStars(hoverRating, true); // Highlight the stars on hover
-    });
+            star.addEventListener("mouseover", function() {
+                const hoverRating = parseInt(this.getAttribute("data-value"));
+                highlightStars(hoverRating, true);
+            });
 
-    star.addEventListener("mouseout", function() {
-        highlightStars(selectedRating); // Return the stars to their original state
-    });
-});
+            star.addEventListener("mouseout", function() {
+                highlightStars(selectedRating);
+            });
+        });
 
-function highlightStars(rating, isHover = false) {
-    stars.forEach(star => {
-        const starValue = parseInt(star.getAttribute("data-value"));
-        const emptyStar = star.querySelector('.bi-star');
-        const filledStar = star.querySelector('.bi-star-fill');
+        function highlightStars(rating, isHover = false) {
+            stars.forEach(star => {
+                const starValue = parseInt(star.getAttribute("data-value"));
+                const emptyStar = star.querySelector('.bi-star');
+                const filledStar = star.querySelector('.bi-star-fill');
 
-        if (starValue <= rating) {
-            if (isHover) {
-                emptyStar.style.opacity = '0';
-                filledStar.style.opacity = '1';
-            } else {
-                star.classList.add("active"); // Add active class for all stars up to the clicked one
-                emptyStar.style.opacity = '0';
-                filledStar.style.opacity = '1';
-            }
-        } else {
-            star.classList.remove("active"); // Remove active class for stars after the clicked one
-            emptyStar.style.opacity = '1';
-            filledStar.style.opacity = '0';
+                if (starValue <= rating) {
+                    if (isHover) {
+                        emptyStar.style.opacity = '0';
+                        filledStar.style.opacity = '1';
+                    } else {
+                        star.classList.add("active");
+                        emptyStar.style.opacity = '0';
+                        filledStar.style.opacity = '1';
+                    }
+                } else {
+                    star.classList.remove("active");
+                    emptyStar.style.opacity = '1';
+                    filledStar.style.opacity = '0';
+                }
+            });
         }
-    });
-}
-
-
     </script>
 </body>
 </html>
