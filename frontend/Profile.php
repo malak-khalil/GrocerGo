@@ -268,7 +268,7 @@
         <div class="profile-container">
             <h1>My Account</h1>
             
-            <form class="profile-form" onsubmit="return validateForm()">
+            <form id="profile-form" class="profile-form" onsubmit="return false;">
                 <div class="form-group">
                     <label for="Fname">First Name</label>
                     <input type="text" id="Fname" name="Fname"  placeholder="John" required>
@@ -286,67 +286,75 @@
                 
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="username"  placeholder="johndoe">
+                    <input type="text" id="username" name="username"  placeholder="johndoe" readonly>
                 </div>
                 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="john.doe@gmail.com">
+                    <input type="email" id="email" name="email" placeholder="john.doe@gmail.com" readonly>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="address" id="address" name="address" value="Beirut, Hamra, Bliss Street">
+                    <input type="address" id="address" name="address" placeholder="Beirut, Hamra, Bliss Street">
                 </div>
                 
-                <button type="button" class="btn btn-secondary" onclick="location.href='ForgotPassword.php'">Forgot Password</button>
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-                <button type="button" class="btn btn-danger">Sign Out</button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='Change_pass.php'">Change Password</button>
+                <button type="button" class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
+                <button type="button" class="btn btn-danger" onclick="signOut()">Sign Out</button>
             </form>
         </div>
     </main>
     
     <script>
-        const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-        const navbar = document.getElementById('navbar');
 
-        mobileNavToggle.addEventListener('click', () => {
-            const visibility = navbar.getAttribute('data-visible');
-            
-            if (visibility === "false") {
-                navbar.setAttribute('data-visible', "true");
-                mobileNavToggle.setAttribute('aria-expanded', "true");
+    function loadProfileData() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '../backend/Profile-handler.php?action=loadProfile', true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                var user = JSON.parse(xhr.responseText);
+                document.getElementById('Fname').value = user.Fname;
+                document.getElementById('Lname').value = user.Lname;
+                document.getElementById('Pnumber').value = user.phone;
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.Email;
+                document.getElementById('address').value = user.address;
+            }
+        };
+        xhr.send();
+    }
+
+
+    function saveProfile() {
+        var Fname = document.getElementById('Fname').value;
+        var Lname = document.getElementById('Lname').value;
+        var Pnumber = document.getElementById('Pnumber').value;
+        var address = document.getElementById('address').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../backend/Profile-handler.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                alert('Profile updated successfully!');
             } else {
-                navbar.setAttribute('data-visible', "false");
-                mobileNavToggle.setAttribute('aria-expanded', "false");
+                alert('Error updating profile!');
             }
-        });
+        };
+        xhr.send('action=saveProfile&Fname=' + encodeURIComponent(Fname) + '&Lname=' + encodeURIComponent(Lname) +
+                 '&Pnumber=' + encodeURIComponent(Pnumber) + '&address=' + encodeURIComponent(address));
+    }
 
-        function validateForm() {
-            const fname = document.getElementById("Fname").value;
-            const lname = document.getElementById("Lname").value;
-            const phone = document.getElementById("Pnumber").value;
-            const username = document.getElementById("username").value;
-
-            if (!fname || !lname || !phone || !username) {
-                alert("Please fill in all required fields.");
-                return false;
-            }
-
-            const phonePattern = /^\+?[0-9\s\-]+$/;
-            if (!phonePattern.test(phone)) {
-                alert("Please enter a valid phone number.");
-                return false;
-            }
-
-            alert("Your profile has been updated successfully!");
-            return true;
+    function signOut() {
+        if (confirm("Are you sure you want to sign out?")) {
+            window.location.href = "../frontend/Log-in.php";
         }
+    }
 
-        document.querySelector('.btn-danger').addEventListener('click', function() {
-            if (confirm("Are you sure you want to sign out?")) {
-                window.location.href = "../frontend/Log-in.php";
-            }
-        });
+
+    window.onload = function () {
+        loadProfileData();
+    };
     </script>
 </body>
 </html>

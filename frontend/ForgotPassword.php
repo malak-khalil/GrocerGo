@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password - GrocerGo</title>
@@ -281,6 +282,9 @@
     <main class="main-content">
         <div class="profile-container">
             <h1>Forgot Password</h1>
+            <div id="message" style="display:none; margin-bottom: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center;">
+            Email sent! Redirecting...
+            </div>
             <form class="profile-form" onsubmit="return validateForgotPasswordForm()">
                 <div class="form-group">
                     <label for="email">Enter your email</label>
@@ -303,36 +307,23 @@
         });
 
         function validateForgotPasswordForm() {
-        const email = document.getElementById("email").value;
-        if (email === "") {
-            alert("Please enter your email address.");
-            return false;
+            const email = $("#email").val().trim();
+
+            if (email === "") {
+                alert("Please enter your email address.");
+                return false;
+            }
+
+            $("#message").fadeIn();
+
+
+            setTimeout(function() {
+                window.location.href = "Change_pass.php";
+            }, 2000);
+
+            return false; 
         }
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "ForgotPassword.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-
-        const data = "email=" + encodeURIComponent(email);
-
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    alert(response.message);  
-                    window.location.href = "Change_pass.html?token=" + response.token; 
-                } else {
-                    alert(response.message); 
-                }
-            } else {
-                alert('There was a problem with the request.');
-            }
-        };
-
-        xhr.send(data);
-        return false; 
-    }
     </script>
 </body>
 </html>
