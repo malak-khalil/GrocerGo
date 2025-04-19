@@ -308,7 +308,6 @@ $(document).ready(function() {
         });
     }
 
-    // Load original products when search is empty or reset
     function loadOriginalProducts() {
         // Show loading state
         $('#productsGrid').html('<div class="loading">Loading products...</div>');

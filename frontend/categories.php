@@ -64,6 +64,13 @@
                 <span style="font-weight: bold;">Open hours: 8 AM - 12 AM</span>
             </div>
         </div>
+        <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="search-btn"><i class="bi bi-search"></i> Search</button>
+    </div>
+    <div class="search-results" id="searchResults" style="display: none;">
+    <div class="search-results-container" id="searchResultsContainer"></div>
+</div>
     </div>
     
     <section class="hero-section">

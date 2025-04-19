@@ -1,7 +1,4 @@
-<?php
-// reviews.php - Standalone reviews functionality
-
-// Database connection
+<?php //Aya al saleh
 $host = 'localhost';       
 $dbname = 'grocergo'; 
 $user = 'root';
@@ -11,7 +8,6 @@ try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $user, $pass);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Handle form submission
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = $_POST['name'] ?? '';
         $reviewText = $_POST['reviewText'] ?? '';
@@ -25,13 +21,11 @@ try {
                 ':rating' => $rating
             ]);
             
-            // Redirect to prevent form resubmission
             header("Location: ".$_SERVER['PHP_SELF']);
             exit();
         }
     }
     
-    // Fetch all reviews
     $stmt = $pdo->query("SELECT * FROM reviews ORDER BY created_at DESC");
     $reviews = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
