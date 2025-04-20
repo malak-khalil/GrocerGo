@@ -1,13 +1,11 @@
-<?php
+<?php     // malak khalil
 $host = "localhost";
 $user = "root";
 $password = "";
 $dbname = "grocergo";
 
-// Create connection
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
-// Check connection
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
@@ -97,7 +95,6 @@ if(isset($_POST['add_to_cart'])) {
         <button class="search-btn"><i class="bi bi-search"></i> Search</button>
     </div>
     
-    <!-- Main Content -->
     <main class="main-content">
         <h1 class="page-title">Tobacco</h1>
         
@@ -131,7 +128,6 @@ if(isset($_POST['add_to_cart'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-    // Fetch products from backend
     $.ajax({
         url: '../backend/tobacco.php',
         method: 'GET',
@@ -155,7 +151,6 @@ if(isset($_POST['add_to_cart'])) {
         }
     });
 
-    // Render products function
     function renderProducts(products) {
         const grid = $('#productsGrid');
         grid.empty();
@@ -190,7 +185,6 @@ if(isset($_POST['add_to_cart'])) {
         });
     }
 
-    // Quantity controls
     $(document).on('click', '.quantity-btn', function() {
         const quantityDisplay = $(this).siblings('.quantity');
         let currentQuantity = parseInt(quantityDisplay.text());
@@ -210,7 +204,6 @@ if(isset($_POST['add_to_cart'])) {
         $(".submit-product-quantity").val(currentQuantity.toString());
     }
 
-    // Modal functionality
     $(document).on('click', '.product-image', function() {
         const productCard = $(this).closest('.product-card');
         const productID = productCard.attr('data-id');
@@ -246,14 +239,11 @@ if(isset($_POST['add_to_cart'])) {
         $('#modalBody').html(modalHTML);
         $('#productModal').fadeIn();
         
-        // Prevent body scroll when modal is open
         $('body').css('overflow', 'hidden');
     });
 
-    // Close modal
     $('#closeModal').click(closeModal);
     
-    // Close when clicking outside modal
     $(document).mouseup(function(e) {
         if ($('#productModal').is(':visible') && 
             !$(e.target).closest('.modal-content').length && 
@@ -262,7 +252,6 @@ if(isset($_POST['add_to_cart'])) {
         }
     });
     
-    // Close with ESC key
     $(document).keyup(function(e) {
         if (e.key === "Escape" && $('#productModal').is(':visible')) {
             closeModal();
@@ -274,7 +263,6 @@ if(isset($_POST['add_to_cart'])) {
         $('body').css('overflow', 'auto');
     }
 
-    // Add to cart from modal
     $(document).on('click', '#modalBody .add-to-cart', function() {
         const quantity = $('#modalBody .quantity').text();
         const productName = $('#modalBody .modal-title').text();
@@ -282,7 +270,6 @@ if(isset($_POST['add_to_cart'])) {
         closeModal();
     });
 
-    // Mobile navigation toggle
     const mobileNavToggle = $('.mobile-nav-toggle');
     const navbar = $('#navbar');
 
@@ -293,22 +280,18 @@ if(isset($_POST['add_to_cart'])) {
     });
 });
 $(document).ready(function() {
-    // Real-time search: Trigger search as the user types
     $('#searchInput').on('keyup', function() {
         performSearch();
     });
 
-    // Perform search
     function performSearch() {
         const searchTerm = $('#searchInput').val().trim();
 
         if (searchTerm === '') {
-            // If the search input is empty, load all products and reset the cart items
             loadOriginalProducts();
             return;
         }
 
-        // Show loading state
         $('#productsGrid').html('<div class="loading">Searching products...</div>');
 
         $.ajax({
@@ -336,7 +319,6 @@ $(document).ready(function() {
         });
     }
 
-    // Render products in the grid
     function renderProducts(products) {
         const grid = $('#productsGrid');
         grid.empty();
@@ -371,9 +353,7 @@ $(document).ready(function() {
         });
     }
 
-    // Load original products when search is empty or reset
     function loadOriginalProducts() {
-        // Show loading state
         $('#productsGrid').html('<div class="loading">Loading products...</div>');
         $('.page-title').text('Tobacco');
 
@@ -393,16 +373,11 @@ $(document).ready(function() {
             }
         });
 
-        // Reset Cart items display (if any cart-related data needs to be reset)
         displayCartItems();
     }
 
-    // Function to display cart items (This should be customized based on your cart system)
     function displayCartItems() {
-        // For example, you might want to load cart items from local storage or session storage
-        // If using session storage, you can fetch the items like this:
         let cartItems = JSON.parse(sessionStorage.getItem('cart')) || [];
-        const cartDisplay = $('#cartItems'); // Make sure this is the correct element for displaying cart items
 
         if (cartItems.length > 0) {
             cartDisplay.html('<ul>' + cartItems.map(item => `<li>${item.name} - ${item.quantity}</li>`).join('') + '</ul>');

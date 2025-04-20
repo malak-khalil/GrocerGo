@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: 20 أبريل 2025 الساعة 22:00
--- إصدار الخادم: 9.1.0
+-- Generation Time: Apr 20, 2025 at 10:42 PM
+-- Server version: 9.1.0
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `discounts`
+-- Table structure for table `discounts`
 --
 
 DROP TABLE IF EXISTS `discounts`;
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `discounts` (
 ) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `discounts`
+-- Dumping data for table `discounts`
 --
 
 INSERT INTO `discounts` (`id`, `product_id`, `discount_percent`, `start_date`, `end_date`) VALUES
@@ -83,7 +83,7 @@ INSERT INTO `discounts` (`id`, `product_id`, `discount_percent`, `start_date`, `
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `products`
+-- Table structure for table `products`
 --
 
 DROP TABLE IF EXISTS `products`;
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 ) ENGINE=MyISAM AUTO_INCREMENT=244 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `products`
+-- Dumping data for table `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_path`, `category`) VALUES
@@ -346,7 +346,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_p
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `reviews`
+-- Table structure for table `reviews`
 --
 
 DROP TABLE IF EXISTS `reviews`;
@@ -360,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `reviews`
+-- Dumping data for table `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALUES
@@ -375,7 +375,7 @@ INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALU
 -- --------------------------------------------------------
 
 --
--- بنية الجدول `users`
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- إرجاع أو استيراد بيانات الجدول `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `address`, `Password`) VALUES
