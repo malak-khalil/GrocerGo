@@ -142,25 +142,36 @@ async function performSearch(query) {
     }
 }
 function setupQuantityControls() {
-    // Minus button - allow going to 0
     document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.replaceWith(btn.cloneNode(true));
+    });
+    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true));
+    });
+
+    // Set up minus buttons
+    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             const quantityElement = this.nextElementSibling;
             let quantity = parseInt(quantityElement.textContent);
-            if (quantity > 0) {
+            if (!isNaN(quantity) && quantity > 0) {
                 quantity--;
                 quantityElement.textContent = quantity;
             }
         });
     });
 
-    // Plus button
+    // Set up plus buttons
     document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
             const quantityElement = this.previousElementSibling;
             let quantity = parseInt(quantityElement.textContent);
-            quantity++;
-            quantityElement.textContent = quantity;
+            if (!isNaN(quantity)) {
+                quantity++;
+                quantityElement.textContent = quantity;
+            }
         });
     });
 }
@@ -184,9 +195,7 @@ function displaySearchResults(products, query) {
         </div>
         <div class="products-grid">
             ${products.map(product => {
-                // Fix image path - remove any leading slashes or dots
                 let imagePath = product.image_path.replace(/^[./\\]+/, '');
-                // Display price exactly as it comes from the database
                 let price = product.price;
                 
                 return `
@@ -214,8 +223,6 @@ function displaySearchResults(products, query) {
     `;
 
     setupQuantityControls();
-
-    // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
@@ -226,7 +233,6 @@ function displaySearchResults(products, query) {
 }
 
 function addToCart(productId, quantity) {
-    // Here you would typically make an AJAX call to your backend
     console.log(`Adding product ${productId} with quantity ${quantity} to cart`);
     showToast('Item added to cart!');
 }
@@ -247,7 +253,6 @@ function showToast(message) {
     }, 3000);
 }
 
-// Event Listeners
 searchInput.addEventListener('input', function() {
     clearTimeout(searchDebounce);
     const query = this.value.trim();
@@ -268,7 +273,6 @@ searchButton.addEventListener('click', function() {
     }
 });
 
-// Close search results when clicking outside
 document.addEventListener('click', function(event) {
     if (!searchResults.contains(event.target) && 
         event.target !== searchInput && 
@@ -277,13 +281,11 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Prevent search form submission
 document.querySelector('.search-container').addEventListener('submit', function(e) {
     e.preventDefault();
     const query = searchInput.value.trim();
     performSearch(query);
 });
-// Add this to your existing JavaScript
 async function loadPromotions() {
     const promotionsContainer = document.getElementById('promotionsContainer');
     
@@ -365,10 +367,7 @@ function displayPromotions(promotions) {
 
     setupQuantityControls();
 }
-     
-
-
-// Add this function to your existing JavaScript code
+    
 function addProductEventListeners() {
     // Quantity controls
     document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
@@ -401,9 +400,7 @@ function addProductEventListeners() {
     });
 }
 
-// Make sure this function also exists
 function addToCart(productId, quantity) {
-    // Here you would typically make an AJAX call to your backend
     console.log(`Adding product ${productId} with quantity ${quantity} to cart`);
     showToast('Item added to cart!');
 }
@@ -423,7 +420,6 @@ function showToast(message) {
         setTimeout(() => toast.remove(), 300);
     }, 3000);
 }
-// Call this when DOM loads
 document.addEventListener("DOMContentLoaded", function() {
     setupQuantityControls();
     loadPromotions();

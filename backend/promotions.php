@@ -1,4 +1,4 @@
-<?php
+<?php    // malak khalil
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET");
@@ -6,8 +6,6 @@ include('dbinc.php');
 
 try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-    // Get current promotions (where end_date is in future or null)
     $stmt = $pdo->prepare("
         SELECT 
             p.id, 

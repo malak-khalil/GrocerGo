@@ -16,7 +16,7 @@ and can modify the address from his profile,
 - made all the updates and corrected the notes that u gave us in phase 1
 - the index is redirected to the landing page instead of the log in page 
 - additional styling updates was made for the 12 categories pages and landing page, in addition to the user credentials pages for better design and overview.
-
+- added promotions , as some items may have a discount , placed in the main page, data taken from the discounts table in the database, 
 
 
 backend implementation:

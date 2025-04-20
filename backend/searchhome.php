@@ -1,5 +1,4 @@
-<?php
-// searchhome.php
+<?php // malak khalil
 header('Content-Type: application/json');
 include('dbinc.php');
 

@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 19, 2025 at 11:22 PM
--- Server version: 9.1.0
+-- Generation Time: 20 أبريل 2025 الساعة 22:00
+-- إصدار الخادم: 9.1.0
 -- PHP Version: 8.3.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,7 +24,66 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- بنية الجدول `discounts`
+--
+
+DROP TABLE IF EXISTS `discounts`;
+CREATE TABLE IF NOT EXISTS `discounts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `discount_percent` decimal(5,2) NOT NULL,
+  `start_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `end_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- إرجاع أو استيراد بيانات الجدول `discounts`
+--
+
+INSERT INTO `discounts` (`id`, `product_id`, `discount_percent`, `start_date`, `end_date`) VALUES
+(1, 1, 15.00, '2025-04-21 00:03:51', '2025-05-20 23:59:59'),
+(2, 7, 15.00, '2025-04-21 00:03:51', '2025-05-20 23:59:59'),
+(3, 12, 15.00, '2025-04-21 00:03:51', '2025-05-20 23:59:59'),
+(4, 13, 20.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(5, 16, 20.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(6, 18, 20.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(7, 20, 10.00, '2025-04-21 00:03:51', '2025-05-25 23:59:59'),
+(8, 24, 10.00, '2025-04-21 00:03:51', '2025-05-25 23:59:59'),
+(9, 26, 10.00, '2025-04-21 00:03:51', '2025-05-25 23:59:59'),
+(10, 32, 25.00, '2025-04-21 00:03:51', '2025-05-10 11:00:00'),
+(11, 36, 25.00, '2025-04-21 00:03:51', '2025-05-10 11:00:00'),
+(12, 38, 25.00, '2025-04-21 00:03:51', '2025-05-10 11:00:00'),
+(13, 42, 15.00, '2025-04-21 00:03:51', '2025-06-01 23:59:59'),
+(14, 50, 10.00, '2025-04-21 00:03:51', '2025-06-01 23:59:59'),
+(15, 64, 20.00, '2025-04-21 00:03:51', '2025-06-01 23:59:59'),
+(16, 69, 15.00, '2025-04-21 00:03:51', '2025-06-01 23:59:59'),
+(17, 92, 30.00, '2025-04-21 00:03:51', '2025-08-31 23:59:59'),
+(18, 101, 20.00, '2025-04-21 00:03:51', '2025-08-31 23:59:59'),
+(19, 118, 15.00, '2025-04-21 00:03:51', '2025-08-31 23:59:59'),
+(20, 129, 25.00, '2025-04-21 00:03:51', '2025-05-07 23:59:59'),
+(21, 134, 15.00, '2025-04-21 00:03:51', '2025-05-07 23:59:59'),
+(22, 137, 10.00, '2025-04-21 00:03:51', '2025-05-07 23:59:59'),
+(23, 146, 20.00, '2025-04-21 00:03:51', '2025-05-11 23:59:59'),
+(24, 166, 15.00, '2025-04-21 00:03:51', '2025-05-11 23:59:59'),
+(25, 176, 10.00, '2025-04-21 00:03:51', '2025-05-11 23:59:59'),
+(26, 185, 15.00, '2025-04-21 00:03:51', '2025-05-31 23:59:59'),
+(27, 190, 10.00, '2025-04-21 00:03:51', '2025-05-31 23:59:59'),
+(28, 192, 20.00, '2025-04-21 00:03:51', '2025-05-31 23:59:59'),
+(29, 202, 25.00, '2025-04-21 00:03:51', '2025-05-12 23:59:59'),
+(30, 220, 15.00, '2025-04-21 00:03:51', '2025-05-12 23:59:59'),
+(31, 223, 10.00, '2025-04-21 00:03:51', '2025-05-12 23:59:59'),
+(32, 224, 30.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(33, 231, 20.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(34, 235, 15.00, '2025-04-21 00:03:51', '2025-05-15 23:59:59'),
+(35, 239, 10.00, '2025-04-21 00:03:51', '2025-05-20 23:59:59'),
+(36, 243, 15.00, '2025-04-21 00:03:51', '2025-05-20 23:59:59');
+
+-- --------------------------------------------------------
+
+--
+-- بنية الجدول `products`
 --
 
 DROP TABLE IF EXISTS `products`;
@@ -40,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 ) ENGINE=MyISAM AUTO_INCREMENT=244 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `products`
+-- إرجاع أو استيراد بيانات الجدول `products`
 --
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_path`, `category`) VALUES
@@ -287,7 +346,7 @@ INSERT INTO `products` (`id`, `name`, `description`, `price`, `amount`, `image_p
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reviews`
+-- بنية الجدول `reviews`
 --
 
 DROP TABLE IF EXISTS `reviews`;
@@ -301,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 ) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `reviews`
+-- إرجاع أو استيراد بيانات الجدول `reviews`
 --
 
 INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALUES
@@ -316,7 +375,7 @@ INSERT INTO `reviews` (`id`, `name`, `review_text`, `rating`, `created_at`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- بنية الجدول `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -333,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Dumping data for table `users`
+-- إرجاع أو استيراد بيانات الجدول `users`
 --
 
 INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `address`, `Password`) VALUES
