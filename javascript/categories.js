@@ -141,7 +141,29 @@ async function performSearch(query) {
         `;
     }
 }
+function setupQuantityControls() {
+    // Minus button - allow going to 0
+    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.nextElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            if (quantity > 0) {
+                quantity--;
+                quantityElement.textContent = quantity;
+            }
+        });
+    });
 
+    // Plus button
+    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.previousElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            quantity++;
+            quantityElement.textContent = quantity;
+        });
+    });
+}
 function showSearchResults() {
     searchResults.style.display = 'block';
     mainContent.style.display = 'none';
@@ -191,26 +213,7 @@ function displaySearchResults(products, query) {
         </div>
     `;
 
-    // Quantity controls
-    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const quantityElement = this.nextElementSibling;
-            let quantity = parseInt(quantityElement.textContent);
-            if (quantity > 1) {
-                quantity--;
-                quantityElement.textContent = quantity;
-            }
-        });
-    });
-
-    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const quantityElement = this.previousElementSibling;
-            let quantity = parseInt(quantityElement.textContent);
-            quantity++;
-            quantityElement.textContent = quantity;
-        });
-    });
+    setupQuantityControls();
 
     // Add to cart functionality
     document.querySelectorAll('.add-to-cart').forEach(btn => {
@@ -249,7 +252,7 @@ searchInput.addEventListener('input', function() {
     clearTimeout(searchDebounce);
     const query = this.value.trim();
     
-    if (query.length > 0) {
+    if (query.length >= 0) {
         searchDebounce = setTimeout(() => {
             performSearch(query);
         }, 300);
@@ -360,8 +363,7 @@ function displayPromotions(promotions) {
         }).join('')}
     `;
 
-    // Add event listeners
-    addProductEventListeners();
+    setupQuantityControls();
 }
      
 
@@ -423,5 +425,6 @@ function showToast(message) {
 }
 // Call this when DOM loads
 document.addEventListener("DOMContentLoaded", function() {
+    setupQuantityControls();
     loadPromotions();
 });
