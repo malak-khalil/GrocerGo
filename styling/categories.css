@@ -1269,3 +1269,123 @@ grid-template-columns: 1fr;
         width: 100%;
     }
 }
+/* Loading spinner */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid var(--primary-color);
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Toast notification */
+.toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    text-align: center;
+    border-radius: 4px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1002;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+}
+/* Search Results Section */
+.search-results {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    animation: fadeIn 0.5s ease;
+}
+
+.search-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.search-title {
+    color: var(--primary-dark);
+    font-size: 2rem;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.search-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--primary-light);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.search-count {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Make sure these match your existing product grid styles */
+.search-results .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.search-results .product-card {
+    background-color: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+    animation: fadeInUp 0.8s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Loading States */
+.search-results .loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--primary-dark);
+    font-size: 1.2rem;
+}
+
+.search-results .loading i {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    display: block;
+    color: var(--primary-light);
+}
+.quantity-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

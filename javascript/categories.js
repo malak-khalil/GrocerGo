@@ -1,11 +1,14 @@
 const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
 const navbar = document.getElementById('navbar');
 const searchInput = document.getElementById('searchInput');
+const searchButton = document.getElementById('searchButton');
 const searchResults = document.getElementById('searchResults');
 const searchResultsContainer = document.getElementById('searchResultsContainer');
+const mainContent = document.querySelector('main');
+const footer = document.querySelector('footer');
 let searchDebounce;
 
-// Existing mobile nav toggle
+// Mobile Navigation Toggle
 mobileNavToggle.addEventListener('click', () => {
     const visibility = navbar.getAttribute('data-visible');
     
@@ -16,9 +19,9 @@ mobileNavToggle.addEventListener('click', () => {
         navbar.setAttribute('data-visible', "false");
         mobileNavToggle.setAttribute('aria-expanded', "false");
     }
-});      
+});
 
-// Existing dropdown toggle
+// Dropdown Toggle
 function toggleDropdown(button) {
     const dropdown = button.parentElement;
     dropdown.classList.toggle('active');
@@ -32,7 +35,10 @@ document.addEventListener('click', function(event) {
         });
     }
 });
+
+// DOM Content Loaded
 document.addEventListener("DOMContentLoaded", function() {
+    // Image loading animation
     const images = document.querySelectorAll(".fade-in");
     images.forEach(img => {
         if (img.complete) {
@@ -44,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    // Scroll reveal animation
     function revealElements() {
         document.querySelectorAll(".category-box").forEach(element => {
             let elementPosition = element.getBoundingClientRect().top;
@@ -51,21 +58,14 @@ document.addEventListener("DOMContentLoaded", function() {
     
             if (elementPosition < windowHeight - 50) {
                 element.classList.add("visible");
-                console.log("Made visible:", element);
             }
         });
     }
     
-    document.addEventListener("DOMContentLoaded", function() {
-        requestAnimationFrame(() => {
-            revealElements();
-        });
-        window.addEventListener("scroll", revealElements);
-    });
-    
     revealElements();
     window.addEventListener("scroll", revealElements);
 
+    // Page transition effect
     document.body.classList.add("loaded");
 
     document.querySelectorAll("a").forEach(link => {
@@ -85,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         }
     });
+
+    // Hero section animation
     const heroSection = document.querySelector(".hero-section");
     if (heroSection) {
         setTimeout(() => {
@@ -93,4 +95,188 @@ document.addEventListener("DOMContentLoaded", function() {
             heroSection.querySelector(".cta-button").classList.add("loaded");
         }, 300);
     }
+});
+
+// Search Functionality
+async function performSearch(query) {
+    if (query.length < 1) {
+        hideSearchResults();
+        return;
+    }
+
+    // Show loading state
+    searchResultsContainer.innerHTML = `
+        <div class="loading">
+            <i class="bi bi-search"></i>
+            <p>Searching for products...</p>
+        </div>
+    `;
+    showSearchResults();
+
+    try {
+        const response = await fetch(`../backend/searchhome.php?query=${encodeURIComponent(query)}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.data.length > 0) {
+            displaySearchResults(data.data, query);
+        } else {
+            searchResultsContainer.innerHTML = `
+                <div class="no-products">
+                    <i class="bi bi-search"></i>
+                    <p>No products found matching "${query}"</p>
+                </div>
+            `;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        searchResultsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="bi bi-exclamation-triangle"></i>
+                <p>Error loading search results. Please try again.</p>
+                <p>${error.message}</p>
+            </div>
+        `;
+    }
+}
+
+function showSearchResults() {
+    searchResults.style.display = 'block';
+    mainContent.style.display = 'none';
+    footer.style.display = 'none';
+}
+
+function hideSearchResults() {
+    searchResults.style.display = 'none';
+    mainContent.style.display = 'block';
+    footer.style.display = 'block';
+}
+
+function displaySearchResults(products, query) {
+    searchResultsContainer.innerHTML = `
+        <div class="search-header">
+            <h2 class="search-title">Search Results for "${query}"</h2>
+            <span class="search-count">${products.length} ${products.length === 1 ? 'item' : 'items'} found</span>
+        </div>
+        <div class="products-grid">
+            ${products.map(product => {
+                // Fix image path - remove any leading slashes or dots
+                let imagePath = product.image_path.replace(/^[./\\]+/, '');
+                // Display price exactly as it comes from the database
+                let price = product.price;
+                
+                return `
+                <div class="product-card">
+                    <img src="../${imagePath}" alt="${product.name}" class="product-image" onerror="this.src='../Images/default-product.jpg'">
+                    <div class="product-details">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-info">
+                            <span class="product-price">${price}</span>
+                            <span class="product-weight">${product.amount || ''}</span>
+                        </div>
+                        <div class="quantity-row">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus">-</button>
+                                <span class="quantity">0</span>
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('')}
+        </div>
+    `;
+
+    // Quantity controls
+    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.nextElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.previousElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            quantity++;
+            quantityElement.textContent = quantity;
+        });
+    });
+
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            const quantity = parseInt(this.closest('.product-card').querySelector('.quantity').textContent);
+            addToCart(productId, quantity);
+        });
+    });
+}
+
+function addToCart(productId, quantity) {
+    // Here you would typically make an AJAX call to your backend
+    console.log(`Adding product ${productId} with quantity ${quantity} to cart`);
+    showToast('Item added to cart!');
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Event Listeners
+searchInput.addEventListener('input', function() {
+    clearTimeout(searchDebounce);
+    const query = this.value.trim();
+    
+    if (query.length > 0) {
+        searchDebounce = setTimeout(() => {
+            performSearch(query);
+        }, 300);
+    } else {
+        hideSearchResults();
+    }
+});
+
+searchButton.addEventListener('click', function() {
+    const query = searchInput.value.trim();
+    if (query.length > 0) {
+        performSearch(query);
+    }
+});
+
+// Close search results when clicking outside
+document.addEventListener('click', function(event) {
+    if (!searchResults.contains(event.target) && 
+        event.target !== searchInput && 
+        event.target !== searchButton) {
+        hideSearchResults();
+    }
+});
+
+// Prevent search form submission
+document.querySelector('.search-container').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const query = searchInput.value.trim();
+    performSearch(query);
 });

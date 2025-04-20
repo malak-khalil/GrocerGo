@@ -196,7 +196,7 @@
 <body>
     <div class="container">
 <div class="logo-container">
-            <img width="352px" src="..\Images\LogoForLogin.png" alt="GrocerGo Logo">
+            <img width="352px" src="..\Images\home\LogoForLogin.png" alt="GrocerGo Logo">
         </div>
 
                <h1>About Our Grocery Store</h1>
@@ -220,31 +220,31 @@
             <h2>Meet the Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="../Images/aya.jpeg" alt="Aya Al Saleh">
+                    <img src="../Images/home/aya.jpg" alt="Aya Al Saleh">
                     <p>Aya Al Saleh</p>
                 </div>
                 <div class="team-member">
-                    <img src="../Images/malak.jpeg" alt="Malak Khalil">
+                    <img src="../Images/home/malak.jpg" alt="Malak Khalil">
                     <p>Malak Khalil</p>
                 </div>
                 <div class="team-member">
-                    <img src="../Images/antonio.jpeg" alt="Antonio Karam">
+                    <img src="../Images/home/antonio.jpg" alt="Antonio Karam">
                     <p>Antonio Karam</p>
                 </div>
                 <div class="team-member">
-                    <img src="../Images/reina.jpeg" alt="Reina Najjar">
+                    <img src="../Images/home/reina.jpg" alt="Reina Najjar">
                     <p>Reina Najjar</p>
                 </div>
             </div>
         </div>
-
+ 
       <div class="about-box" id="contact-us">
     <h2>Contact Us</h2>
     <p>If you have any questions, suggestions, or feedback, feel free to reach out to us. We value our customers and strive to improve your shopping experience.</p>
     <div class="contact-info">
         <div class="phone">
             <i class="bi bi-telephone-fill"></i>
-            <strong>Phone:</strong> <a href="tel:+71-233-806">71 233 806</a>
+            <strong>Phone:</strong> <a href="tel:+71-233-806">+961 71 233 806</a>
         </div>
         <div class="email">
             <i class="bi bi-envelope-fill"></i>

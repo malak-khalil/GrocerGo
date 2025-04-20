@@ -1,8 +1,7 @@
 <?php
+// searchhome.php
 header('Content-Type: application/json');
-
-// Include your database connection file
-require_once 'dbinc.php'; // Make sure this path is correct
+include('dbinc.php');
 
 $searchTerm = isset($_GET['query']) ? trim($_GET['query']) : '';
 
@@ -15,15 +14,12 @@ if (empty($searchTerm)) {
 }
 
 try {
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
     $stmt = $pdo->prepare("SELECT id, name, price, amount, image_path, description, category
                            FROM products
                            WHERE name LIKE :searchTerm
-                           OR description LIKE :searchTerm
-                           OR category LIKE :searchTerm");
+                           ORDER BY name ASC");
     
-    $searchParam = "%" . $searchTerm . "%";
+    $searchParam = '%' . $searchTerm . '%';
     $stmt->bindParam(':searchTerm', $searchParam);
     $stmt->execute();
     
