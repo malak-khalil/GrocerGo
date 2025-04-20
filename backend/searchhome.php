@@ -1,29 +1,36 @@
-<?php
 // searchhome.php
+<?php
+header('Content-Type: application/json');
 include('dbinc.php');
 
-header('Content-Type: application/json');
+$searchTerm = isset($_GET['query']) ? $_GET['query'] : '';
 
-if (!isset($_GET['search'])) {
-    echo json_encode(['error' => 'No search term provided']);
+if (empty($searchTerm)) {
+    echo json_encode([
+        "status" => "error",
+        "message" => "No search term provided"
+    ]);
     exit;
 }
 
-$searchTerm = '%' . $_GET['search'] . '%';
-
 try {
-    $stmt = $pdo->prepare("SELECT id, name, description, price, image_path 
-                          FROM products 
-                          WHERE name LIKE :search 
-                          OR description LIKE :search
-                          OR category LIKE :search
-                          LIMIT 10");
-    $stmt->bindParam(':search', $searchTerm, PDO::PARAM_STR);
-    $stmt->execute();
+    $stmt = $pdo->prepare("SELECT id, name, price, amount, image_path, description, category
+                           FROM products
+                           WHERE name LIKE :searchTerm
+                           OR description LIKE :searchTerm
+                           OR category LIKE :searchTerm");
     
+    $stmt->execute(['searchTerm' => '%' . $searchTerm . '%']);
     $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($products);
+
+    echo json_encode([
+        "status" => "success",
+        "data" => $products
+    ]);
 } catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Error fetching products: " . $e->getMessage()
+    ]);
 }
 ?>
