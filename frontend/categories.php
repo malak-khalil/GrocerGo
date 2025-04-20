@@ -10,7 +10,7 @@
     <link href="../styling/items.css" rel="stylesheet">
     <link href="../styling/categories.css" rel="stylesheet">
     <style>
-        /* Search Results Styling */
+        /* Search Results Styling */    
         .search-results {
             position: relative;
             width: 100%;
@@ -480,125 +480,180 @@
             }
         });
         
-        // Search functionality
         $(document).ready(function() {
-            const $searchInput = $('#searchInput');
-            const $searchButton = $('#searchButton');
-            const $searchResults = $('#searchResults');
-            const $searchResultsContainer = $('#searchResultsContainer');
-            const $mainContent = $('main');
-            let searchDebounce;
-            
-            // Search when button is clicked
-            $searchButton.on('click', function(e) {
-                e.preventDefault();
-                performSearch();
-            });
-            
-            // Search when Enter key is pressed
-            $searchInput.on('keypress', function(e) {
-                if (e.which === 13) {
-                    e.preventDefault();
-                    performSearch();
-                }
-            });
-            
-            // Live search as user types (with debounce)
-            $searchInput.on('keyup', function() {
-                clearTimeout(searchDebounce);
-                searchDebounce = setTimeout(performSearch, 500);
-            });
-            
-            // Clear search when input is empty
-            $searchInput.on('input', function() {
-                if ($(this).val().trim() === '') {
-                    resetSearch();
-                }
-            });
-            
-            function performSearch() {
-                const searchTerm = $searchInput.val().trim();
-                
-                if (searchTerm === '') {
-                    resetSearch();
+    // ... existing mobile nav and dropdown code ...
+
+    // Search functionality
+    const $searchInput = $('#searchInput');
+    const $searchButton = $('#searchButton');
+    const $searchResults = $('#searchResults');
+    const $searchResultsContainer = $('#searchResultsContainer');
+    const $mainContent = $('main');
+    let searchDebounce;
+    
+    $searchButton.on('click', function(e) {
+        e.preventDefault();
+        performSearch();
+    });
+    
+    $searchInput.on('keypress', function(e) {
+        if (e.which === 13) {
+            e.preventDefault();
+            performSearch();
+        }
+    });
+    
+    $searchInput.on('keyup', function() {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(performSearch, 500);
+    });
+    
+    $searchInput.on('input', function() {
+        if ($(this).val().trim() === '') {
+            resetSearch();
+        }
+    });
+    
+    function performSearch() {
+        const searchTerm = $searchInput.val().trim();
+        
+        if (searchTerm === '') {
+            resetSearch();
+            return;
+        }
+        
+        $searchResults.show();
+        $mainContent.hide();
+        $searchResultsContainer.html(`
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Searching products...</p>
+            </div>
+        `);
+        
+        $.ajax({
+            url: '../backend/searchhome.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { query: searchTerm },
+            success: function(data) {
+                if (data.status === 'error') {
+                    $searchResultsContainer.html(`
+                        <div class="error-message">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            ${data.message}
+                        </div>
+                    `);
                     return;
                 }
                 
-                $searchResults.show();
-                $mainContent.hide();
-                $searchResultsContainer.html('<div class="loading">Searching products...</div>');
-                
-                $.ajax({
-                    url: '../backend/search.php',
-                    method: 'GET',
-                    dataType: 'json',
-                    data: { query: searchTerm },
-                    success: function(data) {
-                        if (data.status === 'error') {
-                            $searchResultsContainer.html(`<div class="error-message">${data.message}</div>`);
-                            return;
-                        }
-                        
-                        if (data.data && data.data.length > 0) {
-                            renderSearchResults(data.data, searchTerm);
-                        } else {
-                            $searchResultsContainer.html(`<div class="no-products">No products found matching "${searchTerm}"</div>`);
-                        }
-                    },
-                    error: function() {
-                        $searchResultsContainer.html('<div class="error-message">Search failed. Please try again.</div>');
-                    }
-                });
-            }
-            
-            function renderSearchResults(products, searchTerm) {
-                $searchResultsContainer.empty();
-                
-                const resultsHeader = $(`
-                    <div class="search-header">
-                        <h2 class="search-title">Search Results for "${searchTerm}"</h2>
-                        <div class="search-count">${products.length} items found</div>
-                    </div>
-                `);
-                
-                const resultsGrid = $('<div class="products-grid">');
-                
-                $searchResultsContainer.append(resultsHeader, resultsGrid);
-                
-                products.forEach(product => {
-                    const productCard = $(`
-                        <div class="product-card">
-                            <img src="${product.image_path}" alt="${product.name}" class="product-image">
-                            <div class="product-info">
-                                <h3 class="product-name">${product.name}</h3>
-                                <div class="product-meta">
-                                    <span class="product-price">$${product.price}</span>
-                                    <span class="product-amount">${product.amount}</span>
-                                </div>
-                                <div class="product-actions">
-                                    <div class="quantity-controls">
-                                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
-                                        <span class="quantity">0</span>
-                                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                    <button class="add-to-cart">Add to Cart</button>
-                                </div>
-                            </div>
+                if (data.data && data.data.length > 0) {
+                    renderSearchResults(data.data, searchTerm);
+                } else {
+                    $searchResultsContainer.html(`
+                        <div class="no-products">
+                            <i class="bi bi-search"></i>
+                            No products found matching "${searchTerm}"
                         </div>
                     `);
-                    
-                    resultsGrid.append(productCard);
-                });
-            }
-            
-            
-            function resetSearch() {
-                $searchInput.val('');
-                $searchResults.hide();
-                $searchResultsContainer.empty();
-                $mainContent.show();
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Search error:", error);
+                $searchResultsContainer.html(`
+                    <div class="error-message">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Search failed. Please try again later.
+                    </div>
+                `);
             }
         });
+    }
+    
+    function renderSearchResults(products, searchTerm) {
+        $searchResultsContainer.empty();
+        
+        const resultsHeader = $(`
+            <div class="search-header">
+                <h2 class="search-title">
+                    <i class="bi bi-search"></i> 
+                    Search Results for "${searchTerm}"
+                </h2>
+                <div class="search-count">${products.length} items found</div>
+            </div>
+        `);
+        
+        const resultsGrid = $('<div class="products-grid">');
+        
+        $searchResultsContainer.append(resultsHeader, resultsGrid);
+        
+        products.forEach(product => {
+            const productCard = $(`
+                <div class="product-card">
+                    <img src="${product.image_path || '../Images/default-product.jpg'}" 
+                         alt="${product.name}" 
+                         class="product-image"
+                         onerror="this.src='../Images/default-product.jpg'">
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-description">${product.description || ''}</p>
+                        <div class="product-meta">
+                            <span class="product-price">$${product.price.toFixed(2)}</span>
+                            <span class="product-amount">${product.amount}</span>
+                        </div>
+                        <div class="product-actions">
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                                <span class="quantity">0</span>
+                                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                            </div>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `);
+            
+            resultsGrid.append(productCard);
+        });
+        
+        attachQuantityEvents();
+    }
+    
+    function attachQuantityEvents() {
+        $('.quantity-controls').off('click').on('click', '.quantity-btn', function(e) {
+            e.preventDefault();
+            const $btn = $(this);
+            const $quantity = $btn.siblings('.quantity');
+            let current = parseInt($quantity.text()) || 0;
+            
+            if ($btn.hasClass('plus-btn')) {
+                $quantity.text(current + 1);
+            } else if ($btn.hasClass('minus-btn') && current > 0) {
+                $quantity.text(current - 1);
+            }
+        });
+        
+        $('.add-to-cart').off('click').on('click', function(e) {
+            e.preventDefault();
+            const $card = $(this).closest('.product-card');
+            const quantity = parseInt($card.find('.quantity').text()) || 0;
+            
+            if (quantity > 0) {
+                // Here you would normally make an AJAX call to add to cart
+                alert(`Added ${quantity} items to cart!`);
+            } else {
+                alert('Please select at least 1 item');
+            }
+        });
+    }
+    
+    function resetSearch() {
+        $searchInput.val('');
+        $searchResults.hide();
+        $searchResultsContainer.empty();
+        $mainContent.show();
+    }
+});
     </script>
 </body>
 </html>

@@ -915,6 +915,21 @@ box-shadow: none;
 background-color: transparent;
 animation: none;
 }
+/* Add to your CSS */
+.loading-spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #27ae60;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 .dropdown-content a {
 color: var(--text-light);
@@ -1177,7 +1192,7 @@ grid-template-columns: 1fr;
 
 .product-price {
     font-weight: bold;
-    color: #e74c3c;
+    color: black;
 }
 
 .product-amount {
@@ -1215,7 +1230,7 @@ grid-template-columns: 1fr;
 }
 
 .add-to-cart {
-    background: #27ae60;
+    background: #1E4A3B;
     color: white;
     border: none;
     padding: 8px 15px;
