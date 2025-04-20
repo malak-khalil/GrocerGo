@@ -7,8 +7,8 @@
     <meta name="description" content="GrocerGo - Your fastest way to get groceries delivered. Fresh produce, pantry staples, and household essentials delivered to your door in Beirut.">
     <link rel="icon" href='../Images/home/cart3.svg' type="image/x-icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="..\styling\items.css" rel="stylesheet">
-    <link href="..\styling\categories.css" rel="stylesheet">
+    <link href="../styling/items.css" rel="stylesheet">
+    <link href="../styling/categories.css" rel="stylesheet">
 </head>
 <body>
    
@@ -115,7 +115,7 @@
             </div>
         </div>
     </section>
-    
+
     <section class="categories-section" id="shop-now">
         <div class="container">
             <div class="categories-header">
@@ -127,7 +127,7 @@
             <div class="category-container">
                 <a href="fruitsandvegetables.php" class="category-box">
                     <img src="../images/category/fruitsandvegetables.jpg" alt="Fruits and Vegetables" class="category-image">
-                    <div class="category-overlay">
+                      <div class="category-overlay">
                         <h3 class="category-name">Fruits & Vegetables</h3>
                         <span class="category-link">Shop Now <i class="bi bi-arrow-right"></i></span>
                     </div>

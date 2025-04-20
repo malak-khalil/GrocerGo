@@ -1,11 +1,14 @@
+const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+const navbar = document.getElementById('navbar');
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 const searchResultsContainer = document.getElementById('searchResultsContainer');
 let searchDebounce;
 
-// Handle mobile nav toggle
+// Existing mobile nav toggle
 mobileNavToggle.addEventListener('click', () => {
     const visibility = navbar.getAttribute('data-visible');
+    
     if (visibility === "false") {
         navbar.setAttribute('data-visible', "true");
         mobileNavToggle.setAttribute('aria-expanded', "true");
@@ -13,85 +16,81 @@ mobileNavToggle.addEventListener('click', () => {
         navbar.setAttribute('data-visible', "false");
         mobileNavToggle.setAttribute('aria-expanded', "false");
     }
-});
+});      
 
-// Handle input event for search
-searchInput.addEventListener('input', function() {
-    clearTimeout(searchDebounce);
-    const searchTerm = this.value.trim();
+// Existing dropdown toggle
+function toggleDropdown(button) {
+    const dropdown = button.parentElement;
+    dropdown.classList.toggle('active');
+}
+
+document.addEventListener('click', function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    }
+});
+document.addEventListener("DOMContentLoaded", function() {
+    const images = document.querySelectorAll(".fade-in");
+    images.forEach(img => {
+        if (img.complete) {
+            img.classList.add("loaded"); 
+        } else {
+            img.addEventListener("load", function() {
+                img.classList.add("loaded");
+            });
+        }
+    });
+
+    function revealElements() {
+        document.querySelectorAll(".category-box").forEach(element => {
+            let elementPosition = element.getBoundingClientRect().top;
+            let windowHeight = window.innerHeight;
     
-    if (searchTerm.length < 2) {
-        searchResults.style.display = 'none';
-        return;
+            if (elementPosition < windowHeight - 50) {
+                element.classList.add("visible");
+                console.log("Made visible:", element);
+            }
+        });
     }
     
-    searchDebounce = setTimeout(() => {
-        fetchSearchResults(searchTerm);
-    }, 300);
+    document.addEventListener("DOMContentLoaded", function() {
+        requestAnimationFrame(() => {
+            revealElements();
+        });
+        window.addEventListener("scroll", revealElements);
+    });
+    
+    revealElements();
+    window.addEventListener("scroll", revealElements);
+
+    document.body.classList.add("loaded");
+
+    document.querySelectorAll("a").forEach(link => {
+        if (link.href.includes(window.location.origin) && 
+            !link.classList.contains("app-btn") && 
+            !link.classList.contains("cta-button")) {
+            link.addEventListener("click", function(e) {
+                if (this.getAttribute("target") !== "_blank" && 
+                    !this.classList.contains("dropbtn") &&
+                    !this.closest(".dropdown-content")) {
+                    e.preventDefault();
+                    document.body.classList.add("fade-out");
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 500);
+                }
+            });
+        }
+    });
+    const heroSection = document.querySelector(".hero-section");
+    if (heroSection) {
+        setTimeout(() => {
+            heroSection.querySelector(".hero-title").classList.add("loaded");
+            heroSection.querySelector(".hero-subtitle").classList.add("loaded");
+            heroSection.querySelector(".cta-button").classList.add("loaded");
+        }, 300);
+    }
 });
-
-function fetchSearchResults(searchTerm) {
-    fetch(`searchhome.php?search=${encodeURIComponent(searchTerm)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                showSearchError(data.error);
-                return;
-            }
-            
-            if (!Array.isArray(data)) {
-                showSearchError('Invalid data format received');
-                return;
-            }
-            
-            if (data.length === 0) {
-                showNoResults();
-                return;
-            }
-            
-            displaySearchResults(data);
-        })
-        .catch(error => {
-            console.error('Search error:', error);
-            showSearchError('Failed to load search results');
-        });
-}
-
-function displaySearchResults(products) {
-    let html = '<div class="search-items">';
-    products.forEach(product => {
-        const imagePath = product.image_path.startsWith('../') ? product.image_path.substring(3) : product.image_path;
-        
-        html += `
-            <div class="search-item" data-id="${product.id}">
-                <img src="${imagePath}" alt="${product.name}" class="search-item-image">
-                <div class="search-item-info">
-                    <h4>${product.name}</h4>
-                    <p>${product.description ? product.description.substring(0, 50) + '...' : ''}</p>
-                    <div class="search-item-price">$${product.price ? product.price.toFixed(2) : '0.00'}</div>
-                </div>
-            </div>
-        `;
-    });
-    html += '</div>';
-    
-    searchResultsContainer.innerHTML = html;
-    searchResults.style.display = 'block';
-    
-    document.querySelectorAll('.search-item').forEach(item => {
-        item.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            window.location.href = `product.php?id=${productId}`;
-        });
-    });
-}
-
-function showSearchError(message) {
-    searchResultsContainer.innerHTML = `<div class="search-error">${message}</div>`;
-    searchResults.style.display = 'block';
-}
-
-function showNoResults() {
-    searchResultsContainer.innerHTML = '<div class="no-results">No products found</div>';
-    searchResults.style.display = 'block';
-}
