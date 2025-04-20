@@ -280,3 +280,148 @@ document.querySelector('.search-container').addEventListener('submit', function(
     const query = searchInput.value.trim();
     performSearch(query);
 });
+// Add this to your existing JavaScript
+async function loadPromotions() {
+    const promotionsContainer = document.getElementById('promotionsContainer');
+    
+    try {
+        promotionsContainer.innerHTML = `
+            <div class="loading">
+                <i class="bi bi-arrow-repeat"></i>
+                <p>Loading promotions...</p>
+            </div>
+        `;
+
+        const response = await fetch('../backend/promotions.php');
+        
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.data.length > 0) {
+            displayPromotions(data.data);
+        } else if (data.status === 'empty') {
+            promotionsContainer.innerHTML = `
+                <div class="no-promotions">
+                    <i class="bi bi-percent"></i>
+                    <p>${data.message}. Check back soon!</p>
+                </div>
+            `;
+        } else {
+            throw new Error(data.message || "No promotion data received");
+        }
+    } catch (error) {
+        console.error('Promotions error:', error);
+        promotionsContainer.innerHTML = `
+            <div class="error-message">
+                <i class="bi bi-exclamation-triangle"></i>
+                <p>${error.message}</p>
+                <p>Please try again later</p>
+            </div>
+        `;
+    }
+}
+
+
+function displayPromotions(promotions) {
+    const container = document.getElementById('promotionsContainer');
+    container.innerHTML = `
+        ${promotions.map(product => {
+            const imagePath = product.image_path.replace(/^[./\\]+/, '');
+            const originalPrice = product.original_price.replace('$', '');
+            const discountPercent = product.discount_percent;
+            const discountedPrice = (originalPrice * (1 - discountPercent/100)).toFixed(2);
+            
+            return `
+            <div class="promotion-card">
+                <div class="promotion-badge">${discountPercent}% OFF</div>
+                <img src="../${imagePath}" alt="${product.name}" class="promotion-image" 
+                     onerror="this.src='../Images/default-product.jpg'">
+                <div class="promotion-details">
+                    <h3 class="promotion-name">${product.name}</h3>
+                    <div class="price-container">
+                        <span class="original-price">$${originalPrice}</span>
+                        <span class="promotional-price">$${discountedPrice}</span>
+                    </div>
+                    <span class="product-weight">${product.amount || ''}</span>
+                    <div class="promotion-actions">
+                        <div class="quantity-controls">
+                            <button class="quantity-btn minus">-</button>
+                            <span class="quantity">0</span>
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <button class="add-to-cart-promo" data-id="${product.id}">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            `;
+        }).join('')}
+    `;
+
+    // Add event listeners
+    addProductEventListeners();
+}
+     
+
+
+// Add this function to your existing JavaScript code
+function addProductEventListeners() {
+    // Quantity controls
+    document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.nextElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const quantityElement = this.previousElementSibling;
+            let quantity = parseInt(quantityElement.textContent);
+            quantity++;
+            quantityElement.textContent = quantity;
+        });
+    });
+
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            const quantity = parseInt(this.closest('.product-card').querySelector('.quantity').textContent);
+            addToCart(productId, quantity);
+        });
+    });
+}
+
+// Make sure this function also exists
+function addToCart(productId, quantity) {
+    // Here you would typically make an AJAX call to your backend
+    console.log(`Adding product ${productId} with quantity ${quantity} to cart`);
+    showToast('Item added to cart!');
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+// Call this when DOM loads
+document.addEventListener("DOMContentLoaded", function() {
+    loadPromotions();
+});

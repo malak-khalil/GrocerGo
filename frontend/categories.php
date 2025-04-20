@@ -9,167 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="../styling/items.css" rel="stylesheet">
     <link href="../styling/categories.css" rel="stylesheet">
-    <style>
-        /* Search Results Styling */    
-        .search-results {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: none;
-        }
-        
-        .search-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .search-title {
-            font-size: 1.5rem;
-            color: #2c3e50;
-        }
-        
-        .search-count {
-            color: #7f8c8d;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .product-card {
-            background: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .product-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        
-        .product-info {
-            padding: 15px;
-        }
-        
-        .product-name {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #2c3e50;
-        }
-        
-        .product-description {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-        }
-        
-        .product-price {
-            font-weight: bold;
-            color: #e74c3c;
-        }
-        
-        .product-amount {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        .product-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-        }
-        
-        .quantity-btn {
-            background: #f8f9fa;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-        
-        .quantity {
-            margin: 0 10px;
-            min-width: 20px;
-            text-align: center;
-        }
-        
-        .add-to-cart {
-            background: #27ae60;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .add-to-cart:hover {
-            background: #2ecc71;
-        }
-        
-        .loading, .no-products, .error-message {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.1rem;
-            color: #7f8c8d;
-        }
-        
-        .error-message {
-            color: #e74c3c;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            }
-            
-            .product-actions {
-                flex-direction: column;
-                gap: 10px;
-            }
-        
-            .add-to-cart {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
     <nav>
@@ -374,7 +213,24 @@
                 </div>
             </div>
         </section>
+<section class="promotions-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="bi bi-percent"></i> Today's Special Offers
+            </h2>
+            <p class="section-subtitle">Limited-time discounts on popular items</p>
+        </div>
         
+        <div class="promotions-container" id="promotionsContainer">
+            <div class="loading">
+                <i class="bi bi-arrow-repeat"></i>
+                <p>Loading promotions...</p>
+            </div>
+        </div>
+    </div>
+</section>
+</section>
         <section class="testimonials-section">
             <div class="container">
                 <h2 class="section-title">What Our Customers Say</h2>
