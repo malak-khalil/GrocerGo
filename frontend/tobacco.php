@@ -1,3 +1,38 @@
+<?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "grocergo";
+
+// Create connection
+$conn = mysqli_connect($host, $user, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$user_id = 1;
+
+if(isset($_POST['add_to_cart'])) {
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $product_image = $_POST['product_image'];
+    $product_quantity = $_POST['product_quantity'];
+    
+    $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE product_id = '$product_id' AND user_id = '$user_id'") or die('query failed');
+
+    if(mysqli_num_rows($select_cart) > 0){
+        mysqli_query($conn, "UPDATE cart SET quantity='$product_quantity' WHERE product_id = '$product_id' AND user_id = '$user_id'");
+    }else{
+        mysqli_query($conn, "INSERT INTO cart (user_id, product_id, product_name, product_img, product_price, quantity) VALUES('$user_id', '$product_id', '$product_name', '$product_image', '$product_price', '$product_quantity')") or die('query failed');
+    }
+}
+ 
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +175,14 @@
                             <span class="quantity">0</span>
                             <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <form method="post" action="" class="form-submit">
+                            <input type="hidden" name="product_id" class="product_id" value="${product.id}">
+                            <input type="hidden" name="product_image" class="product_image" value="${product.image_path}">
+                            <input type="hidden" name="product_name" class="product_name" value="${product.name}">
+                            <input type="hidden" name="product_price" class="product_price" value="${product.price}">
+                            <input type="hidden" name="product_quantity" class="submit-product-quantity">
+                            <input type="submit" value="Add to Cart" name="add_to_cart" class="add-to-cart">
+                        </form>
                     </div>
                 </div>
             `;
@@ -154,15 +196,24 @@
         let currentQuantity = parseInt(quantityDisplay.text());
         
         if ($(this).hasClass('plus-btn')) {
-            quantityDisplay.text(currentQuantity + 1);
+            currentQuantity = currentQuantity + 1;
+            quantityDisplay.text(currentQuantity);
+            updateQuantity(currentQuantity);
         } else if ($(this).hasClass('minus-btn') && currentQuantity > 0) {
-            quantityDisplay.text(currentQuantity - 1);
+            currentQuantity = currentQuantity - 1;
+            quantityDisplay.text(currentQuantity);
+            updateQuantity(currentQuantity);
         }
     });
+
+    function updateQuantity(currentQuantity) {
+        $(".submit-product-quantity").val(currentQuantity.toString());
+    }
 
     // Modal functionality
     $(document).on('click', '.product-image', function() {
         const productCard = $(this).closest('.product-card');
+        const productID = productCard.attr('data-id');
         const productName = productCard.find('.product-name').text();
         const productImage = $(this).attr('src');
         const productPrice = productCard.find('.product-price').text();
@@ -181,9 +232,15 @@
                 <span class="quantity">0</span>
                 <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
             </div>
-            <button class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
-                Add to Cart
-            </button>
+            
+            <form method="post" action="" class="form-submit">
+                <input type="hidden" name="product_id" class="product_id" value="${productID}">
+                <input type="hidden" name="product_image" class="product_image" value="${productImage}">
+                <input type="hidden" name="product_name" class="product_name" value="${productName}">
+                <input type="hidden" name="product_price" class="product_price" value="${productPrice}">
+                <input type="hidden" name="product_quantity" class="submit-product-quantity">
+                <input type="submit" value="Add to Cart" name="add_to_cart" class="add-to-cart" style="width: 100%; padding: 12px; margin-top: 15px;">
+            </form>
         `;
 
         $('#modalBody').html(modalHTML);
@@ -299,7 +356,14 @@ $(document).ready(function() {
                             <span class="quantity">0</span>
                             <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
                         </div>
-                        <button class="add-to-cart">Add to Cart</button>
+                        <form method="post" action="" class="form-submit">
+                            <input type="hidden" name="product_id" class="product_id" value="${product.id}">
+                            <input type="hidden" name="product_image" class="product_image" value="${product.image_path}">
+                            <input type="hidden" name="product_name" class="product_name" value="${product.name}">
+                            <input type="hidden" name="product_price" class="product_price" value="${product.price}">
+                            <input type="hidden" name="product_quantity" class="submit-product-quantity">
+                            <input type="submit" value="Add to Cart" name="add_to_cart" class="add-to-cart">
+                        </form>
                     </div>
                 </div>
             `;
