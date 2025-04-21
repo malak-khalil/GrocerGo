@@ -1708,3 +1708,34 @@ grid-template-columns: 1fr;
         grid-template-columns: 1fr;
     }
 }
+/* Discount badge styles */
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4444;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Original price style (with strikethrough) */
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+/* Discounted price style */
+.product-price.discounted {
+    color: #ff4444;
+    font-weight: bold;
+}
+
+.product-card {
+    position: relative;
+}
