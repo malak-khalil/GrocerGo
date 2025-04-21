@@ -1,4 +1,4 @@
-<?php     // malak khalil
+<?php        // malak khalil
 $host = "localhost";
 $user = "root";
 $password = "";
