@@ -443,7 +443,6 @@ INSERT INTO `cart` (`id`, `user_id`, `product_id`, `product_name`, `product_img`
 (37, 1, 185, 'Organic Eggs', '../images/healthy and organic/organic eggs 18 pcs.webp', '$5.99', '1'),
 (35, 1, 240, 'Al Fakher Two Apples Hookah Tobacco', '../images/tobacco/two apples.jpg', '$14.99', '2'),
 (32, 1, 151, 'Cocoa Wafer with Cocoa Cream', '../images/snacks and candy/cocoa wafer with cocoa cream.jpeg', '$2.79', '1'),
-(34, 1, 43, 'Almonds', '../images/pantry essentials/almonds.webp', '$9.99', ''),
 (31, 1, 148, 'Biscolata Mood Chocolate', '../images/snacks and candy/biscolata.webp', '$3.99', '2'),
 (45, 1, 21, 'Wellsley Greek Plain Nonfat Yogurt', '../images/dairy and eggs/greekYogurt.avif', '$5.49', '2'),
 (46, 1, 23, 'Plein Soleil Shredded Cheddar', '../images/dairy and eggs/cheddar.jpg', '$5.99', '1'),
