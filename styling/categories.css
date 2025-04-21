@@ -1375,3 +1375,70 @@ footer p {
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 992px) {
+  /* Existing mobile dropdown styles... */
+  
+  .dropdown-content {
+      position: static;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+      width: 100%;
+      box-shadow: none;
+      background-color: transparent;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      border-radius: 0;
+  }
+  
+  .dropdown.active .dropdown-content {
+      max-height: 60vh; /* Adjust this value based on your needs */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+  }
+  
+  .dropdown-content a {
+      color: var(--text-light);
+      padding: 0.75rem 0;
+      display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+  }
+  
+  .dropdown-content a:last-child {
+      border-bottom: none;
+  }
+  
+  /* Custom scrollbar for dropdown */
+  .dropdown-content::-webkit-scrollbar {
+      width: 5px;
+  }
+  
+  .dropdown-content::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+  }
+  
+  .dropdown-content::-webkit-scrollbar-thumb {
+      background: var(--primary-light);
+      border-radius: 10px;
+  }
+    .dropbtn i.bi-chevron-down {
+      display: inline-block !important;
+      font-size: 1rem;
+      margin-left: 5px;
+      transition: transform 0.3s ease;
+    }
+    
+    .dropdown.active .dropbtn i.bi-chevron-down {
+      transform: rotate(180deg);
+    }
+  }
+  .dropdown-content {
+      mask-image: linear-gradient(to bottom, 
+          black calc(100% - 40px), 
+          transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, 
+          black calc(100% - 40px), 
+          transparent 100%);
+  }

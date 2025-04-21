@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Dropdown functionality
 function setupDropdowns() {
+    // Remove any existing onclick handlers from HTML
     document.querySelectorAll('.dropbtn').forEach(btn => {
         btn.removeAttribute('onclick');
     });
