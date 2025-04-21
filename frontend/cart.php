@@ -31,6 +31,9 @@
         </button>
     
         <ul id="navbar" class="navbar" data-visible="false">
+        <li>
+            <a href="../frontend/categories.php"><i class="bi bi-house"></i> Home</a>
+        </li>
             <li>
                 <div class="dropdown"> 
                     <button class="dropbtn" onclick="toggleDropdown(this)">
