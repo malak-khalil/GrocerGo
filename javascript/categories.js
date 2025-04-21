@@ -221,7 +221,7 @@ function displaySearchResults(products, query) {
                             </div>
                             <form method="post" action="" class="form-submit">
                                 <input type="hidden" name="product_id" class="product_id" value="${product.id}">
-                                <input type="hidden" name="product_image" class="product_image" value="${imagePath}">
+                                <input type="hidden" name="product_image" class="product_image" value="../${imagePath}">
                                 <input type="hidden" name="product_name" class="product_name" value="${product.name}">
                                 <input type="hidden" name="product_price" class="product_price" value="${price}">
                                 <input type="hidden" name="product_quantity" class="submit-product-quantity">
@@ -372,7 +372,7 @@ function displayPromotions(promotions) {
                         </div>
                         <form method="post" action="" class="form-submit">
                             <input type="hidden" name="product_id" class="product_id" value="${product.id}">
-                            <input type="hidden" name="product_image" class="product_image" value="${imagePath}">
+                            <input type="hidden" name="product_image" class="product_image" value="../${imagePath}">
                             <input type="hidden" name="product_name" class="product_name" value="${product.name}">
                             <input type="hidden" name="product_price" class="product_price" value="${discountedPrice}">
                             <input type="hidden" name="product_quantity" class="submit-product-quantity">
