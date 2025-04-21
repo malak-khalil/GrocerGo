@@ -1,5 +1,29 @@
 <!-- Reina Najjar -->
 
+<?php
+                $host = "localhost";
+                $user = "root";
+                $password = "";
+                $dbname = "grocergo";
+
+                // Create connection
+                $conn = mysqli_connect($host, $user, $password, $dbname);
+
+                // Check connection
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+
+                // get current user id
+                session_start();
+
+                if (!isset($_SESSION['user_id'])) {
+                    header("Location: ../frontend/Log-in.php");
+                    exit();
+                }
+
+                $user_id = $_SESSION['user_id'];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +43,10 @@
             const popDialog = document.getElementById("popupDialog");
             popDialog.style.visibility = popDialog.style.visibility === "visible" ? "hidden" : "visible";
         }
+        function toggleDropdown(button) {
+                const dropdown = button.parentElement;
+                dropdown.classList.toggle('active');
+        }
         $(document).ready(function() {
             const mobileNavToggle = $('.mobile-nav-toggle');
             const navbar = $('#navbar');
@@ -27,7 +55,7 @@
                 const visibility = navbar.attr('data-visible');
                 navbar.attr('data-visible', visibility === "false" ? "true" : "false");
                 mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
-            });
+            });        
         });
     </script>
 </head>
@@ -74,30 +102,8 @@
 
     <div class="cart-page" id="cart-page">
         <!-- shows the items in the cart: there are two scenarios: cart is empty and cart is not empty -->
+            
             <?php
-                $host = "localhost";
-                $user = "root";
-                $password = "";
-                $dbname = "grocergo";
-
-                // Create connection
-                $conn = mysqli_connect($host, $user, $password, $dbname);
-
-                // Check connection
-                if (!$conn) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
-                // get current user id
-                session_start();
-
-                if (!isset($_SESSION['user_id'])) {
-                    header("Location: ../frontend/Log-in.php");
-                    exit();
-                }
-
-                $user_id = $_SESSION['user_id'];
-
                 // get items in user cart 
                 $sql = "SELECT * FROM cart WHERE user_id = '$user_id'";
                 $result = mysqli_query($conn, $sql);
