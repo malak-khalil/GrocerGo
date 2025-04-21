@@ -158,6 +158,7 @@ function setupQuantityControls() {
             if (!isNaN(quantity) && quantity > 0) {
                 quantity--;
                 quantityElement.textContent = quantity;
+                updateQuantity(quantity);
             }
         });
     });
@@ -171,9 +172,14 @@ function setupQuantityControls() {
             if (!isNaN(quantity)) {
                 quantity++;
                 quantityElement.textContent = quantity;
+                updateQuantity(quantity);
             }
         });
     });
+
+    function updateQuantity(currentQuantity) {
+        $(".submit-product-quantity").val(currentQuantity.toString());
+    }
 }
 function showSearchResults() {
     searchResults.style.display = 'block';
@@ -213,7 +219,14 @@ function displaySearchResults(products, query) {
                                 <span class="quantity">0</span>
                                 <button class="quantity-btn plus">+</button>
                             </div>
-                            <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+                            <form method="post" action="" class="form-submit">
+                                <input type="hidden" name="product_id" class="product_id" value="${product.id}">
+                                <input type="hidden" name="product_image" class="product_image" value="${imagePath}">
+                                <input type="hidden" name="product_name" class="product_name" value="${product.name}">
+                                <input type="hidden" name="product_price" class="product_price" value="${price}">
+                                <input type="hidden" name="product_quantity" class="submit-product-quantity">
+                                <input type="submit" value="Add to Cart" name="add_to_cart" data-id="${product.id}" class="add-to-cart">
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -357,7 +370,14 @@ function displayPromotions(promotions) {
                             <span class="quantity">0</span>
                             <button class="quantity-btn plus">+</button>
                         </div>
-                        <button class="add-to-cart-promo" data-id="${product.id}">Add to Cart</button>
+                        <form method="post" action="" class="form-submit">
+                            <input type="hidden" name="product_id" class="product_id" value="${product.id}">
+                            <input type="hidden" name="product_image" class="product_image" value="${imagePath}">
+                            <input type="hidden" name="product_name" class="product_name" value="${product.name}">
+                            <input type="hidden" name="product_price" class="product_price" value="${discountedPrice}">
+                            <input type="hidden" name="product_quantity" class="submit-product-quantity">
+                            <input type="submit" value="Add to Cart" name="add_to_cart" data-id="${product.id}" class="add-to-cart-promo">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -368,6 +388,10 @@ function displayPromotions(promotions) {
     setupQuantityControls();
 }
     
+function updateQuantity(currentQuantity) {
+    $(".submit-product-quantity").val(currentQuantity.toString());
+}
+
 function addProductEventListeners() {
     // Quantity controls
     document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
@@ -377,6 +401,7 @@ function addProductEventListeners() {
             if (quantity > 1) {
                 quantity--;
                 quantityElement.textContent = quantity;
+                updateQuantity(quantity);
             }
         });
     });
@@ -387,6 +412,7 @@ function addProductEventListeners() {
             let quantity = parseInt(quantityElement.textContent);
             quantity++;
             quantityElement.textContent = quantity;
+            updateQuantity(quantity);
         });
     });
 
