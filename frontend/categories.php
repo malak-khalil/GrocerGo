@@ -26,7 +26,7 @@
         <ul id="navbar" class="navbar" data-visible="false">
             <li>
                 <div class="dropdown"> 
-                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                    <button class="dropbtn">
                         <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
                     </button>
                     <div class="dropdown-content">
