@@ -10,7 +10,7 @@ if (empty($searchTerm)) {
         "message" => "No search term provided"
     ]);
     exit;
-}
+}  
 
 try {
     $stmt = $pdo->prepare("SELECT id, name, price, amount, image_path, description, category
