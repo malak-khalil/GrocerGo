@@ -9,7 +9,7 @@
     <meta name="description" content="Cart page for user">
     <title>Your Cart</title>
     <link rel="icon" href='../Images/home/cart3.svg' type="image/x-icon">
-    <link rel="stylesheet" href="..\styling\nav.css">
+    <link rel="stylesheet" href="..\styling\categories.css">
     <link rel="stylesheet" href="..\styling\cartStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
