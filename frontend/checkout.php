@@ -15,7 +15,14 @@
     }
 
     // get current user id
-    $user_id = 1;
+    session_start();
+
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ../frontend/Log-in.php");
+        exit();
+    }
+
+    $user_id = $_SESSION['user_id'];
 
 ?>
 
