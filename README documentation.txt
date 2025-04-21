@@ -16,7 +16,7 @@ and can modify the address from his profile,
 - made all the updates and corrected the notes that you gave us in phase 1
 - the index is redirected to the landing page instead of the log in page 
 - additional styling updates was made for the 12 categories pages and landing page, in addition to the user credentials pages for better design and overview.
-- added promotions , as some items may have a discount , placed in the main page, data taken from the discounts table in the database, 
+- added promotions , as some items may have a discount , placed in the main page, data taken from the discounts table in the database,.
 
 
 backend implementation:
@@ -33,3 +33,7 @@ accordinging to what category a product is specified , it appears in its page.
 - add to cart functionality was added in the home page, in each category page, when viewing items normally, searching, or viewing the item popup 
 - the items in the cart page are generated using php by retrieving the data from the database, and you can increase or decrease the quantity of items, remove an item, or clear the cart
 - the checkout page order summary is also generated using php by retrieving the data from the database
+- user is now able to sign up and log in smoothly
+- The profile (My account) pages now retrieves all user data and displays it and the user is now able to edit some of their details.
+- Forgot and change password functionalities added to the Profile and log in pages that allow the user to change their password.
+- Sign out completely signs the user out of the website and the user needs to log in again to access it.
