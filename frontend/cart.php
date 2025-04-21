@@ -189,6 +189,39 @@
         </div> 
         <?php } ?>
     </div>
-    
+<script>
+                    function openPop() {
+            const popDialog = document.getElementById("popupDialog");
+            popDialog.style.visibility = popDialog.style.visibility === "visible" ? "hidden" : "visible";
+        }
+        
+        function toggleDropdown(button) {
+            const dropdown = button.parentElement;
+            dropdown.classList.toggle('active');
+        }
+        
+        $(document).ready(function() {
+            const mobileNavToggle = $('.mobile-nav-toggle');
+            const navbar = $('#navbar');
+
+            mobileNavToggle.on('click', function() {
+                const visibility = navbar.attr('data-visible');
+                navbar.attr('data-visible', visibility === "false" ? "true" : "false");
+                mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
+            });        
+            
+            // Add animation class when quantity changes
+            $('.bi-plus-lg, .bi-dash-lg').on('click', function() {
+                const quantityElement = $(this).closest('.cart-buttons').find('.quantity');
+                quantityElement.addClass('changed');
+                setTimeout(() => {
+                    quantityElement.removeClass('changed');
+                }, 300);
+            });
+            
+            // Page load animation
+            $('body').css('opacity', '0').animate({ opacity: 1 }, 600);
+        });
+    </script>
 </body>
 </html>

@@ -262,3 +262,82 @@ div.cart-item img {
         border-bottom-left-radius: 0%;
     }
 }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    80% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.cart-page {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.cart-item {
+    animation: slideIn 0.5s ease-out;
+    animation-fill-mode: both;
+    transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.empty-cart img {
+    animation: popIn 0.8s ease-out;
+}
+
+.empty-cart h2 {
+    animation: fadeIn 0.8s ease-out 0.3s both;
+}
+
+.empty-cart .to-categories-button {
+    animation: fadeIn 0.8s ease-out 0.6s both;
+}
+
+.subtotal-buttons {
+    animation: fadeIn 0.8s ease-out;
+}
+
+#popupDialog {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.cart-item:nth-child(1) { animation-delay: 0.1s; }
+.cart-item:nth-child(2) { animation-delay: 0.2s; }
+.cart-item:nth-child(3) { animation-delay: 0.3s; }
+.cart-item:nth-child(4) { animation-delay: 0.4s; }
+.cart-item:nth-child(5) { animation-delay: 0.5s; }
+.cart-item:nth-child(n+6) { animation-delay: 0.6s; }
+
+.quantity {
+    transition: all 0.3s ease;
+}
+
+.quantity.changed {
+    transform: scale(1.2);
+    color: #1e4a3b;
+}
+
+button {
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.navbar[data-visible="true"] {
+    animation: slideIn 0.4s ease-out;
+}
