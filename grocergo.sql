@@ -409,6 +409,50 @@ INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `addr
 (11, 'malak', 'khalil', '71233806', 'malakxkhalil', 'malak.khalil@lau.edu', 'madam curie', '$2y$10$t4l4yISLeAIQSzm5R.p/GetLiA/XA2Sh7huOtA6/P3jkSj3Vbhx8G');
 COMMIT;
 
+
+--
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE IF NOT EXISTS `cart` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `product_name` varchar(100) NOT NULL,
+  `product_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `product_price` varchar(20) NOT NULL,
+  `quantity` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`,`product_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `user_id`, `product_id`, `product_name`, `product_img`, `product_price`, `quantity`) VALUES
+(44, 1, 131, 'Frozen Chopped Spinach', '../images/frozen food/frozen chopped spinach.png', '$3.49', '4'),
+(43, 1, 130, 'Frozen Beef Kibbeh', '../images/frozen food/frozen beef kibbeh 400g.webp', '$6.99', '2'),
+(42, 1, 7, 'Avocado', '../images/fruits/avocado.jpg', '$1.60', '2'),
+(40, 1, 2, 'Cucumber', '../images/fruits/cucumber.jpg', '$0.50', '5'),
+(41, 1, 4, 'Potatoes', '../images/fruits/potatoes.jpg', '$0.38', '1'),
+(39, 1, 188, 'Organic Flaxseed', '../images/healthy and organic/organic flaxseed.jpg', '$4.99', '4'),
+(38, 1, 186, 'Organic Gluten-Free Oats', '../images/healthy and organic/organuc gluten free oats.jpg', '$4.49', '1'),
+(33, 1, 147, 'Biscoff Lotus Spread', '../images/snacks and candy/biscof lotus spread.jpeg', '$5.49', '2'),
+(36, 1, 44, 'Apple Cider Vinegar', '../images/pantry essentials/apple vinegar.jpg', '$4.99', '2'),
+(37, 1, 185, 'Organic Eggs', '../images/healthy and organic/organic eggs 18 pcs.webp', '$5.99', '1'),
+(35, 1, 240, 'Al Fakher Two Apples Hookah Tobacco', '../images/tobacco/two apples.jpg', '$14.99', '2'),
+(32, 1, 151, 'Cocoa Wafer with Cocoa Cream', '../images/snacks and candy/cocoa wafer with cocoa cream.jpeg', '$2.79', '1'),
+(34, 1, 43, 'Almonds', '../images/pantry essentials/almonds.webp', '$9.99', ''),
+(31, 1, 148, 'Biscolata Mood Chocolate', '../images/snacks and candy/biscolata.webp', '$3.99', '2'),
+(45, 1, 21, 'Wellsley Greek Plain Nonfat Yogurt', '../images/dairy and eggs/greekYogurt.avif', '$5.49', '2'),
+(46, 1, 23, 'Plein Soleil Shredded Cheddar', '../images/dairy and eggs/cheddar.jpg', '$5.99', '1'),
+(47, 1, 22, 'Philadelphia Whipped Cream Cheese', '../images/dairy and eggs/CreamCheese.webp', '$4.99', '2'),
+(48, 1, 225, 'Dettol Liquid Disinfectant', '../images/cleaning and household/dettol liquid disinfectant.jpg', '$5.00', '1'),
+(49, 1, 229, 'Facial Soft Tissue Pack', '../images/cleaning and household/facial soft tissue pack.jpg', '$1.20', '2'),
+(50, 1, 13, 'Chicken Breast', '../images/butchery and seafood/chickenBreast.jpg', '$5.99', '2');
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
