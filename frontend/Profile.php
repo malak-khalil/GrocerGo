@@ -306,6 +306,22 @@
     </main>
     
     <script>
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+        const navbar = document.getElementById('navbar');
+
+        mobileNavToggle.addEventListener('click', () => {
+            const visibility = navbar.getAttribute('data-visible');
+            
+            if (visibility === "false") {
+                navbar.setAttribute('data-visible', "true");
+                mobileNavToggle.setAttribute('aria-expanded', "true");
+            } else {
+                navbar.setAttribute('data-visible', "false");
+                mobileNavToggle.setAttribute('aria-expanded', "false");
+            }
+        });
+
+        
 
     function loadProfileData() {
         var xhr = new XMLHttpRequest();
