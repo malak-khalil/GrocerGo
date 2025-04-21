@@ -12,12 +12,7 @@ if (!$conn) {
 
 session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../frontend/Log-in.php");
-    exit();
-}
 
-$user_id = $_SESSION['user_id'];
 
 if(isset($_POST['add_to_cart'])) {
     $product_id = $_POST['product_id'];
@@ -25,6 +20,13 @@ if(isset($_POST['add_to_cart'])) {
     $product_price = $_POST['product_price'];
     $product_image = $_POST['product_image'];
     $product_quantity = $_POST['product_quantity'];
+
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: ../frontend/Log-in.php");
+        exit();
+    }
+    
+    $user_id = $_SESSION['user_id'];
     
     $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE product_id = '$product_id' AND user_id = '$user_id'") or die('query failed');
 
