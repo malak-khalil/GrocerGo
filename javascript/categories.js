@@ -8,36 +8,75 @@ const mainContent = document.querySelector('main');
 const footer = document.querySelector('footer');
 let searchDebounce;
 
-// Mobile Navigation Toggle
-mobileNavToggle.addEventListener('click', () => {
-    const visibility = navbar.getAttribute('data-visible');
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile navigation toggle - Fixed version
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navbar = document.querySelector('.navbar');
     
-    if (visibility === "false") {
-        navbar.setAttribute('data-visible', "true");
-        mobileNavToggle.setAttribute('aria-expanded', "true");
-    } else {
-        navbar.setAttribute('data-visible', "false");
-        mobileNavToggle.setAttribute('aria-expanded', "false");
-    }
-});
-
-// Dropdown Toggle
-function toggleDropdown(button) {
-    const dropdown = button.parentElement;
-    dropdown.classList.toggle('active');
-}
-
-document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.querySelectorAll('.dropdown');
-        dropdowns.forEach(dropdown => {
-            dropdown.classList.remove('active');
+    if (mobileNavToggle && navbar) {
+        mobileNavToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevent event bubbling
+            const isVisible = navbar.getAttribute('data-visible') === 'true';
+            navbar.setAttribute('data-visible', !isVisible);
+            mobileNavToggle.setAttribute('aria-expanded', !isVisible);
+            document.body.style.overflow = isVisible ? '' : 'hidden';
         });
     }
-});
 
-// DOM Content Loaded
-document.addEventListener("DOMContentLoaded", function() {
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768 && navbar && navbar.getAttribute('data-visible') === 'true') {
+            if (!navbar.contains(e.target) && e.target !== mobileNavToggle) {
+                navbar.setAttribute('data-visible', 'false');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+
+    // Dropdown functionality - Consolidated version
+    function toggleDropdown(button) {
+        const dropdown = button.parentElement;
+        const dropdownContent = dropdown.querySelector('.dropdown-content');
+        const isShowing = dropdownContent.classList.contains('show');
+        
+        // Close all other dropdowns first
+        document.querySelectorAll('.dropdown-content.show').forEach(content => {
+            if (content !== dropdownContent) {
+                content.classList.remove('show');
+            }
+        });
+        
+        // Toggle current dropdown
+        dropdownContent.classList.toggle('show', !isShowing);
+        
+        // Close when clicking outside (only for desktop)
+        if (!isShowing && window.innerWidth > 768) {
+            const clickHandler = function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdownContent.classList.remove('show');
+                    document.removeEventListener('click', clickHandler);
+                }
+            };
+            document.addEventListener('click', clickHandler);
+        }
+    }
+    
+    // Make dropdown function available globally
+    window.toggleDropdown = toggleDropdown;
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (window.innerWidth <= 768 && navbar.getAttribute('data-visible') === 'true') {
+                navbar.setAttribute('data-visible', 'false');
+                mobileNavToggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+
     // Image loading animation
     const images = document.querySelectorAll(".fade-in");
     images.forEach(img => {
@@ -68,8 +107,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Page transition effect
     document.body.classList.add("loaded");
 
+    // Enhanced link handling with page transitions
     document.querySelectorAll("a").forEach(link => {
-        if (link.href.includes(window.location.origin) && 
+        if (link.href && 
+            link.href.includes(window.location.origin) && 
             !link.classList.contains("app-btn") && 
             !link.classList.contains("cta-button")) {
             link.addEventListener("click", function(e) {
@@ -90,9 +131,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const heroSection = document.querySelector(".hero-section");
     if (heroSection) {
         setTimeout(() => {
-            heroSection.querySelector(".hero-title").classList.add("loaded");
-            heroSection.querySelector(".hero-subtitle").classList.add("loaded");
-            heroSection.querySelector(".cta-button").classList.add("loaded");
+            heroSection.querySelector(".hero-title")?.classList.add("loaded");
+            heroSection.querySelector(".hero-subtitle")?.classList.add("loaded");
+            heroSection.querySelector(".cta-button")?.classList.add("loaded");
         }, 300);
     }
 });
