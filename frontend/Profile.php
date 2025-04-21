@@ -300,7 +300,7 @@
                 
                 <button type="button" class="btn btn-secondary" onclick="location.href='Change_pass.php'">Change Password</button>
                 <button type="button" class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
-                <button type="button" class="btn btn-danger" onclick="signOut()">Sign Out</button>
+                <button type="button" class="btn btn-danger" onclick="window.location.href='../backend/logout.php'">Sign Out</button>
             </form>
         </div>
     </main>
