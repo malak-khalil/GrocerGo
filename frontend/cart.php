@@ -23,23 +23,21 @@
     </script>
 </head>
 <body>
-    <nav>
-        <img src="..\Images\LogoForLogin.png" alt="GrocerGo Logo" class="logo">
+<nav>
+        <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
         
-        <button class="mobile-nav-toggle"> 
-            <i class="bi bi-list nav-button"></i>
+        <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
+            <i class="bi bi-list"></i>
         </button>
-
+    
         <ul id="navbar" class="navbar" data-visible="false">
             <li>
-                <a href="..\frontend\categories.php"><i class="bi bi-house"></i> Home</a>
-            </li>
-            <li>
                 <div class="dropdown"> 
-                    <button class="dropbtn" onclick="getCategories()"><i class="bi bi-grid-fill"></i> Categories</button>
-                    
+                    <button class="dropbtn" onclick="toggleDropdown(this)">
+                        <i class="bi bi-grid"></i> Categories <i class="bi bi-chevron-down"></i>
+                    </button>
                     <div class="dropdown-content">
-                    <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
+                        <a href="#shop-now"><i class="bi bi-grid-fill"></i> All Categories</a>
                         <a href="../frontend/bakery.php"><i class="bi bi-basket"></i> Bakery</a>
                         <a href="../frontend/beautyandpersonalcare.php"><i class="bi bi-brush"></i> Beauty & Personal Care</a>
                         <a href="../frontend/beverages.php"><i class="bi bi-cup-straw"></i></i> Beverages</a>
@@ -55,22 +53,13 @@
                     </div>
                 </div>
             </li>
+            
             <li>
-                <a href="..\frontend\Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
-            </li>
-            <li>
-                <a href="..\frontend\cart.php" class="cart-link">
-                    <div class="cart">
-                        <i class="bi bi-cart3"></i>
-                    </div> 
-                </a>
-                
+                <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
             </li>
         </ul>
     </nav>
-    <!-- end of navigation bar -->
 
-    <!-- contents of the cart page -->
     <div class="cart-page" id="cart-page">
         <!-- shows the items in the cart: there are two scenarios: cart is empty and cart is not empty -->
             <?php
