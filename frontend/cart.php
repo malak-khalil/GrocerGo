@@ -91,7 +91,7 @@
             ?>
                     <div id="label" class="text-center">
                         <div class="empty-cart">
-                            <img width="25%" src="../images/home/cart-img.jpg" alt=""/>
+                        <img width="25%" src="../images/home/cart-img.jpg" alt="Shopping Cart" style="display: block; margin: 0 auto;" />
                             <h2>Your cart is empty.</h2>
                             <a href="../frontend/categories.php"> 
                                 <button class="to-categories-button">Keep shopping</button>
