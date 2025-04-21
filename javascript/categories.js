@@ -15,27 +15,65 @@ mobileNavToggle.addEventListener('click', () => {
     if (visibility === "false") {
         navbar.setAttribute('data-visible', "true");
         mobileNavToggle.setAttribute('aria-expanded', "true");
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
     } else {
         navbar.setAttribute('data-visible', "false");
         mobileNavToggle.setAttribute('aria-expanded', "false");
+        document.body.style.overflow = ''; // Re-enable scrolling
     }
 });
 
-// Dropdown Toggle
+// Dropdown Toggle - Updated for mobile
 function toggleDropdown(button) {
     const dropdown = button.parentElement;
-    dropdown.classList.toggle('active');
+    const isMobile = window.innerWidth <= 992;
+    
+    if (isMobile) {
+        // For mobile, just toggle the active class
+        dropdown.classList.toggle('active');
+    } else {
+        // For desktop, use hover behavior
+        const dropdowns = document.querySelectorAll('.dropdown');
+        dropdowns.forEach(drop => {
+            if (drop !== dropdown) {
+                drop.classList.remove('active');
+            }
+        });
+        dropdown.classList.toggle('active');
+    }
 }
 
+// Close dropdowns when clicking outside - updated
 document.addEventListener('click', function(event) {
-    if (!event.target.matches('.dropbtn')) {
+    const isMobile = window.innerWidth <= 992;
+    
+    if (!isMobile && !event.target.matches('.dropbtn')) {
         const dropdowns = document.querySelectorAll('.dropdown');
         dropdowns.forEach(dropdown => {
             dropdown.classList.remove('active');
         });
     }
+    
+    // Close mobile menu when clicking a link
+    if (window.innerWidth <= 992 && 
+        navbar.getAttribute('data-visible') === "true" && 
+        event.target.closest('a') && 
+        !event.target.closest('.dropdown-content')) {
+        navbar.setAttribute('data-visible', "false");
+        mobileNavToggle.setAttribute('aria-expanded', "false");
+        document.body.style.overflow = '';
+    }
 });
 
+// Handle window resize
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 992) {
+        // Reset mobile menu state when resizing to desktop
+        navbar.setAttribute('data-visible', "false");
+        mobileNavToggle.setAttribute('aria-expanded', "false");
+        document.body.style.overflow = '';
+    }
+});
 // DOM Content Loaded
 document.addEventListener("DOMContentLoaded", function() {
     // Image loading animation
