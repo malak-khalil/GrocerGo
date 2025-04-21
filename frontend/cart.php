@@ -147,7 +147,7 @@
         <div id="label" class="text-center">
             <div class="subtotal-buttons">
                 <h2>Subtotal: $<?= number_format($grand_total, 2) ?></h2>
-                <a href="../frontend/checkout.html">
+                <a href="../frontend/checkout.php">
                     <button class="checkout">Go to checkout</button>
                 </a>
                 <button onclick="openPop()" class="clear-all">Empty cart</button>

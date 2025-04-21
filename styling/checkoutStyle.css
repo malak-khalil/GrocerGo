@@ -112,6 +112,9 @@ input[type="text"], textarea {
     justify-content: center;
     align-items: center;
     text-align: center;
+
+    position: fixed;
+    top: 10vh;
     
     min-height: 70vh; 
 

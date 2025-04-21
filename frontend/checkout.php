@@ -1,14 +1,34 @@
 <!-- Reina Najjar -->
 
+<?php
+    $host = "localhost";
+    $user = "root";
+    $password = "";
+    $dbname = "grocergo";
+
+    // Create connection
+    $conn = mysqli_connect($host, $user, $password, $dbname);
+
+    // Check connection
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // get current user id
+    $user_id = 1;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Checkout page for users done with shopping">
-    <title>GrocerGo Checkout</title>
+    <title>Checkout</title>
     <link rel="stylesheet" href="..\styling\checkoutStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <header>
@@ -23,7 +43,29 @@
         <!-- order summary -->
         <section>
             <div class="order-summary" id="order">
+                <h2>Order Summary</h2>
+            <?php
+                // get items in user cart 
+                $sql = "SELECT * FROM cart WHERE user_id = '$user_id'";
+                $result = mysqli_query($conn, $sql);
                 
+                $grand_total = 0;
+                // generate the cart items on the page
+                while($row = mysqli_fetch_assoc($result)) {
+                    $total_price = (float)$row['quantity'] * (float)substr($row['product_price'], 1)
+            ?>
+                <div class="order-item">
+                <h4><?= $row['product_name'] ?></h4>
+
+                <div class="amount-price">
+                    <p style="font-size: 1rem">Quantity: <?= $row['quantity'] ?></p>
+                    <p id="price">$<?= number_format($total_price, 2) ?></p>
+                </div>
+        </div>
+            <?php
+                    $grand_total += $total_price;
+                }
+            ?>
             </div>
         </section>
 
@@ -34,7 +76,13 @@
                     <div class="address">
                         <h3>Delivering to</h3>
                         <form action="action_page.php" method="post" id="form1"> 
-                            <input type="text" name="address" required/> 
+                            <?php 
+                                $sql = "SELECT address FROM users WHERE id = '$user_id' LIMIT 1";
+                                $result = mysqli_query($conn, $sql);
+                                while($row = mysqli_fetch_assoc($result)) {
+                            ?>
+                            <input type="text" name="address" value="<?= $row['address']?>" required/> 
+                            <?php } ?>
                         </form>
                         <h4><br>Instructions for the driver</h4>
                         <textarea name="message" rows="2" cols="30"></textarea>
@@ -43,7 +91,9 @@
                     <hr width="75%">
                     
                     <div class="total" id="total">
-                        
+                        <p>Subtotal: $<?= number_format($grand_total, 2) ?></p>
+                        <p>Delivery Charge: $2</p>
+                        <h3>Total: $<?= number_format($grand_total + 2, 2) ?></p>
                     </div>
 
                     <hr width="75%">
@@ -73,12 +123,10 @@
                         </div>
 
                         <!-- place order -->
-                        <a href="..\frontend\Reviews.html"><input type="button" value="Place order" class="submit" onclick="submitForms()"/></a>
+                        <a href="..\frontend\Reviews.php"><input type="button" value="Place order" class="submit" onclick="submitForms()"/></a>
                 </div>
             </div>
         </section>
     </div>
 </body>
-<script src="..\javascript\Data.js"></script>
-<script src="..\javascript\checkout.js"></script>
-</html>    
+</html>
