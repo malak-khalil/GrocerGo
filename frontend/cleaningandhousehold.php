@@ -48,7 +48,7 @@
                     <a href="../frontend/tobacco.php"><i class="bi bi-fire"></i> Tobacco</a>
                 </div>
                 </div>
-            </li>
+            </li>      
             
             <li>
                 <a href="../frontend/Profile.php"><i class="bi bi-person-circle"></i> My Account</a>
