@@ -13,13 +13,22 @@
     <link rel="stylesheet" href="..\styling\cartStyle.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <!-- <script src="..\javascript\nav.js" defer></script> -->
     <script>
         // pop up for clear cart
         function openPop() {
             const popDialog = document.getElementById("popupDialog");
             popDialog.style.visibility = popDialog.style.visibility === "visible" ? "hidden" : "visible";
         }
+        $(document).ready(function() {
+            const mobileNavToggle = $('.mobile-nav-toggle');
+            const navbar = $('#navbar');
+
+            mobileNavToggle.on('click', function() {
+                const visibility = navbar.attr('data-visible');
+                navbar.attr('data-visible', visibility === "false" ? "true" : "false");
+                mobileNavToggle.attr('aria-expanded', visibility === "false" ? "true" : "false");
+            });
+        });
     </script>
 </head>
 <body>
