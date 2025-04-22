@@ -395,17 +395,17 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `address`, `Password`) VALUES
-(1, 'Layla', 'Hassan', '+96170111222', 'laylahassan', 'layla@gmail.com', '123 Cedar St, Beirut', 'password123'),
-(2, 'Omar', 'Salem', '+96170123456', 'omarsalem', 'omar.salem@gmail.com', '45 Elm Ave, Tripoli', 'omarsafe456'),
-(3, 'Maya', 'Khalil', '+96170345678', 'mayakhalil', 'maya.k@gmail.com', 'XX Street, Merdacheh, Botchay', 'maya_pass789'),
-(4, 'Jad', 'Mansour', '+96170987654', 'jadmansour', 'jad.m@gmail.com', '9 Olive Blvd, Jounieh', 'jadstrong!'),
-(5, 'Rana', 'Fadel', '+96170654321', 'ranafadel', 'rana.f@gmail.com', '230 Palm St, Zahle', 'ranarocks'),
-(6, 'Kassem', 'Ali', '+96176456789', 'kassemali', 'kassem.ali@gmail.com', '123 Maple St, Hadath', 'kassem2024'),
-(7, 'Nadine', 'Jabbour', '+96171765432', 'nadinej', 'nadine.jabbour@gmail.com', '56 Oak Ave, Baabda', 'nadinepass99'),
-(8, 'Tariq', 'Kassem', '+96176543210', 'tariqk', 'tariq.kassem@hotmail.com', '98 Cedar Rd, Jounieh', 'tariq1234'),
-(9, 'Sami', 'Khalil', '+96178551122', 'samikhalil', 'sami.khalil@yahoo.com', '101 Palm Blvd, Beirut', 'sammy2000'),
-(10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456'),
+INSERT INTO `users` (`ID`, `Fname`, `Lname`, `phone`, `username`, `Email`, `address`, `Password`) VALUES 
+(1, 'Layla', 'Hassan', '+96170111222', 'laylahassan', 'layla@gmail.com', '123 Cedar St, Beirut', 'password123'), /* inserts used before hashing */
+(2, 'Omar', 'Salem', '+96170123456', 'omarsalem', 'omar.salem@gmail.com', '45 Elm Ave, Tripoli', 'omarsafe456'), /*inserts used before hashing*/
+(3, 'Maya', 'Khalil', '+96170345678', 'mayakhalil', 'maya.k@gmail.com', 'XX Street, Merdacheh, Botchay', 'maya_pass789'), /* inserts used before hashing */
+(4, 'Jad', 'Mansour', '+96170987654', 'jadmansour', 'jad.m@gmail.com', '9 Olive Blvd, Jounieh', 'jadstrong!'), /* inserts used before hashing */
+(5, 'Rana', 'Fadel', '+96170654321', 'ranafadel', 'rana.f@gmail.com', '230 Palm St, Zahle', 'ranarocks'), /* inserts used before hashing */
+(6, 'Kassem', 'Ali', '+96176456789', 'kassemali', 'kassem.ali@gmail.com', '123 Maple St, Hadath', 'kassem2024'), /* inserts used before hashing */
+(7, 'Nadine', 'Jabbour', '+96171765432', 'nadinej', 'nadine.jabbour@gmail.com', '56 Oak Ave, Baabda', 'nadinepass99'), /* inserts used before hashing */
+(8, 'Tariq', 'Kassem', '+96176543210', 'tariqk', 'tariq.kassem@hotmail.com', '98 Cedar Rd, Jounieh', 'tariq1234'), /* inserts used before hashing */
+(9, 'Sami', 'Khalil', '+96178551122', 'samikhalil', 'sami.khalil@yahoo.com', '101 Palm Blvd, Beirut', 'sammy2000'), /* inserts used before hashing */
+(10, 'Rami', 'El-Sayed', '+96179887766', 'ramielsayed', 'rami.elsayed@outlook.com', '77 Sunflower St, Sin El Fil', 'rami@456'), /* inserts used before hashing */
 (11, 'malak', 'khalil', '71233806', 'malakxkhalil', 'malak.khalil@lau.edu', 'madam curie', '$2y$10$t4l4yISLeAIQSzm5R.p/GetLiA/XA2Sh7huOtA6/P3jkSj3Vbhx8G');
 COMMIT;
 

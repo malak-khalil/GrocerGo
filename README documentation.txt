@@ -35,5 +35,5 @@ accordinging to what category a product is specified , it appears in its page.
 - the checkout page order summary is also generated using php by retrieving the data from the database
 - user is now able to sign up and log in smoothly
 - The profile (My account) pages now retrieves all user data and displays it and the user is now able to edit some of their details.
-- Forgot and change password functionalities added to the Profile and log in pages that allow the user to change their password.
+- Forgot and change password functionalities added to the Profile and log in pages that allow the user to change their password (ForgotPassword.php and Change_pass.php were created).
 - Sign out completely signs the user out of the website and the user needs to log in again to access it.
