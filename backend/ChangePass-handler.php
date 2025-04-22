@@ -1,37 +1,45 @@
-<?php  // antonio karam
+<?php
 session_start();
 include('dbinc.php');
 
-
-if (!isset($_SESSION['user_id'])) {
-    echo "User not logged in.";
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $use_id = true;
+} elseif (isset($_SESSION['reset_email'])) {
+    $reset_email = $_SESSION['reset_email'];
+    $use_id = false;
+} else {
+    echo "Access denied. Please log in or reset password.";
     exit();
 }
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
     $newPass = $_POST['newPass'] ?? '';
-    $confirmPass = $_POST['confirmPass'] ?? '';
 
-
-    if ($newPass !== $confirmPass) {
-        echo "New passwords do not match.";
+    if (empty($newPass)) {
+        echo "New password cannot be empty.";
         exit();
     }
-
 
     $hashedPass = password_hash($newPass, PASSWORD_DEFAULT);
 
     try {
-        $stmt = $pdo->prepare("UPDATE users SET Password = :password WHERE ID = :user_id");
-        $stmt->bindParam(':password', $hashedPass);
-        $stmt->bindParam(':user_id', $_SESSION['user_id']);
+        if ($use_id) {
+            $stmt = $pdo->prepare("UPDATE users SET Password = :password WHERE ID = :id");
+            $stmt->bindParam(':password', $hashedPass);
+            $stmt->bindParam(':id', $user_id);
+        } else {
+            $stmt = $pdo->prepare("UPDATE users SET Password = :password WHERE Email = :email");
+            $stmt->bindParam(':password', $hashedPass);
+            $stmt->bindParam(':email', $reset_email);
+        }
+
         $stmt->execute();
+
+        if (!$use_id) unset($_SESSION['reset_email']);
 
         echo "success";
     } catch (PDOException $e) {
-
         echo "Error updating password: " . $e->getMessage();
     }
 } else {

@@ -1,4 +1,24 @@
 <!-- By Antonio Karam --> 
+<?php
+session_start();
+include('../backend/dbinc.php');
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+
+    $stmt = $pdo->prepare("SELECT ID FROM users WHERE Email = :email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    if ($stmt->rowCount() === 1) {
+        $_SESSION['reset_email'] = $email;
+        header("Location: ../frontend/Change_pass.php");
+        exit();
+    } else {
+        $error = "Email not found.";
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -286,7 +306,7 @@
             <div id="message" style="display:none; margin-bottom: 20px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 5px; text-align: center;">
             Email sent! Redirecting...
             </div>
-            <form class="profile-form" onsubmit="return validateForgotPasswordForm()">
+            <form class="profile-form" method="POST">
                 <div class="form-group">
                     <label for="email">Enter your email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your registered email" required>
