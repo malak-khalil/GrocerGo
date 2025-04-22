@@ -144,7 +144,7 @@ function renderProducts(products) {
                         <span class="quantity">0</span>
                         <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
                     </div>
-                    <form method="post" action="" class="form-submit">
+                    <form method="post" action="../backend/add-to-cart.php" class="form-submit">
                             <input type="hidden" name="product_id" class="product_id" value="${product.id}">
                             <input type="hidden" name="product_image" class="product_image" value="${product.image_path}">
                             <input type="hidden" name="product_name" class="product_name" value="${product.name}">

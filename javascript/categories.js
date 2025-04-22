@@ -236,7 +236,7 @@ function displaySearchResults(products, query) {
                                 <span class="quantity">0</span>
                                 <button class="quantity-btn plus">+</button>
                             </div>
-                            <form method="post" action="" class="form-submit">
+                            <form method="post" action="../backend/add-to-cart.php" class="form-submit">
                                 <input type="hidden" name="product_id" class="product_id" value="${product.id}">
                                 <input type="hidden" name="product_image" class="product_image" value="../${imagePath}">
                                 <input type="hidden" name="product_name" class="product_name" value="${product.name}">
@@ -283,22 +283,44 @@ function setupQuantityControls() {
             }
         });
     });
+
+    function updateQuantity(currentQuantity) {
+        $(".submit-product-quantity").val(currentQuantity.toString());
+    }
 }
 
 function updateQuantity(currentQuantity) {
-    document.querySelectorAll(".submit-product-quantity").forEach(el => {
-        el.value = currentQuantity.toString();
-    });
+    $(".submit-product-quantity").val(currentQuantity.toString());
 }
 
 // Cart functionality
 function setupAddToCartButtons() {
     document.querySelectorAll('.add-to-cart').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
+            
             const productId = this.getAttribute('data-id');
             const quantity = parseInt(this.closest('.product-card').querySelector('.quantity').textContent);
             addToCart(productId, quantity);
+
+            pid = $(".product_id").val();
+            pimg = $(".product_image").val();
+            pname = $(".product_name").val();
+            pprice = $(".product_price").val();
+            pqty = $(".submit-product-quantity").val();
+            $.ajax({
+                url: "../backend/add-to-cart.php",
+                type: "POST",
+                data: {
+                    product_id: pid,
+                    product_image: pimg,
+                    product_name: pname,
+                    product_price: pprice,
+                    product_quantity: pqty
+                },
+                success: function() {
+                  console.log("item data sent");
+                }
+              });
         });
     });
 }
