@@ -85,7 +85,7 @@ INSERT INTO `discounts` (`id`, `product_id`, `discount_percent`, `start_date`, `
 --
 -- Table structure for table `products`
 --
-
+      
 DROP TABLE IF EXISTS `products`;
 CREATE TABLE IF NOT EXISTS `products` (
   `id` int NOT NULL AUTO_INCREMENT,
