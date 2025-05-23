@@ -166,61 +166,112 @@ input[type="submit"]:hover {
     </div>
     </div>
     <script>
+  document.getElementById("SignupForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    submitSignupForm();
+  });
 
-    document.getElementById("SignupForm").addEventListener("submit", function(event) {
-      event.preventDefault();  
-      submitSignupForm();       
-    });
+  function submitSignupForm() {
+    const Fname    = document.getElementById("Fname").value.trim();
+    const Lname    = document.getElementById("Lname").value.trim();
+    const Pnumber  = document.getElementById("Pnumber").value.trim();
+    const username = document.getElementById("username").value.trim();
+    const email    = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const address  = document.getElementById("address").value.trim();
 
-    function submitSignupForm() {
-      const Fname = document.getElementById("Fname").value;
-      const Lname = document.getElementById("Lname").value;
-      const Pnumber = document.getElementById("Pnumber").value;
-      const username = document.getElementById("username").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const address = document.getElementById("address").value;
+    const errDiv   = document.getElementById("errorMessage");
+    let errors      = [];
 
-    if (!Fname || !Lname || !email || !password || !username || !Pnumber || !address) {
-      alert("All fields are required.");
-      return false; 
+    if (!Fname) {
+      errors.push("First name is required.");
+    } else if (Fname.length < 2) {
+      errors.push("First name must be at least 2 characters.");
+    }
+
+    if (!Lname) {
+      errors.push("Last name is required.");
+    } else if (Lname.length < 2) {
+      errors.push("Last name must be at least 2 characters.");
+    }
+
+    if (!Pnumber) {
+      errors.push("Phone number is required.");
+    } else if (Pnumber.replace(/\D/g, "").length < 8) {
+      errors.push("Phone number must have at least 8 digits.");
+    }
+
+    if (!username) {
+      errors.push("Username is required.");
+    } else if (username.length < 4) {
+      errors.push("Username must be at least 4 characters.");
     }
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
+    if (!email) {
+      errors.push("Email is required.");
+    } else if (email.length < 6) {
+      errors.push("Email must be at least 6 characters.");
+    } else if (!emailPattern.test(email)) {
+      errors.push("Please enter a valid email address.");
+    }
+
+
+    if (!password) {
+      errors.push("Password is required.");
+    } else if (password.length < 8) {
+      errors.push("Password must be at least 8 characters.");
+    }
+
+    if (!address) {
+      errors.push("Address is required.");
+    } else if (address.length < 5) {
+      errors.push("Address must be at least 5 characters.");
+    }
+
+    if (errors.length) {
+      errDiv.innerHTML     = errors.map(e => `<div>• ${e}</div>`).join("");
+      errDiv.style.display = "block";
       return false;
+    } else {
+      errDiv.style.display = "none";
     }
 
     const xhr = new XMLHttpRequest();
-      xhr.open("POST", "../backend/Signup_handler.php", true);
-      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-      const data = `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&username=${encodeURIComponent(username)}&Pnumber=${encodeURIComponent(Pnumber)}&Fname=${encodeURIComponent(Fname)}&Lname=${encodeURIComponent(Lname)}&address=${encodeURIComponent(address)}`;
-
+    xhr.open("POST", "../backend/Signup_handler.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onload = function() {
-        if (xhr.status === 200) {
-          try {
-            const response = JSON.parse(xhr.responseText);
-            if (response.success) {
-              window.location.href = "Log-in.php";
-            } else {
-              document.getElementById("errorMessage").innerText = response.message;
-              document.getElementById("errorMessage").style.display = "block";
-            }
-          } catch (e) {
-            console.error("JSON parse error", e);
-            document.getElementById("errorMessage").innerText = "Server error. Please try again.";
-            document.getElementById("errorMessage").style.display = "block";
+      if (xhr.status === 200) {
+        try {
+          const response = JSON.parse(xhr.responseText);
+          if (response.success) {
+            window.location.href = "Log-in.php";
+          } else {
+            errDiv.innerText     = response.message;
+            errDiv.style.display = "block";
           }
-        } else {
-          console.error("Request failed with status:", xhr.status);
+        } catch (e) {
+          console.error("JSON parse error", e);
+          errDiv.innerText     = "Server error. Please try again.";
+          errDiv.style.display = "block";
         }
-      };
+      } else {
+        console.error("Request failed with status:", xhr.status);
+      }
+    };
 
-      xhr.send(data);
-  };
-      </script>
+    const data =
+      `Fname=${encodeURIComponent(Fname)}` +
+      `&Lname=${encodeURIComponent(Lname)}` +
+      `&Pnumber=${encodeURIComponent(Pnumber)}` +
+      `&username=${encodeURIComponent(username)}` +
+      `&email=${encodeURIComponent(email)}` +
+      `&password=${encodeURIComponent(password)}` +
+      `&address=${encodeURIComponent(address)}`;
+    xhr.send(data);
+  }
+</script>
+
     
   </body>
 </html>
