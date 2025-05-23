@@ -14,7 +14,7 @@
 	      height: 100vh;
           margin: 0;
           font-family: 'sans-serif';
-      }
+      }  
 
 .outer_container {
             flex-direction: column;
