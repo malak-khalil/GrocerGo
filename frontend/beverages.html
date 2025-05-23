@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beverages - GrocerGo</title>
+    <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="..\styling\items.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../frontend/categories.html">
+            <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
+        </a>
+        
+        <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
+            <i class="bi bi-list"></i>
+        </button>
+    
+        <ul id="navbar" class="navbar" data-visible="false">
+            <li>
+                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li>
+                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+            </li>
+            <li>
+                <a href="../frontend/cart.html"><i class="bi bi-cart3"></i> Cart</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="search-btn">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Beverages</h1>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- Product cards will be generated here -->
+        </div>
+    </main>
+    
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    const products = [
+        {
+            id: 1,
+            name: "Evian Water Bottle",
+            price: 1.99,
+            weight: "500ml",
+            image: "../images/beverages/evian water bottle 500ml.png",
+            description: "Natural spring water from the French Alps. Pure and refreshing."
+        },
+        {
+            id: 2,
+            name: "Sparkling Water",
+            price: 1.99,
+            weight: "500ml",
+            image: "../images/beverages/sparkling water.avif",
+            description: "Carbonated mineral water with a crisp, refreshing taste."
+        },
+        {
+            id: 3,
+            name: "Rim Mineral Water",
+            price: 5.99,
+            weight: "2L x 6 Bottles",
+            image: "../images/beverages/rim  mineral water 2Lx6.avif",
+            description: "Natural mineral water pack. Great for home or office use."
+        },
+        {
+            id: 4,
+            name: "Nestle Pure Life Gallon Water",
+            price: 2.99,
+            weight: "5L",
+            image: "../images/beverages/nestle pure life Gallon water.jpg",
+            description: "Purified drinking water in a convenient gallon size."
+        },
+        {
+            id: 5,
+            name: "7UP",
+            price: 1.29,
+            weight: "330ml",
+            image: "../images/beverages/7UP.webp",
+            description: "Clear, crisp lemon-lime flavored soda. Refreshing and caffeine-free."
+        },
+        {
+            id: 6,
+            name: "Almond Milk",
+            price: 3.99,
+            weight: "1L",
+            image: "../images/beverages/almond milk 1L.jpg",
+            description: "Creamy dairy-free milk alternative made from almonds."
+        },
+        {
+            id: 7,
+            name: "Black Tea 100 Pack",
+            price: 4.99,
+            weight: "100 Tea Bags",
+            image: "../images/beverages/black tea 100 pack.jpg",
+            description: "Premium black tea bags for a classic tea experience."
+        },
+        {
+            id: 8,
+            name: "Black Tea",
+            price: 2.49,
+            weight: "50 Tea Bags",
+            image: "../images/beverages/black tea.avif",
+            description: "Rich and robust black tea in convenient tea bags."
+        },
+        {
+            id: 9,
+            name: "Classic Plain Najjar Coffee",
+            price: 5.99,
+            weight: "200g",
+            image: "../images/beverages/classic plain najjar coffee.jpg",
+            description: "Premium Lebanese coffee with a rich, authentic flavor."
+        },
+        {
+            id: 10,
+            name: "Coca-Cola",
+            price: 1.29,
+            weight: "330ml",
+            image: "../images/beverages/cocacola.png",
+            description: "The classic Coca-Cola taste in a convenient bottle."
+        },
+        {
+            id: 11,
+            name: "Coconut Milk",
+            price: 4.49,
+            weight: "1L",
+            image: "../images/beverages/coconut milk 1L.jpg",
+            description: "Rich and creamy dairy-free milk alternative made from coconuts."
+        },
+        {
+            id: 12,
+            name: "Coffee Creamer",
+            price: 3.99,
+            weight: "400g",
+            image: "../images/beverages/coffee creamer.jpg",
+            description: "Non-dairy creamer for coffee. Adds rich, creamy texture."
+        },
+        {
+            id: 13,
+            name: "Dark Blue Energy Drink",
+            price: 2.49,
+            weight: "250ml",
+            image: "../images/beverages/dark blue.avif",
+            description: "Energy drink with taurine, caffeine and B-vitamins for a quick boost."
+        },
+        {
+            id: 14,
+            name: "Dark Cafe Original Coffee",
+            price: 3.99,
+            weight: "200ml",
+            image: "../images/beverages/dark cafe original coffee 200ml.avif",
+            description: "Ready-to-drink premium coffee with a rich, dark roast flavor."
+        },
+        {
+            id: 15,
+            name: "Green Tea",
+            price: 4.29,
+            weight: "20 Tea Bags",
+            image: "../images/beverages/green tea.jpg",
+            description: "Antioxidant-rich green tea with a light, refreshing taste."
+        },
+        {
+            id: 16,
+            name: "Ground Coffee",
+            price: 6.49,
+            weight: "250g",
+            image: "../images/beverages/ground coffee.jpg",
+            description: "Premium ground coffee beans for a rich, aromatic brew."
+        },
+        {
+            id: 17,
+            name: "Ice Tea Peach Diet",
+            price: 1.99,
+            weight: "500ml",
+            image: "../images/beverages/ice tea peach diet.jpg",
+            description: "Refreshing peach-flavored iced tea with no added sugar."
+        },
+        {
+            id: 18,
+            name: "Luna Iced Coffee Mocha",
+            price: 3.99,
+            weight: "250ml",
+            image: "../images/beverages/luna iced coffee mocha.webp",
+            description: "Ready-to-drink iced coffee with rich mocha flavor."
+        },
+        {
+            id: 19,
+            name: "Lipton Chamomile Tea Herbal",
+            price: 3.99,
+            weight: "20 Tea Bags",
+            image: "../images/beverages/lipton chamomile tea herbal 20 packs.avif",
+            description: "Soothing herbal tea with natural chamomile flowers."
+        },
+        {
+            id: 20,
+            name: "Mirinda",
+            price: 1.29,
+            weight: "330ml",
+            image: "../images/beverages/mirinda.webp",
+            description: "Sparkling orange-flavored soft drink."
+        },
+        {
+            id: 21,
+            name: "Najjar Classic Coffee with Cardamom",
+            price: 6.49,
+            weight: "200g",
+            image: "../images/beverages/najjar classic with Cardamom.jpg",
+            description: "Traditional Lebanese coffee with aromatic cardamom."
+        },
+        {
+            id: 22,
+            name: "Najjar Decaf Coffee",
+            price: 5.99,
+            weight: "200g",
+            image: "../images/beverages/najjar decaf coffee.jpg",
+            description: "Premium Lebanese coffee without the caffeine."
+        },
+        {
+            id: 23,
+            name: "Nescafe 3 in 1 Classic Instant Coffee",
+            price: 8.99,
+            weight: "20g x 24 packs",
+            image: "../images/beverages/Nescafe 3 in 1 classic instant coffee 20gx24 packs.jpg",
+            description: "Instant coffee with creamer and sugar in convenient sachets."
+        },
+        {
+            id: 24,
+            name: "Nescafe Dark Roast Instant Coffee",
+            price: 7.99,
+            weight: "100g",
+            image: "../images/beverages/nescafe dark roast instant coffee.jpg",
+            description: "Rich, dark roast instant coffee with intense flavor."
+        },
+        {
+            id: 25,
+            name: "Oat Milk",
+            price: 4.29,
+            weight: "1L",
+            image: "../images/beverages/oat milk 1L.jpg",
+            description: "Creamy dairy-free milk alternative made from oats."
+        },
+        {
+            id: 26,
+            name: "Pepsi",
+            price: 1.29,
+            weight: "330ml",
+            image: "../images/beverages/pepsi.png",
+            description: "The classic Pepsi cola taste in a convenient bottle."
+        },
+        {
+            id: 27,
+            name: "Red Bull",
+            price: 2.99,
+            weight: "250ml",
+            image: "../images/beverages/red bull.jpg",
+            description: "Energy drink that vitalizes body and mind."
+        },
+        {
+            id: 28,
+            name: "Soy Milk",
+            price: 4.29,
+            weight: "1L",
+            image: "../images/beverages/soy milk 1L.avif",
+            description: "Nutritious dairy-free milk alternative made from soybeans."
+        },
+        {
+            id: 29,
+            name: "Torabika Cappuccino Instant Coffee",
+            price: 7.99,
+            weight: "22 Packs",
+            image: "../images/beverages/torabika cappuccino instant coffee 22 packs.webp",
+            description: "Instant cappuccino mix with rich coffee flavor."
+        },
+        {
+            id: 30,
+            name: "Torabika Sugar-Free Cappuccino",
+            price: 6.99,
+            weight: "20 Packs",
+            image: "../images/beverages/torabika sugar free cappuccino coffee 12.5gx20 packs.avif",
+            description: "Instant cappuccino mix without added sugar."
+        },
+        {
+            id: 31,
+            name: "UNO Chocolate Shake",
+            price: 2.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO chocolate shake.webp",
+            description: "Rich and creamy chocolate-flavored milk drink."
+        },
+        {
+            id: 32,
+            name: "UNO Apple Juice",
+            price: 1.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO apple juice.jpg",
+            description: "100% pure apple juice with no added sugar."
+        },
+        {
+            id: 33,
+            name: "UNO Mango Juice",
+            price: 1.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO mango juice.webp",
+            description: "Sweet and tropical mango-flavored juice drink."
+        },
+        {
+            id: 34,
+            name: "UNO Orange Juice",
+            price: 1.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO orange juice.jpg",
+            description: "100% pure orange juice with no added sugar."
+        },
+        {
+            id: 35,
+            name: "UNO Pineapple Juice",
+            price: 1.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO pineapple.jpg",
+            description: "Sweet and tangy pineapple-flavored juice drink."
+        },
+        {
+            id: 36,
+            name: "UNO Strawberry & Banana Juice",
+            price: 1.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO strawberry and banana juice.jpg",
+            description: "Delicious blend of strawberry and banana flavors."
+        },
+        {
+            id: 37,
+            name: "UNO Strawberry Milkshake",
+            price: 2.99,
+            weight: "250ml",
+            image: "../images/beverages/UNO strawberry milkshake.avif",
+            description: "Creamy strawberry-flavored milk drink."
+        }
+    ];
+
+    // DOM elements
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const productModal = document.getElementById('productModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalBody = document.getElementById('modalBody');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navbar = document.getElementById('navbar');
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Generate product cards
+    function renderProducts(productsToRender) {
+        productsGrid.innerHTML = '';
+        productsToRender.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.id = product.id;
+            
+            // Check if product is already in cart
+            const cartItem = cart.find(item => item.id === product.id);
+            const quantity = cartItem ? cartItem.quantity : 0;
+            
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-info">
+                        <span class="product-price">$${product.price.toFixed(2)}</span>
+                        <span class="product-weight">${product.weight}</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                        <span class="quantity">${quantity}</span>
+                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                    <button class="add-to-cart">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+                </div>
+            `;
+            productsGrid.appendChild(productCard);
+            
+            // Add click event to product image
+            const productImage = productCard.querySelector('.product-image');
+            productImage.addEventListener('click', () => openProductModal(product));
+            
+            // Add event listeners for quantity controls
+            const plusBtn = productCard.querySelector('.plus-btn');
+            const minusBtn = productCard.querySelector('.minus-btn');
+            const quantityDisplay = productCard.querySelector('.quantity');
+            const addToCartBtn = productCard.querySelector('.add-to-cart');
+            
+            plusBtn.addEventListener('click', () => {
+                const newQuantity = parseInt(quantityDisplay.textContent) + 1;
+                quantityDisplay.textContent = newQuantity;
+                addToCartBtn.textContent = 'Update Cart';
+                updateCart(product.id, newQuantity);
+            });
+            
+            minusBtn.addEventListener('click', () => {
+                const currentQuantity = parseInt(quantityDisplay.textContent);
+                if (currentQuantity > 0) {
+                    const newQuantity = currentQuantity - 1;
+                    quantityDisplay.textContent = newQuantity;
+                    addToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+                    updateCart(product.id, newQuantity);
+                }
+            });
+            
+            addToCartBtn.addEventListener('click', () => {
+                const quantity = parseInt(quantityDisplay.textContent);
+                if (quantity > 0) {
+                    updateCart(product.id, quantity);
+                    addToCartBtn.textContent = 'Update Cart';
+                    showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                } else {
+                    showToast('Please select at least 1 item');
+                }
+            });
+        });
+    }
+
+    // Update cart function
+    function updateCart(productId, quantity) {
+        // Remove if quantity is 0
+        if (quantity === 0) {
+            cart = cart.filter(item => item.id !== productId);
+        } else {
+            // Check if already in cart
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                const product = products.find(p => p.id === productId);
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Open product modal
+    function openProductModal(product) {
+        // Check if product is in cart
+        const cartItem = cart.find(item => item.id === product.id);
+        const quantity = cartItem ? cartItem.quantity : 0;
+        
+        modalBody.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="modal-image">
+            <h2 class="modal-title">${product.name}</h2>
+            <p class="modal-description">${product.description}</p>
+            <p class="modal-price">$${product.price.toFixed(2)} / ${product.weight}</p>
+            <div class="quantity-controls" style="justify-content: center; margin: 20px 0;">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">${quantity}</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="margin-top: 10px;">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+        `;
+        
+        // Get modal elements
+        const modalQuantity = modalBody.querySelector('.quantity');
+        const modalPlusBtn = modalBody.querySelector('.plus-btn');
+        const modalMinusBtn = modalBody.querySelector('.minus-btn');
+        const modalAddToCartBtn = modalBody.querySelector('.add-to-cart');
+        
+        // Add event listeners for modal controls
+        modalPlusBtn.addEventListener('click', () => {
+            const newQuantity = parseInt(modalQuantity.textContent) + 1;
+            modalQuantity.textContent = newQuantity;
+            modalAddToCartBtn.textContent = 'Update Cart';
+        });
+        
+        modalMinusBtn.addEventListener('click', () => {
+            const currentQuantity = parseInt(modalQuantity.textContent);
+            if (currentQuantity > 0) {
+                const newQuantity = currentQuantity - 1;
+                modalQuantity.textContent = newQuantity;
+                modalAddToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+            }
+        });
+        
+        modalAddToCartBtn.addEventListener('click', () => {
+            const quantity = parseInt(modalQuantity.textContent);
+            if (quantity > 0) {
+                updateCart(product.id, quantity);
+                modalAddToCartBtn.textContent = 'Update Cart';
+                showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                
+                // Update the main product card if it's visible
+                const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
+                if (productCard) {
+                    const cardQuantity = productCard.querySelector('.quantity');
+                    const cardAddToCartBtn = productCard.querySelector('.add-to-cart');
+                    cardQuantity.textContent = quantity;
+                    cardAddToCartBtn.textContent = 'Update Cart';
+                }
+            } else {
+                showToast('Please select at least 1 item');
+            }
+        });
+        
+        productModal.style.display = 'flex';
+    }
+
+    // Show toast notification
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+
+    // Add toast styles dynamically
+    const toastStyles = document.createElement('style');
+    toastStyles.textContent = `
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast-notification.show {
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(toastStyles);
+
+    // Close product modal
+    closeModal.addEventListener('click', () => {
+        productModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === productModal) {
+            productModal.style.display = 'none';
+        }
+    });
+
+    // Search functionality
+    function searchProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+        renderProducts(filteredProducts);
+    }
+
+    // Mobile navigation toggle
+    mobileNavToggle.addEventListener('click', () => {
+        const visibility = navbar.getAttribute('data-visible');
+        
+        if (visibility === "false") {
+            navbar.setAttribute('data-visible', "true");
+            mobileNavToggle.setAttribute('aria-expanded', "true");
+        } else {
+            navbar.setAttribute('data-visible', "false");
+            mobileNavToggle.setAttribute('aria-expanded', "false");
+        }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProducts(products);
+        
+        // Add event listeners
+        searchInput.addEventListener('input', searchProducts);
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantry & Essentials - GrocerGo</title>
+    <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"><!-- Link to your external CSS file -->
+    <link rel="stylesheet" href="../styling/items.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../frontend/categories.html">
+            <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
+        </a>
+        
+        <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
+            <i class="bi bi-list"></i>
+        </button>
+    
+        <ul id="navbar" class="navbar" data-visible="false">
+            <li>
+                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li>
+                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+            </li>
+            <li>
+                <a href="../frontend/cart.html"><i class="bi bi-cart3"></i> Cart</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="search-btn">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Pantry & Essentials</h1>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- Product cards will be generated here -->
+        </div>
+    </main>
+    
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    const products = [
+        {
+            id: 1,
+            name: "Barilla Fettuccine Pasta",
+            price: 2.99,
+            weight: "16oz",
+            image: "../images/pantry essentials/barilla fettucini pasta.avif",
+            description: "Premium Italian pasta made with durum wheat semolina for authentic taste and perfect al dente texture."
+        },
+        {
+            id: 2,
+            name: "Almonds",
+            price: 9.99,
+            weight: "500g",
+            image: "../images/pantry essentials/almonds.webp",
+            description: "Natural raw almonds packed with protein, fiber, and healthy fats. Great for snacking or cooking."
+        },
+        {
+            id: 3,
+            name: "Apple Cider Vinegar",
+            price: 4.99,
+            weight: "500ml",
+            image: "../images/pantry essentials/apple vinegar.jpg",
+            description: "Organic unfiltered apple cider vinegar with the mother, rich in enzymes and beneficial bacteria."
+        },
+        {
+            id: 4,
+            name: "Barilla Farfalle Pasta",
+            price: 2.99,
+            weight: "16oz",
+            image: "../images/pantry essentials/barilla farfalle pasta.webp",
+            description: "Bow tie shaped pasta perfect for salads and creamy sauces. Made from high-quality durum wheat."
+        },
+        {
+            id: 5,
+            name: "Barilla Rotini Pasta",
+            price: 2.99,
+            weight: "16oz",
+            image: "../images/pantry essentials/barilla rotini pasta.webp",
+            description: "Corkscrew shaped pasta that holds sauces well. Ideal for pasta salads and baked dishes."
+        },
+        {
+            id: 6,
+            name: "Barilla Spaghetti Pasta",
+            price: 2.99,
+            weight: "500g",
+            image: "../images/pantry essentials/Barilla Spaghetti.jpg",
+            description: "Classic Italian spaghetti made from 100% durum wheat semolina for authentic taste."
+        },
+        {
+            id: 7,
+            name: "Barilla Whole Wheat Pasta",
+            price: 3.49,
+            weight: "500g",
+            image: "../images/pantry essentials/barilla whole wheat pasta.jpg",
+            description: "Nutritious whole wheat pasta with all the goodness of whole grains and great taste."
+        },
+        {
+            id: 8,
+            name: "Barilla Penne Pasta",
+            price: 2.99,
+            weight: "16oz",
+            image: "../images/pantry essentials/Barillla Penne Pasta.jpg",
+            description: "Tube-shaped pasta with ridges that hold sauce perfectly. Great for baked pasta dishes."
+        },
+        {
+            id: 9,
+            name: "Basmati Rice",
+            price: 6.99,
+            weight: "5lb",
+            image: "../images/pantry essentials/basmatiRice.png",
+            description: "Premium long grain basmati rice with delicate aroma and fluffy texture when cooked."
+        },
+        {
+            id: 10,
+            name: "BBQ Sauce",
+            price: 3.99,
+            weight: "500ml",
+            image: "../images/pantry essentials/BBQ sauce.webp",
+            description: "Rich and tangy barbecue sauce perfect for grilling, dipping, and marinating."
+        },
+        {
+            id: 11,
+            name: "Almond Butter",
+            price: 8.99,
+            weight: "250g",
+            image: "../images/pantry essentials/almond butter.jpeg",
+            description: "Creamy almond butter made from 100% roasted almonds with no added sugar or oils."
+        },
+        {
+            id: 12,
+            name: "Black Pepper Powder",
+            price: 3.49,
+            weight: "50g",
+            image: "../images/pantry essentials/black pepper powder.png",
+            description: "Freshly ground black pepper with robust flavor and aroma. Essential kitchen seasoning."
+        },
+        {
+            id: 13,
+            name: "Brown Sugar",
+            price: 2.99,
+            weight: "1kg",
+            image: "../images/pantry essentials/brown sugar.avif",
+            description: "Natural brown sugar with rich molasses flavor. Perfect for baking and sweetening."
+        },
+        {
+            id: 14,
+            name: "Cashews",
+            price: 9.99,
+            weight: "500g",
+            image: "../images/pantry essentials/cashews.jpg",
+            description: "Premium quality whole cashews, rich and buttery. Great for snacking or cooking."
+        },
+        {
+            id: 15,
+            name: "Chickpeas",
+            price: 1.99,
+            weight: "16oz can",
+            image: "../images/pantry essentials/chickPeas.webp",
+            description: "Ready-to-use chickpeas in water. Perfect for hummus, salads, and stews."
+        },
+        {
+            id: 16,
+            name: "Chilli Pepper Powder",
+            price: 3.29,
+            weight: "60g",
+            image: "../images/pantry essentials/chilli pepper powder.webp",
+            description: "Spicy red chili powder to add heat and flavor to your dishes."
+        },
+        {
+            id: 17,
+            name: "Coconut Oil",
+            price: 6.99,
+            weight: "600g",
+            image: "../images/pantry essentials/coconut oil.webp",
+            description: "Pure virgin coconut oil, unrefined and cold-pressed. Great for cooking and skincare."
+        },
+        {
+            id: 18,
+            name: "Cumin Powder",
+            price: 3.49,
+            weight: "50g",
+            image: "../images/pantry essentials/cumin powder.avif",
+            description: "Aromatic ground cumin with earthy flavor. Essential for curries and Mexican dishes."
+        },
+        {
+            id: 19,
+            name: "Dolly's Ketchup",
+            price: 1.99,
+            weight: "450g",
+            image: "../images/pantry essentials/dollys ketchup 450g.avif",
+            description: "Classic tomato ketchup with perfect balance of sweetness and tanginess."
+        },
+        {
+            id: 20,
+            name: "Garlic Powder",
+            price: 3.29,
+            weight: "85.05g",
+            image: "../images/pantry essentials/garlic powder.jpeg",
+            description: "Dehydrated garlic ground into fine powder. Convenient alternative to fresh garlic."
+        },
+        {
+            id: 21,
+            name: "Green Lentils",
+            price: 4.99,
+            weight: "1kg",
+            image: "../images/pantry essentials/green lentils.webp",
+            description: "Nutritious green lentils that hold their shape well when cooked. High in protein."
+        },
+        {
+            id: 22,
+            name: "Black Beans",
+            price: 1.50,
+            weight: "15 oz can",
+            image: "../images/pantry essentials/black beans.jpeg",
+            description: "Ready-to-use black beans in water. Great for Mexican dishes, soups and salads."
+        },
+        {
+            id: 23,
+            name: "Natural Honey",
+            price: 12.40,
+            weight: "1 kg",
+            image: "../images/pantry essentials/honey.jpg",
+            description: "Pure, raw honey with all its natural enzymes and health benefits."
+        },
+        {
+            id: 24,
+            name: "Mayonnaise",
+            price: 4.99,
+            weight: "675ml",
+            image: "../images/pantry essentials/mayonnaise.png",
+            description: "Creamy, rich mayonnaise perfect for sandwiches, salads and dips."
+        },
+        {
+            id: 25,
+            name: "Olive Oil",
+            price: 14.99,
+            weight: "3L",
+            image: "../images/pantry essentials/olive oil.webp",
+            description: "Extra virgin olive oil, cold extracted for maximum flavor and health benefits."
+        },
+        {
+            id: 26,
+            name: "Onion Powder",
+            price: 3.49,
+            weight: "289.3g",
+            image: "../images/pantry essentials/onion powder.png",
+            description: "Dehydrated onions ground into fine powder. Adds onion flavor without the texture."
+        },
+        {
+            id: 27,
+            name: "Paprika Powder",
+            price: 3.99,
+            weight: "60g",
+            image: "../images/pantry essentials/paprika powder.webp",
+            description: "Mild, sweet paprika powder that adds color and subtle flavor to dishes."
+        },
+        {
+            id: 28,
+            name: "Peanut Butter",
+            price: 5.49,
+            weight: "340g",
+            image: "../images/pantry essentials/peanut butter.webp",
+            description: "Smooth peanut butter made from 100% roasted peanuts with no added sugar."
+        },
+        {
+            id: 29,
+            name: "Peanuts",
+            price: 4.99,
+            weight: "500g",
+            image: "../images/pantry essentials/peanuts.jpeg",
+            description: "Raw peanuts in shell. Great for snacking or making homemade peanut butter."
+        },
+        {
+            id: 30,
+            name: "Red Lentils",
+            price: 3.99,
+            weight: "1kg",
+            image: "../images/pantry essentials/red lentils.webp",
+            description: "Quick-cooking red lentils that break down easily, perfect for soups and dals."
+        },
+        {
+            id: 31,
+            name: "Rolled Oats",
+            price: 4.49,
+            weight: "500g",
+            image: "../images/pantry essentials/rolled oats.jpg",
+            description: "Whole grain rolled oats, perfect for porridge, baking and smoothies."
+        },
+        {
+            id: 32,
+            name: "Salt",
+            price: 1.99,
+            weight: "1kg",
+            image: "../images/pantry essentials/salt.avif",
+            description: "Fine iodized table salt for cooking and seasoning."
+        },
+        {
+            id: 33,
+            name: "Sea Sardines",
+            price: 2.99,
+            weight: "106g",
+            image: "../images/pantry essentials/Sea Sardines.jpg",
+            description: "Sardines in olive oil, rich in omega-3 fatty acids and protein."
+        },
+        {
+            id: 34,
+            name: "Tahini",
+            price: 7.49,
+            weight: "400g",
+            image: "../images/pantry essentials/tahini.avif",
+            description: "Sesame seed paste, a key ingredient in hummus and Middle Eastern cuisine."
+        },
+        {
+            id: 35,
+            name: "Tuna in Water",
+            price: 2.89,
+            weight: "160g",
+            image: "../images/pantry essentials/tuna in water.avif",
+            description: "Premium tuna packed in water. High protein, low fat option for salads and sandwiches."
+        },
+        {
+            id: 36,
+            name: "Tuna in Sunflower Oil",
+            price: 2.99,
+            weight: "160g",
+            image: "../images/pantry essentials/tuna in sunflower oil.jpg",
+            description: "Tuna packed in sunflower oil for extra flavor and moisture."
+        },
+        {
+            id: 37,
+            name: "Sunflower Oil",
+            price: 9.99,
+            weight: "3L",
+            image: "../images/pantry essentials/vegetable oil.webp",
+            description: "Pure sunflower oil, light flavor and high smoke point ideal for frying."
+        },
+        {
+            id: 38,
+            name: "White Flour",
+            price: 3.99,
+            weight: "5lb",
+            image: "../images/pantry essentials/white flour.webp",
+            description: "All-purpose white flour for baking bread, cakes and pastries."
+        },
+        {
+            id: 39,
+            name: "Soy Sauce",
+            price: 2.49,
+            weight: "150ml",
+            image: "../images/pantry essentials/soy sauce.webp",
+            description: "Traditional brewed soy sauce with rich umami flavor for Asian cooking."
+        },
+        {
+            id: 40,
+            name: "Sunflower Seeds",
+            price: 3.49,
+            weight: "500g",
+            image: "../images/pantry essentials/sunflower seeds.jpeg",
+            description: "Raw sunflower seeds packed with healthy fats and vitamin E."
+        },
+        {
+            id: 41,
+            name: "Turmeric Powder",
+            price: 4.29,
+            weight: "67g",
+            image: "../images/pantry essentials/turmeric powder.webp",
+            description: "Bright yellow turmeric powder with anti-inflammatory properties."
+        },
+        {
+            id: 42,
+            name: "Walnuts",
+            price: 8.99,
+            weight: "400g",
+            image: "../images/pantry essentials/walnuts.jpg",
+            description: "Whole walnut halves rich in omega-3 fatty acids. Great for baking and snacking."
+        },
+        {
+            id: 43,
+            name: "White Sugar",
+            price: 5.99,
+            weight: "50lb",
+            image: "../images/pantry essentials/white sugar.jpg",
+            description: "Granulated white sugar for baking, sweetening beverages and cooking."
+        },
+        {
+            id: 44,
+            name: "White Vinegar",
+            price: 3.79,
+            weight: "500ml",
+            image: "../images/pantry essentials/white vinegar.avif",
+            description: "Clear distilled vinegar for cooking, cleaning and pickling."
+        },
+        {
+            id: 45,
+            name: "White Rice",
+            price: 5.99,
+            weight: "1kg",
+            image: "../images/pantry essentials/whiteRice.webp",
+            description: "Long grain white rice that cooks up fluffy and separate."
+        },
+        {
+            id: 46,
+            name: "Whole Grain Brown Rice",
+            price: 6.49,
+            weight: "1lb (454g)",
+            image: "../images/pantry essentials/whole grain rice.png",
+            description: "Nutritious whole grain brown rice with all the bran and germ intact."
+        },
+        {
+            id: 47,
+            name: "Whole Peeled Plum Tomatoes",
+            price: 2.99,
+            weight: "14.5oz (411g)",
+            image: "../images/pantry essentials/whole peeled plum tomatoes.webp",
+            description: "Italian-style peeled plum tomatoes in juice. Perfect for sauces and stews."
+        },
+        {
+            id: 48,
+            name: "Whole Wheat Flour",
+            price: 4.99,
+            weight: "5lbs (2.27kg)",
+            image: "../images/pantry essentials/whole wheat flour.jpg",
+            description: "100% whole wheat flour with all the natural bran and germ."
+        },
+        {
+            id: 49,
+            name: "Worcestershire Sauce",
+            price: 4.99,
+            weight: "150ml",
+            image: "../images/pantry essentials/Worcestershire Sauce.avif",
+            description: "Classic Worcestershire sauce with complex savory flavor for meats and marinades."
+        },
+        {
+            id: 50,
+            name: "Yellow Mustard",
+            price: 3.79,
+            weight: "226g",
+            image: "../images/pantry essentials/yellow mustard.avif",
+            description: "Bright yellow prepared mustard with tangy flavor for sandwiches and hot dogs."
+        }
+    ];
+
+    // DOM elements
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const productModal = document.getElementById('productModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalBody = document.getElementById('modalBody');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navbar = document.getElementById('navbar');
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Generate product cards
+    function renderProducts(productsToRender) {
+        productsGrid.innerHTML = '';
+        productsToRender.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.id = product.id;
+            
+            // Check if product is already in cart
+            const cartItem = cart.find(item => item.id === product.id);
+            const quantity = cartItem ? cartItem.quantity : 0;
+            
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-info">
+                        <span class="product-price">$${product.price.toFixed(2)}</span>
+                        <span class="product-weight">${product.weight}</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                        <span class="quantity">${quantity}</span>
+                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                    <button class="add-to-cart">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+                </div>
+            `;
+            productsGrid.appendChild(productCard);
+            
+            // Add click event to product image
+            const productImage = productCard.querySelector('.product-image');
+            productImage.addEventListener('click', () => openProductModal(product));
+            
+            // Add event listeners for quantity controls
+            const plusBtn = productCard.querySelector('.plus-btn');
+            const minusBtn = productCard.querySelector('.minus-btn');
+            const quantityDisplay = productCard.querySelector('.quantity');
+            const addToCartBtn = productCard.querySelector('.add-to-cart');
+            
+            plusBtn.addEventListener('click', () => {
+                const newQuantity = parseInt(quantityDisplay.textContent) + 1;
+                quantityDisplay.textContent = newQuantity;
+                addToCartBtn.textContent = 'Update Cart';
+                updateCart(product.id, newQuantity);
+            });
+            
+            minusBtn.addEventListener('click', () => {
+                const currentQuantity = parseInt(quantityDisplay.textContent);
+                if (currentQuantity > 0) {
+                    const newQuantity = currentQuantity - 1;
+                    quantityDisplay.textContent = newQuantity;
+                    addToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+                    updateCart(product.id, newQuantity);
+                }
+            });
+            
+            addToCartBtn.addEventListener('click', () => {
+                const quantity = parseInt(quantityDisplay.textContent);
+                if (quantity > 0) {
+                    updateCart(product.id, quantity);
+                    addToCartBtn.textContent = 'Update Cart';
+                    showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                } else {
+                    showToast('Please select at least 1 item');
+                }
+            });
+        });
+    }
+
+    // Update cart function
+    function updateCart(productId, quantity) {
+        // Remove if quantity is 0
+        if (quantity === 0) {
+            cart = cart.filter(item => item.id !== productId);
+        } else {
+            // Check if already in cart
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                const product = products.find(p => p.id === productId);
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Open product modal
+    function openProductModal(product) {
+        // Check if product is in cart
+        const cartItem = cart.find(item => item.id === product.id);
+        const quantity = cartItem ? cartItem.quantity : 0;
+        
+        modalBody.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="modal-image">
+            <h2 class="modal-title">${product.name}</h2>
+            <p class="modal-description">${product.description}</p>
+            <p class="modal-price">$${product.price.toFixed(2)} / ${product.weight}</p>
+            <div class="quantity-controls" style="justify-content: center; margin: 20px 0;">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">${quantity}</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="margin-top: 10px;">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+        `;
+        
+        // Get modal elements
+        const modalQuantity = modalBody.querySelector('.quantity');
+        const modalPlusBtn = modalBody.querySelector('.plus-btn');
+        const modalMinusBtn = modalBody.querySelector('.minus-btn');
+        const modalAddToCartBtn = modalBody.querySelector('.add-to-cart');
+        
+        // Add event listeners for modal controls
+        modalPlusBtn.addEventListener('click', () => {
+            const newQuantity = parseInt(modalQuantity.textContent) + 1;
+            modalQuantity.textContent = newQuantity;
+            modalAddToCartBtn.textContent = 'Update Cart';
+        });
+        
+        modalMinusBtn.addEventListener('click', () => {
+            const currentQuantity = parseInt(modalQuantity.textContent);
+            if (currentQuantity > 0) {
+                const newQuantity = currentQuantity - 1;
+                modalQuantity.textContent = newQuantity;
+                modalAddToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+            }
+        });
+        
+        modalAddToCartBtn.addEventListener('click', () => {
+            const quantity = parseInt(modalQuantity.textContent);
+            if (quantity > 0) {
+                updateCart(product.id, quantity);
+                modalAddToCartBtn.textContent = 'Update Cart';
+                showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                
+                // Update the main product card if it's visible
+                const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
+                if (productCard) {
+                    const cardQuantity = productCard.querySelector('.quantity');
+                    const cardAddToCartBtn = productCard.querySelector('.add-to-cart');
+                    cardQuantity.textContent = quantity;
+                    cardAddToCartBtn.textContent = 'Update Cart';
+                }
+            } else {
+                showToast('Please select at least 1 item');
+            }
+        });
+        
+        productModal.style.display = 'flex';
+    }
+
+    // Show toast notification
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+
+    // Add toast styles dynamically
+    const toastStyles = document.createElement('style');
+    toastStyles.textContent = `
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast-notification.show {
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(toastStyles);
+
+    // Close product modal
+    closeModal.addEventListener('click', () => {
+        productModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === productModal) {
+            productModal.style.display = 'none';
+        }
+    });
+
+    // Search functionality
+    function searchProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+        renderProducts(filteredProducts);
+    }
+
+    // Mobile navigation toggle
+    mobileNavToggle.addEventListener('click', () => {
+        const visibility = navbar.getAttribute('data-visible');
+        
+        if (visibility === "false") {
+            navbar.setAttribute('data-visible', "true");
+            mobileNavToggle.setAttribute('aria-expanded', "true");
+        } else {
+            navbar.setAttribute('data-visible', "false");
+            mobileNavToggle.setAttribute('aria-expanded', "false");
+        }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProducts(products);
+        
+        // Add event listeners
+        searchInput.addEventListener('input', searchProducts);
+    });
+    </script>
+</body>
+</html>

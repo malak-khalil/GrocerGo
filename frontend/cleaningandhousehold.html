@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleaning & Household - GrocerGo</title>
+    <link rel="icon" href="../Images/home/cart3.svg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="..\styling\items.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="../frontend/categories.html">
+            <img src="../Images/LogoForLogin.png" alt="GrocerGo Logo" class="logo">
+        </a>
+        
+        <button class="mobile-nav-toggle" aria-controls="navbar" aria-expanded="false">
+            <i class="bi bi-list"></i>
+        </button>
+    
+        <ul id="navbar" class="navbar" data-visible="false">
+            <li>
+                <a href="../frontend/categories.html"><i class="bi bi-house"></i> Home</a>
+            </li>
+            <li>
+                <a href="../frontend/Profile.html"><i class="bi bi-person-circle"></i> My Account</a>
+            </li>
+            <li>
+                <a href="../frontend/cart.html"><i class="bi bi-cart3"></i> Cart</a>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search for products...">
+        <button class="search-btn">
+            <i class="bi bi-search"></i> Search
+        </button>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 class="page-title">Cleaning & Household</h1>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- Product cards will be generated here -->
+        </div>
+    </main>
+    
+    <!-- Product Modal -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    const products = [
+        {
+            id: 1,
+            name: "Clorox Bleach",
+            price: 3.50,
+            weight: "950ml",
+            image: "../images/cleaning and household/clorox bleach.jpeg",
+            description: "Powerful disinfecting bleach that kills 99.9% of germs and bacteria. Great for laundry and household cleaning."
+        },
+        {
+            id: 2,
+            name: "Dettol Liquid Disinfectant",
+            price: 5.00,
+            weight: "750ml",
+            image: "../images/cleaning and household/dettol liquid disinfectant.jpg",
+            description: "Antiseptic liquid that kills germs and provides protection against infection. Can be used for cleaning, laundry, and personal hygiene."
+        },
+        {
+            id: 3,
+            name: "Dishwashing Soap",
+            price: 2.00,
+            weight: "1L",
+            image: "../images/cleaning and household/fairy lemon dish washing liquid soap.jpg",
+            description: "Lemon-scented dishwashing liquid that cuts through grease and leaves dishes sparkling clean."
+        },
+        {
+            id: 4,
+            name: "Flash Bathroom Cleaner",
+            price: 3.00,
+            weight: "450ml",
+            image: "../images/cleaning and household/flash bowm.avif",
+            description: "Powerful bathroom cleaner that removes limescale, soap scum, and tough stains. Leaves surfaces clean and fresh."
+        },
+        {
+            id: 5,
+            name: "Easy Glass Cleaner",
+            price: 2.50,
+            weight: "825ml",
+            image: "../images/cleaning and household/easy glass cleaner.avif",
+            description: "Streak-free glass cleaner for windows, mirrors, and glass surfaces. Leaves a sparkling shine."
+        },
+        {
+            id: 6,
+            name: "Facial Soft Tissue Pack",
+            price: 1.20,
+            weight: "Pack: 200 Tissues (2-ply)",
+            image: "../images/cleaning and household/facial soft tissue pack.jpg",
+            description: "Soft and gentle facial tissues for everyday use. Pack of 200 2-ply tissues."
+        },
+        {
+            id: 7,
+            name: "Large Trash Bags (30 pcs)",
+            price: 4.00,
+            weight: "Size: 80x110cm",
+            image: "../images/cleaning and household/large trash bags 30pcs.avif",
+            description: "Durable trash bags with drawstring closure. Pack of 30 large bags for heavy-duty use."
+        },
+        {
+            id: 8,
+            name: "OMO Laundry Detergent",
+            price: 9.50,
+            weight: "5 kg",
+            image: "../images/cleaning and household/omo laundry.webp",
+            description: "Powerful laundry detergent that removes tough stains while being gentle on fabrics."
+        },
+        {
+            id: 9,
+            name: "Persil Lavender Powder",
+            price: 12.00,
+            weight: "6 kg",
+            image: "../images/cleaning and household/persil lavender powder.avif",
+            description: "Lavender-scented laundry powder with powerful stain removal and long-lasting freshness."
+        },
+        {
+            id: 10,
+            name: "Sanita Aluminum Foil",
+            price: 3.00,
+            weight: "30 cm x 150 m",
+            image: "../images/cleaning and household/sanita aluminum foil.jpg",
+            description: "High-quality aluminum foil for cooking, baking, and food storage. 30cm wide roll."
+        },
+        {
+            id: 11,
+            name: "Sanita Cling Film",
+            price: 2.50,
+            weight: "30 cm x 300 m",
+            image: "../images/cleaning and household/sanita cling film.png",
+            description: "Plastic cling wrap for food preservation. Sticks to itself and containers to keep food fresh."
+        },
+        {
+            id: 12,
+            name: "Scotch-Brite Kitchen Sponge",
+            price: 1.20,
+            weight: "Pack: 2 Sponges",
+            image: "../images/cleaning and household/scotch brite kitchen tough cleaning dual sided sponge.jpg",
+            description: "Dual-sided kitchen sponge with scrubbing side for tough stains and soft side for delicate surfaces."
+        },
+        {
+            id: 13,
+            name: "Scouring Kitchen Pads",
+            price: 1.00,
+            weight: "Pack: 5 Pads",
+            image: "../images/cleaning and household/scouring kitchen pads.avif",
+            description: "Heavy-duty scouring pads for tough cleaning jobs on pots, pans, and cookware."
+        },
+        {
+            id: 14,
+            name: "Steel Sponges",
+            price: 1.50,
+            weight: "Pack: 3 Sponges",
+            image: "../images/cleaning and household/steel sponges.jpg",
+            description: "Stainless steel cleaning sponges for removing stubborn stains and burnt-on food."
+        },
+        {
+            id: 15,
+            name: "Toilet Tissues",
+            price: 4.00,
+            weight: "Pack: 10 Rolls (2-ply)",
+            image: "../images/cleaning and household/tiolet tissues.webp",
+            description: "Soft and strong 2-ply toilet paper. Pack of 10 rolls for household use."
+        }
+    ];
+
+    // DOM elements
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const productModal = document.getElementById('productModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalBody = document.getElementById('modalBody');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const navbar = document.getElementById('navbar');
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Generate product cards
+    function renderProducts(productsToRender) {
+        productsGrid.innerHTML = '';
+        productsToRender.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.id = product.id;
+            
+            // Check if product is already in cart
+            const cartItem = cart.find(item => item.id === product.id);
+            const quantity = cartItem ? cartItem.quantity : 0;
+            
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image">
+                <div class="product-details">
+                    <h3 class="product-name">${product.name}</h3>
+                    <div class="product-info">
+                        <span class="product-price">$${product.price.toFixed(2)}</span>
+                        <span class="product-weight">${product.weight}</span>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                        <span class="quantity">${quantity}</span>
+                        <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+                    </div>
+                    <button class="add-to-cart">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+                </div>
+            `;
+            productsGrid.appendChild(productCard);
+            
+            // Add click event to product image
+            const productImage = productCard.querySelector('.product-image');
+            productImage.addEventListener('click', () => openProductModal(product));
+            
+            // Add event listeners for quantity controls
+            const plusBtn = productCard.querySelector('.plus-btn');
+            const minusBtn = productCard.querySelector('.minus-btn');
+            const quantityDisplay = productCard.querySelector('.quantity');
+            const addToCartBtn = productCard.querySelector('.add-to-cart');
+            
+            plusBtn.addEventListener('click', () => {
+                const newQuantity = parseInt(quantityDisplay.textContent) + 1;
+                quantityDisplay.textContent = newQuantity;
+                addToCartBtn.textContent = 'Update Cart';
+                updateCart(product.id, newQuantity);
+            });
+            
+            minusBtn.addEventListener('click', () => {
+                const currentQuantity = parseInt(quantityDisplay.textContent);
+                if (currentQuantity > 0) {
+                    const newQuantity = currentQuantity - 1;
+                    quantityDisplay.textContent = newQuantity;
+                    addToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+                    updateCart(product.id, newQuantity);
+                }
+            });
+            
+            addToCartBtn.addEventListener('click', () => {
+                const quantity = parseInt(quantityDisplay.textContent);
+                if (quantity > 0) {
+                    updateCart(product.id, quantity);
+                    addToCartBtn.textContent = 'Update Cart';
+                    showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                } else {
+                    showToast('Please select at least 1 item');
+                }
+            });
+        });
+    }
+
+    // Update cart function
+    function updateCart(productId, quantity) {
+        // Remove if quantity is 0
+        if (quantity === 0) {
+            cart = cart.filter(item => item.id !== productId);
+        } else {
+            // Check if already in cart
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity = quantity;
+            } else {
+                const product = products.find(p => p.id === productId);
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                });
+            }
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    // Open product modal
+    function openProductModal(product) {
+        // Check if product is in cart
+        const cartItem = cart.find(item => item.id === product.id);
+        const quantity = cartItem ? cartItem.quantity : 0;
+        
+        modalBody.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="modal-image">
+            <h2 class="modal-title">${product.name}</h2>
+            <p class="modal-description">${product.description}</p>
+            <p class="modal-price">$${product.price.toFixed(2)} / ${product.weight}</p>
+            <div class="quantity-controls" style="justify-content: center; margin: 20px 0;">
+                <button class="quantity-btn minus-btn"><i class="bi bi-dash-lg"></i></button>
+                <span class="quantity">${quantity}</span>
+                <button class="quantity-btn plus-btn"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <button class="add-to-cart" style="margin-top: 10px;">${quantity > 0 ? 'Update Cart' : 'Add to Cart'}</button>
+        `;
+        
+        // Get modal elements
+        const modalQuantity = modalBody.querySelector('.quantity');
+        const modalPlusBtn = modalBody.querySelector('.plus-btn');
+        const modalMinusBtn = modalBody.querySelector('.minus-btn');
+        const modalAddToCartBtn = modalBody.querySelector('.add-to-cart');
+        
+        // Add event listeners for modal controls
+        modalPlusBtn.addEventListener('click', () => {
+            const newQuantity = parseInt(modalQuantity.textContent) + 1;
+            modalQuantity.textContent = newQuantity;
+            modalAddToCartBtn.textContent = 'Update Cart';
+        });
+        
+        modalMinusBtn.addEventListener('click', () => {
+            const currentQuantity = parseInt(modalQuantity.textContent);
+            if (currentQuantity > 0) {
+                const newQuantity = currentQuantity - 1;
+                modalQuantity.textContent = newQuantity;
+                modalAddToCartBtn.textContent = newQuantity > 0 ? 'Update Cart' : 'Add to Cart';
+            }
+        });
+        
+        modalAddToCartBtn.addEventListener('click', () => {
+            const quantity = parseInt(modalQuantity.textContent);
+            if (quantity > 0) {
+                updateCart(product.id, quantity);
+                modalAddToCartBtn.textContent = 'Update Cart';
+                showToast(`${product.name} ${quantity > 1 ? 'items' : 'item'} added to cart`);
+                
+                // Update the main product card if it's visible
+                const productCard = document.querySelector(`.product-card[data-id="${product.id}"]`);
+                if (productCard) {
+                    const cardQuantity = productCard.querySelector('.quantity');
+                    const cardAddToCartBtn = productCard.querySelector('.add-to-cart');
+                    cardQuantity.textContent = quantity;
+                    cardAddToCartBtn.textContent = 'Update Cart';
+                }
+            } else {
+                showToast('Please select at least 1 item');
+            }
+        });
+        
+        productModal.style.display = 'flex';
+    }
+
+    // Show toast notification
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(toast);
+            }, 300);
+        }, 3000);
+    }
+
+    // Add toast styles dynamically
+    const toastStyles = document.createElement('style');
+    toastStyles.textContent = `
+        .toast-notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .toast-notification.show {
+            opacity: 1;
+        }
+    `;
+    document.head.appendChild(toastStyles);
+
+    // Close product modal
+    closeModal.addEventListener('click', () => {
+        productModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === productModal) {
+            productModal.style.display = 'none';
+        }
+    });
+
+    // Search functionality
+    function searchProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filteredProducts = products.filter(product => 
+            product.name.toLowerCase().includes(searchTerm) ||
+            product.description.toLowerCase().includes(searchTerm)
+        );
+        renderProducts(filteredProducts);
+    }
+
+    // Mobile navigation toggle
+    mobileNavToggle.addEventListener('click', () => {
+        const visibility = navbar.getAttribute('data-visible');
+        
+        if (visibility === "false") {
+            navbar.setAttribute('data-visible', "true");
+            mobileNavToggle.setAttribute('aria-expanded', "true");
+        } else {
+            navbar.setAttribute('data-visible', "false");
+            mobileNavToggle.setAttribute('aria-expanded', "false");
+        }
+    });
+
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProducts(products);
+        
+        // Add event listeners
+        searchInput.addEventListener('input', searchProducts);
+    });
+    </script>
+</body>
+</html>
